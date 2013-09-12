@@ -1,4 +1,4 @@
-casatibetmex
-============
+Casa Tibet México
+=========================
 
-Online platform for the community of Casa Tibet Mexico
+Plataforma en linea para la comunidad de Casa Tibet México.
