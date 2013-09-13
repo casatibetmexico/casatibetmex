@@ -1,0 +1,16 @@
+@charset "utf-8";
+/*
+Theme Name: Casa Tibet : Centros
+Author: Joe Flumerfelt
+Template: ct-mex
+Version: 0.1
+*/
+
+@import url("../ct-mex/style.css");
+
+/** HEADER **********************************************/
+
+.header .img {
+	background-image:url(img/ct_header_variants_white.png);
+	box-shadow:inset 0px 1px 1px rgba(255,255,255,0.3), inset 0px -1px 1px rgba(0,0,0,0.3);
+}

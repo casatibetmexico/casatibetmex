@@ -1,0 +1,217 @@
+/*
+Theme Name: Casa Tibet : Educación
+Author: Joe Flumerfelt
+Template: ct-mex
+Version: 0.1
+*/
+
+@import url("../ct-mex/style.css");
+
+/** STANDARD LAYOUT STYLES *****************************/
+
+a {
+	color:#2546b6;
+}
+
+/** HEADER **********************************************/
+
+.header .img {
+	background-image:url(img/ct_header_variants_blue.png);
+}
+
+.nav_bar .menu li:first-child,
+.nav_bar .menu li.on {
+	border-right:0px;
+	padding-right:21px;
+}
+.nav_bar .menu li.on {
+	background:#1f41aa;
+}
+
+.main_menu li.on,
+.main_menu li.over {
+	color:#1f41aa;
+	border-color:#1f41aa;
+}
+
+/** TITLE BARS ******************************************/
+
+.title {
+	border-top-color:#2546b6;
+	color:#2546b6;
+	
+}
+
+/** BUTTONS **********************************************/
+
+.btn.red {
+	background:#2546b6;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#2546b6),to(#0e3288));
+	background-image: -webkit-linear-gradient(top,#2546b6,#0e3288);
+	background-image: -moz-linear-gradient(top,#2546b6,#0e3288);
+	background-image: -o-linear-gradient(top,#2546b6,#0e3288);
+	background-image: linear-gradient(to bottom,#2546b6,#0e3288);
+	color:rgba(255,255,255,0.9);
+}
+
+/** HOME PAGE ************************************************/
+
+table.programs {
+	width:99%;
+	border-spacing:0px;
+	margin-top:10px;
+	margin-bottom:25px;
+}
+table.programs td {
+	width:200px;
+	overflow:hidden;
+	padding:0px;
+	vertical-align:top;
+	text-align:center;
+	position:relative;
+}
+
+table.programs td .thumbnail {
+	float:none;
+	border-radius:50%;
+	overflow:hidden;
+	box-shadow:1px 1px 5px rgba(0,0,0,0.4);
+	border:1px solid rgba(0,0,0,0.6);
+	text-align:center;
+	width:200px;
+	height:200px;
+	margin-right:0px;
+	position:absolute;
+	left:50%;
+	margin-left:-100px;
+}
+
+table.programs td p {
+	text-align:justify;
+	font-size:12px;
+	line-height:1.4;
+	padding:0px 10px 10px 10px;
+}
+
+table.programs td h2 {
+	font-size:18px;
+	font-weight:bold;
+	margin-top:210px;
+	text-align:center;
+}
+
+table.programs td.banners {
+	padding:0px;
+	width:212px;
+	padding-top:10px;
+	position:relative;
+	height:40px;
+}
+
+table.programs td.banners .btn {
+	float:none;
+	width:120px;
+	position:absolute;
+	left:50%;
+	margin-left:-80px;
+	text-align:center;
+}
+
+/** POSTS & PAGES ********************************************/
+
+.page_header {
+	border-top-color:#2546b6;
+}
+
+.page_header h1 {
+	color:#2546b6;
+}
+
+.page_nav a:hover {
+	color:#2546b6;
+}
+
+.section ul li.program {
+	padding-bottom:10px;
+}
+
+/** SITE TAGS *************************************************/
+
+.tag.over {
+	background:#2546b6;
+}
+
+/** PAGES **************************************************/
+
+.listing.page li.over {
+	color:#2546b6;
+}
+
+.listing.pages li.over {
+	color:#2546b6;
+}
+
+.simple_item.over {
+	color:#2546b6;
+}
+
+
+/** SINGLE : EVENT ***************************************/
+
+.event .details .title {
+	color:#2546b6;
+}
+.listing li.over h3 {
+	color:#2546b6;
+}
+
+/** CALENDAR ************************************************/
+
+.calendar {
+	border-top-color:#2546b6;
+}
+.calendar .ui-datepicker-title span {
+	color:#2546b6;
+}
+.calendar .ui-datepicker-calendar td a:hover {
+	background-color:#2546b6;
+}
+.calendar td.day_highlight {
+	background:#2546b6;
+}
+
+/** FORUMS ***************************************************/
+
+.bbp-topics-front ul.super-sticky, .bbp-topics ul.super-sticky, .bbp-topics ul.sticky, .bbp-forum-content ul.sticky {
+	border-left-color:#2546b6;
+}
+
+/** MODULES *************************************************/
+
+.sub_sections li {
+	font-size:12px;
+	margin-bottom:5px;
+}
+
+/** RESOURCES ***********************************************/
+
+.resource label {
+	display:block;
+	font-size:14px;
+	padding-bottom:10px;
+	padding-right:50px;
+	cursor:pointer;
+}
+
+.resource .tag {
+	margin:0px 10px 10px 0px;
+}
+.resource.over .tag {
+	border-radius:2px;
+	border:1px solid rgba(0,0,0,0.3);
+	background:#2546b6;
+	box-shadow:inset 0px 0px 2px rgba(0,0,0,0.3);
+	color:#ffffff;
+}
+
+
