@@ -1,0 +1,24 @@
+{{! bird shows last tweet (only one). dark="true" shows alternative theme. design: http://www.nymfont.com/2011/07/twitter-sweet-26-free-twitter-icons.html }}
+
+{{#items}}
+{{^dark}}
+<div class="twittersweet_outer twittersweet_outer_light">
+    <div class="twittersweet_text twittersweet_text_light">
+        {{{tweet_text}}}
+        <div class="twittersweet_footer twittersweet_footer_light">
+            {{{tweet_time}}} via {{{tweet_source}}}
+        </div>    
+    </div>
+</div>
+{{/dark}}
+{{#dark}}
+<div class="twittersweet_outer twittersweet_outer_dark">
+    <div class="twittersweet_text twittersweet_text_dark">
+        {{{tweet_text}}}
+        <div class="twittersweet_footer twittersweet_footer_dark">
+            {{{tweet_time}}} via {{{tweet_source}}}
+        </div>    
+    </div>
+</div>
+{{/dark}}
+{{/items}}

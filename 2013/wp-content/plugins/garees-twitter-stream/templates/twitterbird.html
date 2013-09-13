@@ -1,0 +1,18 @@
+{{! bird shows last tweet (only one). small="true" shows smaller version. design: http://deepubalan.com/blog/2010/08/06/free-high-resolution-twitter-bird-icons-and-images/ }}
+
+{{#items}}
+{{^small}}
+<div class="twitterbird_outer" style="width:475px;height:475px;background-image:url({{template_dir}}twitter-bird-tweets-475X475.png);">
+    <div class="twitterbird_inner" style="font-size:28px;">
+        {{{tweet_text}}}<br /><small>{{{tweet_time}}} via {{{tweet_source}}}</small>
+    </div>
+</div>
+{{/small}}
+{{#small}}
+<div class="twitterbird_outer" style="width:250px;height:250px;background-image:url({{template_dir}}twitter-bird-tweets-250X250.png);">
+    <div class="twitterbird_inner" style="font-size:14px;">
+        {{{tweet_text}}}<br /><small>{{{tweet_time}}} via {{{tweet_source}}}</small>
+    </div>
+</div>
+{{/small}}
+{{/items}}

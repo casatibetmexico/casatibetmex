@@ -1,0 +1,13 @@
+{{! only show images, skip tweets without images }}
+
+<div class='gallery'>
+{{#items}}
+{{#tweet_has_image}}
+<dl class="gallery-item "><dt>
+    <a href='{{tweet_image_media_url}}:large'>
+    	<img src='{{tweet_image_media_url}}:thumb' alt='{{tweet_text_raw}}' title='{{tweet_text_raw}}' />
+     </a>
+</dt></dl>
+{{/tweet_has_image}}
+{{/items}}
+</div>

@@ -1,0 +1,52 @@
+/* CSS Document */
+.latesttweets {
+	list-style:none;
+	margin:0px !important;
+	padding:0px !important;
+}
+.latesttweets ul {
+	margin:0px !important;
+	padding:0px !important;
+}
+.latesttweets li {
+	margin:0px !important;
+	width:406px !important;
+	height:90px !important;
+	background-image:url(latesttweets/latesttweets.png);
+	background-origin:border-box;
+	background-repeat:no-repeat;
+	background-position:top left;
+	padding-left:80px !important;
+	padding-right:25px !important;
+	padding-top:18px !important;
+	padding-bottom:18px !important;
+	box-sizing:border-box;
+	font-size:14px;
+	line-height:18px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#0496c8;
+	overflow:hidden;
+}
+.latesttweets li div {
+	margin:0px !important;
+	padding:0px !important;
+}
+.latesttweets a {
+	color: #603028;
+	text-decoration:none;
+}
+.latesttweets a:hover {
+	color: #603028;
+	text-decoration:underline;
+}
+.latesttweets a:visited {
+	color: #603028;
+}
+.latesttweets a:active {
+	color: #603028;
+}
+.latesttweets li:first-child {
+	height:138px !important;
+	background-image:url(latesttweets/latesttweets_first.png);
+	padding-top:66px !important;	
+}

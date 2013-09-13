@@ -1,0 +1,35 @@
+.pp_payment_wrapper {
+	padding:10px;
+	border-radius: 5px;
+	background-color:#faf8f4;
+	overflow:hidden;
+	margin-bottom:5px;
+}
+
+.pp_payment_btn {
+	float:right;
+	/* margin-bottom:10px; */
+}
+
+.pp_payment_info {
+	float:left;
+	/* margin-bottom:10px; */
+}
+
+.pp_payment_info .label {
+	/* font-weight:bold; */
+	font-size:12px;
+}
+
+
+.pp_payment_form input[type=text] {
+	border-radius:2px;
+	border:1px solid #adb1a9;
+	padding:5px;
+	margin-right:5px;
+	width:100px;
+}
+
+.pp_payment_form p {
+	clear:both;
+}

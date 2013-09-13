@@ -1,0 +1,24 @@
+{{! default-style: list with profile-image and action-buttons like the one on twitter.com }}
+
+<ul class="tweet_list">
+{{#items}}
+<li>
+<div class="tweet">
+{{#tweet_has_image}}<div class="tweet_image"><a href="{{tweet_image_url}}"><img src='{{template_dir}}default/image.png' /></a></div>{{/tweet_has_image}}
+<div class="tweet_avatar">
+{{{avatar}}}
+</div>
+<div class="tweet_header">
+	{{{user}}} <span class="tweet_name">{{user_name}}</span>
+</div>
+<div class="tweet_text">
+	{{{tweet_text}}}
+</div>
+<div class="tweet_footer">
+	{{tweet_time_relative}} <span class="tweet_footer_hidden">{{{reply_action}}} {{{retweet_action}}} {{{favorite_action}}}</span><br />
+    {{#tweet_is_retweet}}<span class="retweeted_by">Retweeted by <a href="http://twitter.com/#!/{{retweeted_by_screen_name}}"{{#new_window}} target="_blank"{{/new_window}}>{{retweeted_by_name}}</a></span>{{/tweet_is_retweet}}
+</div>
+</div>
+</li>
+{{/items}}
+</ul>

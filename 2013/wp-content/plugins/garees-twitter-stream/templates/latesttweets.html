@@ -1,0 +1,15 @@
+{{! design by eshbeata: http://psdvoid.com/eshbeata/psds/latest-tweet-4db37243b19a7  uses http://dotdotdot.frebsite.nl/ to shorten tweet-length }}
+
+<script type="text/javascript" language="javascript" src="{{template_dir}}jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{template_dir}}jquery.dotdotdot-1.3.0-packed.js"></script>
+<script type="text/javascript" language="javascript">
+	$(function() {
+		$('.latesttweets li').dotdotdot();
+	});
+</script>
+
+<ul class="latesttweets">
+{{#items}}
+<li>{{#search}}{{{user}}}: {{/search}}{{#tweet_is_retweet}}RT @{{{user}}}: {{/tweet_is_retweet}}{{{tweet_text}}}{{#tweet_has_image}} {{{tweet_image_link}}}{{/tweet_has_image}}</li>
+{{/items}}
+</ul>

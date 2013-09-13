@@ -1,0 +1,9 @@
+{{! Boxes with shadow. Use shortcode-options "background-color" and "text-color" to further customize it. Design by Red: http://www.red-team-design.com/how-to-create-slick-effects-with-css3-box-shadow  }}
+
+<div class="tweetbox-wrapper">
+{{#items}}
+<div class="tweetbox" style="{{#background}}background:{{background}};{{/background}}{{#text}}color:{{text}};{{/text}}">
+{{{tweet_text}}}
+</div>
+{{/items}}
+</div>
