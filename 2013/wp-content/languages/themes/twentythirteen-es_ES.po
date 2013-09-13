@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Twenty Thirteen package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-08-01 22:00:13+0000\n"
+"PO-Revision-Date: 2013-07-31 13:21:54+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -80,19 +80,19 @@ msgstr "Y"
 
 #: archive.php:35
 msgid "Archives"
-msgstr "Archivo"
+msgstr "Archivos"
 
 #: author-bio.php:16
 msgid "About %s"
-msgstr "Acerca de %s"
+msgstr "Sobre %s"
 
 #: author-bio.php:20
 msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
-msgstr "Ver todas las entradas de %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Ver todos los artículos de %s <span class=\"meta-nav\">&rarr;</span>"
 
 #: author.php:30
 msgid "All posts by %s"
-msgstr "Todas las entradas de:  %s"
+msgstr "Todos los artículos de:  %s"
 
 #: category.php:19
 msgid "Category Archives: %s"
@@ -119,7 +119,7 @@ msgstr "Comentarios más recientes &rarr;"
 
 #: comments.php:52
 msgid "Comments are closed."
-msgstr "Los comentarios están cerrados."
+msgstr "Comentarios cerrados."
 
 #: content-aside.php:13 content-audio.php:24 content-gallery.php:24
 #: content-image.php:23 content-link.php:24 content-quote.php:13
@@ -141,7 +141,7 @@ msgstr "Páginas:"
 msgid "Edit"
 msgstr "Editar"
 
-#: functions.php:371
+#: functions.php:368
 msgid "Permalink to %s"
 msgstr "Enlace permanente a %s"
 
@@ -166,7 +166,7 @@ msgstr "No se ha encontrado nada"
 
 #: content-none.php:18
 msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
-msgstr "¿Preparado para publicar tu primera entrada? <a href=\"%1$s\">Empieza aquí</a>."
+msgstr "¿Preparado para publicar tu primer artículo? <a href=\"%1$s\">Empieza aquí</a>."
 
 #: content-none.php:22
 msgid "Sorry, but nothing matched your search terms. Please try again with different keywords."
@@ -178,7 +178,7 @@ msgstr "Parece que no podemos encontrar lo que estás buscando. Tal vez la búsq
 
 #: footer.php:20
 msgid "http://wordpress.org/"
-msgstr "http://es.wordpress.org/"
+msgstr "http://wordpress.org/"
 
 #: footer.php:20
 msgid "Semantic Personal Publishing Platform"
@@ -186,7 +186,7 @@ msgstr "Plataforma de publicación semántica personal."
 
 #: footer.php:20
 msgid "Proudly powered by %s"
-msgstr "Creado con %s"
+msgstr "Basado en %s"
 
 #: functions.php:93
 msgid "Navigation Menu"
@@ -244,7 +244,7 @@ msgstr ", "
 msgid "View all posts by %s"
 msgstr "Ver todas las entradas por %s"
 
-#: functions.php:365
+#: functions.php:364
 msgctxt "1: post format name. 2: date"
 msgid "%1$s on %2$s"
 msgstr "%1$s en %2$s"

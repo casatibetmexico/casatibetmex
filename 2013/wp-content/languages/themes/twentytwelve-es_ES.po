@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Twenty Twelve package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-08-01 22:00:13+0000\n"
+"PO-Revision-Date: 2013-07-31 13:20:11+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -150,11 +150,11 @@ msgstr "Resultados de la búsqueda para: %s"
 
 #: search.php:38
 msgid "Sorry, but nothing matched your search criteria. Please try again with some different keywords."
-msgstr "Lo sentimos pero no hay nada que se ajuste a tu criterio de búsqueda. Por favor, inténtalo de nuevo con otras palabras clave."
+msgstr ""
 
 #: archive.php:35
 msgid "Archives"
-msgstr "Archivo"
+msgstr "Archivos"
 
 msgid "Twenty Twelve"
 msgstr "Twenty Twelve"

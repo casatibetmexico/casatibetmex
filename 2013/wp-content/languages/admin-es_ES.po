@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Administration package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-08-01 22:00:12+0000\n"
+"PO-Revision-Date: 2013-07-31 14:40:14+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,47 +14,47 @@ msgstr ""
 msgid "Compare two different revisions by <strong>selecting the &#8220;Compare any two revisions&#8221; box</strong> to the side."
 msgstr "Compara dos revisiones <strong>seleccionando &#8220;Compara dos revisiones cualquiera&#8221;</strong> en el lateral."
 
-#: wp-admin/about.php:130
+#: wp-admin/about.php:119
 msgid "New and updated libraries: <a href=\"%1$s\">MediaElement.js</a>, jQuery %2$s, jQuery UI %3$s, jQuery Migrate, Backbone %4$s."
 msgstr "Librerías nuevas y actualizadas: <a href=\"%1$s\">MediaElement.js</a>, jQuery %2$s, jQuery UI %3$s, jQuery Migrate, Backbone %4$s."
 
-#: wp-admin/about.php:104
+#: wp-admin/about.php:93
 msgid "Audio/Video API"
 msgstr "API de Audio y Vídeo"
 
-#: wp-admin/about.php:105
+#: wp-admin/about.php:94
 msgid "The new audio/video APIs give developers access to powerful media metadata, like ID3 tags."
 msgstr "Las nuevas APIs de audio y vídeo ofrecen a los desarrolladores acceso a potentes metadatos de medios, como tags ID3."
 
-#: wp-admin/about.php:108
+#: wp-admin/about.php:97
 msgid "Semantic Markup"
 msgstr "Lenguaje de marcas semántico"
 
-#: wp-admin/about.php:109
+#: wp-admin/about.php:98
 msgid "Themes can now choose improved HTML5 markup for comment forms, search forms, and comment lists."
 msgstr "Los temas ahora pueden elegir mejorado lenguaje HTML5 para formularios de contacto, formularios de búsqueda y listas de comentarios."
 
-#: wp-admin/about.php:112
+#: wp-admin/about.php:101
 msgid "JavaScript Utilities"
 msgstr "Utilidades de JavaScript"
 
-#: wp-admin/about.php:113
+#: wp-admin/about.php:102
 msgid "Handy JavaScript utilities ease common tasks like Ajax requests, templating, and Backbone view management."
 msgstr "Nuevas utilidades JavaScript facilitan tareas comunes como peticiones Ajax, edición y gestión de vistas troncales."
 
-#: wp-admin/about.php:119
+#: wp-admin/about.php:108
 msgid "Shortcode Improvements"
 msgstr "Mejoras en los códigos cortos"
 
-#: wp-admin/about.php:120
+#: wp-admin/about.php:109
 msgid "Search content for shortcodes with <code>has_shortcode()</code> and adjust shortcode attributes with a new filter."
 msgstr "Contenido de búsqueda para códigos cortos con <code>has_shortcode()</code> y ajuste de atributos de códigos cortos con un nuevo filtro."
 
-#: wp-admin/about.php:123
+#: wp-admin/about.php:112
 msgid "Revision Control"
 msgstr "Control de Revisiones"
 
-#: wp-admin/about.php:124
+#: wp-admin/about.php:113
 msgid "Fine-grained revision controls allow you to keep a different number of revisions for each post type."
 msgstr "Controles precisos de revisión que te permiten mantener varias revisiones para cada tipo de entrada."
 
@@ -118,43 +118,43 @@ msgstr "WordPress guarda cada cambio desde la primera palabra que escribes. Cada
 msgid "It&#8217;s easy to compare two revisions from any point in time, and to restore a revision and go back to writing. Now you can be confident that no mistake is permanent."
 msgstr "Es fácil comparar dos revisiones desde cualquier punto en el tiempo para restaurar una revisión y volver a escribir. Ahora puedes estar seguro de que ningún error es permanente."
 
-#: wp-admin/about.php:60
+#: wp-admin/about.php:64
 msgid "Improved Autosaves"
 msgstr "Autoguardado mejorado"
 
-#: wp-admin/about.php:61
+#: wp-admin/about.php:65
 msgid "Never lose a word you&#8217;ve written. Autosaving is now even better; whether your power goes out, your browser crashes, or you lose your internet connection, your content is safe."
 msgstr "Nunca pierdas nada de lo que has escrito. El guardado automático es ahora incluso mejor. Si se va la luz, tu navegador se bloquea o se pierde la conexión a Internet, el contenido estará a salvo."
 
-#: wp-admin/about.php:64
+#: wp-admin/about.php:68
 msgid "Better Post Locking"
 msgstr "Mejoras en el bloqueo de entradas"
 
-#: wp-admin/about.php:65
+#: wp-admin/about.php:69
 msgid "Always know who&#8217;s editing with live updates that appear in the list of posts. And if someone leaves for lunch with a post open, you can take over where they left off."
 msgstr "Puedes saber quién está editando mirando las actualizaciones en vivo de la lista de entradas. Y si alguien se ha tomado un descanso y ha dejado una entrada abierta, puedes retomarla donde la dejaron sin problemas."
 
-#: wp-admin/about.php:71
+#: wp-admin/about.php:75
 msgid "Support for Audio and Video"
 msgstr "Soporte para audio y video"
 
-#: wp-admin/about.php:90
+#: wp-admin/about.php:79
 msgid "New Media Player"
 msgstr "Nuevo reproductor de media"
 
-#: wp-admin/about.php:91
+#: wp-admin/about.php:80
 msgid "Share your audio and video with the new built-in HTML5 media player. Upload files using the media manager and embed them in your posts."
 msgstr "Comparte tu audio y vídeo con el reproductor de medios en HTML5 ya incluido. Sube los archivos utilizando en gestor de medios e incrústalos directamente en tus entradas."
 
-#: wp-admin/about.php:93
+#: wp-admin/about.php:82
 msgid "Embed Music from Spotify, Rdio, and SoundCloud"
 msgstr "Incrustar música de Spotify, Rdio y SoundCloud"
 
-#: wp-admin/about.php:94
+#: wp-admin/about.php:83
 msgid "Embed songs and albums from your favorite artists, or playlists you&#8217;ve mixed yourself. It&#8217;s as simple as pasting a URL into a post on its own line."
 msgstr "Incrusta canciones y albums de tus artistas favoritos o listas de reproducción que hayas hecho. Es tan sencillo como pegar la URL en una entrada en una línea vacía. ¡Ojo! Que no haya nada más en la línea."
 
-#: wp-admin/about.php:95
+#: wp-admin/about.php:84
 msgid "(Love another service? Check out all of the <a href=\"%s\">embeds</a> that WordPress supports.)"
 msgstr "(¿Tienes otro servicio que te guste más? Revisa la lista de todos los <a href=\"%s\">incrustados</a> que permite WordPress.)"
 
@@ -978,7 +978,7 @@ msgstr "Obtener favoritos"
 msgid "The \"%s\" options group has been removed. Use another settings group."
 msgstr "El grupo de opciones \"%s\" ha sido eliminado. Utiliza otro grupo de ajustes."
 
-#: wp-admin/includes/update-core.php:883 wp-admin/update-core.php:357
+#: wp-admin/includes/update-core.php:882 wp-admin/update-core.php:357
 msgid "Welcome to WordPress %1$s. You will be redirected to the About WordPress screen. If not, click <a href=\"%2$s\">here</a>."
 msgstr "Bienvenido a WordPress %1$s. Serás redirigido a la pantalla Sobre WordPress. Si no es así, haz clic <a href=\"%2$s\">aquí</a>."
 
@@ -1100,7 +1100,7 @@ msgid ""
 "\n"
 "As a new WordPress user, you should go to <a href=\"%s\">your dashboard</a> to delete this page and create new pages for your content. Have fun!"
 msgstr ""
-"Esto es una página de ejemplo. Es diferente a una entrada porque permanece fija en un lugar y se mostrará en la navegación de tu sitio (en la mayoría de los temas). La mayoría de la gente empieza con una página de Acerca de, que les presenta a los potenciales visitantes del sitio. Podría ser algo como esto:\n"
+"Esto es una página de ejemplo. Es diferente a una entrada porque permanece fija en un lugar y se mostrará en la navegación de tu sitio (en la mayoría de los temas). La mayoría de la gente empieza con una página de Acerca de, que les presenta a los potenciales visitantes del sitio. Podría ser algo como esto::\n"
 "\n"
 "<blockquote>¡Hola! Soy mensajero por el día, aspirante a actor por la noche, y este es mi blog. Vivo en Madrid, tengo un perrazo llamado Duque y me gustan las piñas coladas (y que me pille un chaparrón)</blockquote>\n"
 "\n"
@@ -2187,23 +2187,23 @@ msgstr "Contribuidores"
 msgid "Show Toolbar when viewing site"
 msgstr "Muestra la barra de herramientas en el sitio"
 
-#: wp-admin/about.php:166
+#: wp-admin/about.php:155
 msgid "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bugs."
 msgstr[0] "<strong>Versión %1$s</strong> marcada como actualización de seguridad, soluciona el error %2$s."
 msgstr[1] "<strong>Versión %1$s</strong> marcada como actualización de seguridad, soluciona %2$s errores."
 
-#: wp-admin/about.php:173
+#: wp-admin/about.php:162
 msgid "For more information, see <a href=\"%s\">the release notes</a>."
 msgstr "Para más información, lee <a href=\"%s\">las notas de la versión</a>."
 
-#: wp-admin/about.php:170
+#: wp-admin/about.php:159
 msgid "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bugs."
 msgstr[0] "<strong>Versión %1$s</strong> marcada como actualización de seguridad, soluciona el error %2$s."
 msgstr[1] "<strong>Versión %1$s</strong> marcada como actualización de seguridad, soluciona %2$s errores."
 
-#: wp-admin/about.php:162
+#: wp-admin/about.php:151
 msgid "<strong>Version %1$s</strong> addressed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed %2$s bugs."
 msgstr[0] "<strong>Versión %1$s</strong> soluciona el bug %2$s."
@@ -2213,7 +2213,7 @@ msgstr[1] "<strong>Versión %1$s</strong> soluciona %2$s bugs."
 msgid "Welcome to your WordPress Dashboard! This is the screen you will see when you log in to your site, and gives you access to all the site management features of WordPress. You can get help for any screen by clicking the Help tab in the upper corner."
 msgstr "¡Bienvenido a tu panel de WordPress! Esta es la pantalla que verás cuando inicies sesión en tu sitio, que te da acceso a todas las funciones de gestión del sitio de WordPress. Puedes obtener ayuda para cualquier pantalla haciendo clic en la pestaña Ayuda en la esquina superior."
 
-#: wp-admin/about.php:155
+#: wp-admin/about.php:144
 msgid "Maintenance and Security Release"
 msgid_plural "Maintenance and Security Releases"
 msgstr[0] "Versión de mantenimiento y seguridad"
@@ -2223,19 +2223,19 @@ msgstr[1] "Versiones de mantenimiento y seguridad"
 msgid "What&#8217;s New"
 msgstr "¿Qué hay de nuevo?"
 
-#: wp-admin/about.php:154
+#: wp-admin/about.php:143
 msgid "Security Release"
 msgid_plural "Security Releases"
 msgstr[0] "Versión de seguridad"
 msgstr[1] "Versiones de seguridad"
 
-#: wp-admin/about.php:153
+#: wp-admin/about.php:142
 msgid "Maintenance Release"
 msgid_plural "Maintenance Releases"
 msgstr[0] "Versión de mantenimiento"
 msgstr[1] "Versiones de mantenimiento"
 
-#: wp-admin/about.php:158
+#: wp-admin/about.php:147
 msgid "<strong>Version %1$s</strong> addressed a security issue."
 msgid_plural "<strong>Version %1$s</strong> addressed some security issues."
 msgstr[0] "<strong>La versión %1$s</strong> resuelve un problema de seguridad."
@@ -2245,11 +2245,11 @@ msgstr[1] "<strong>La versión %1$s</strong> resuelve varios problemas de seguri
 msgid "This screen allows you to choose your default permalink structure. You can choose from common settings or create custom URL structures."
 msgstr "Esta pantalla te permite elegir la estructura de enlaces permanentes. Puedes elegir entre las más habituales o crear una estructura de URL personalizada."
 
-#: wp-admin/about.php:138
+#: wp-admin/about.php:127
 msgid "Return to Updates"
 msgstr "Volver a las actualizaciones"
 
-#: wp-admin/includes/update-core.php:884 wp-admin/update-core.php:358
+#: wp-admin/includes/update-core.php:883 wp-admin/update-core.php:358
 msgid "Welcome to WordPress %1$s. <a href=\"%2$s\">Learn more</a>."
 msgstr "Bienvenido a WordPress %1$s. <a href=\"%2$s\">Aprende más</a>."
 
@@ -2563,11 +2563,11 @@ msgstr "Es común la inclusión directa de wp-admin/includes/template.php en el 
 msgid "Welcome to WordPress %s"
 msgstr "Bienvenido a WordPress %s"
 
-#: wp-admin/about.php:142
+#: wp-admin/about.php:131
 msgid "Go to Dashboard &rarr; Home"
 msgstr "Ve a Escritorio &rarr; Inicio"
 
-#: wp-admin/about.php:138
+#: wp-admin/about.php:127
 msgid "Return to Dashboard &rarr; Updates"
 msgstr "Vuelve a Escritorio &rarr; Actualizaciones"
 
@@ -2599,7 +2599,7 @@ msgstr "Nueva característica: Barra de Herramientas"
 msgid "Core Developers"
 msgstr "Jefe de Desarrollo"
 
-#: wp-admin/about.php:100
+#: wp-admin/about.php:89
 msgid "Under the Hood"
 msgstr "Bajo el Capó"
 
@@ -3200,7 +3200,7 @@ msgstr "Confirmador del núcleo"
 msgid "Guest Committer"
 msgstr "Confirmador invitado"
 
-#: wp-admin/about.php:127 wp-admin/credits.php:160
+#: wp-admin/about.php:116 wp-admin/credits.php:160
 msgid "External Libraries"
 msgstr "Librerías externas"
 
@@ -5402,7 +5402,7 @@ msgstr "Las contraseñas introducidas no coinciden. Por favor, prueba de nuevo"
 msgid "You cannot update because <a href=\"http://codex.wordpress.org/Version_%1$s\">WordPress %1$s</a> requires MySQL version %2$s or higher. You are running version %3$s."
 msgstr "La actualización no puede instalarse porque <a href=\"http://codex.wordpress.org/Version_%1$s\">WordPress %1$s</a> requiere la versión %2$s o superior de MySQL. Estás usando la versión %3$s."
 
-#: wp-admin/includes/update-core.php:880 wp-admin/update-core.php:356
+#: wp-admin/includes/update-core.php:879 wp-admin/update-core.php:356
 msgid "WordPress updated successfully"
 msgstr "WordPress ha sido actualizado correctamente"
 
@@ -5492,7 +5492,7 @@ msgctxt "theme"
 msgid "Install Themes"
 msgstr "Instalar temas"
 
-#: wp-admin/about.php:142
+#: wp-admin/about.php:131
 msgid "Go to Dashboard"
 msgstr "Ir al Escritorio"
 
@@ -5757,27 +5757,27 @@ msgstr "Ha sido imposible localizar el directorio de temas de WordPress."
 msgid "Could not fully remove the theme %s."
 msgstr "No se pudo eliminar completamente el tema %s."
 
-#: wp-admin/includes/update-core.php:678
+#: wp-admin/includes/update-core.php:677
 msgid "The update cannot be installed because WordPress %1$s requires PHP version %2$s or higher and MySQL version %3$s or higher. You are running PHP version %4$s and MySQL version %5$s."
 msgstr "La actualización no se pudo instalar a causa de que  WordPress %1$s requiere la versión %2$s o superior de PHP y la versión %3$s o superior de MySQL. Estás usando la versión %4$s de PHP y la versión %5$s de MySQL."
 
-#: wp-admin/includes/update-core.php:680
+#: wp-admin/includes/update-core.php:679
 msgid "The update cannot be installed because WordPress %1$s requires PHP version %2$s or higher. You are running version %3$s."
 msgstr "La actualización no puede instalarse ya que WordPress %1$s requiere la versión %2$s o superior de PHP. Estás usando la versión %3$s."
 
-#: wp-admin/includes/update-core.php:682
+#: wp-admin/includes/update-core.php:681
 msgid "The update cannot be installed because WordPress %1$s requires MySQL version %2$s or higher. You are running version %3$s."
 msgstr "La actualización no puede instalarse porque WordPress %1$s requiere la versión %2$s o superior de MySQL. Estás usando la versión %3$s."
 
-#: wp-admin/includes/update-core.php:638
+#: wp-admin/includes/update-core.php:637
 msgid "Verifying the unpacked files&#8230;"
 msgstr "Verificando los archivos descomprimidos&#8230;"
 
-#: wp-admin/includes/update-core.php:649
+#: wp-admin/includes/update-core.php:648
 msgid "The update could not be unpacked"
 msgstr "No se ha podido descomprimir la actualización."
 
-#: wp-admin/includes/update-core.php:778
+#: wp-admin/includes/update-core.php:777
 msgid "Upgrading database&#8230;"
 msgstr "Actualizado la base de datos&#8230;"
 
@@ -7970,7 +7970,7 @@ msgid "Download failed."
 msgstr "Descarga fallida."
 
 #: wp-admin/includes/class-wp-upgrader.php:52
-#: wp-admin/includes/update-core.php:684
+#: wp-admin/includes/update-core.php:683
 msgid "Installing the latest version&#8230;"
 msgstr "Instalando última versión&#8230;"
 
@@ -7980,7 +7980,7 @@ msgstr "La carpeta ya existe."
 
 #: wp-admin/includes/class-wp-upgrader.php:55 wp-admin/includes/file.php:626
 #: wp-admin/includes/file.php:718 wp-admin/includes/file.php:777
-#: wp-admin/includes/update-core.php:845
+#: wp-admin/includes/update-core.php:844
 msgid "Could not create directory."
 msgstr "No ha sido posible crear el directorio"
 
@@ -8508,8 +8508,8 @@ msgid "Could not extract file from archive."
 msgstr "No podemos descomprimir el archivo."
 
 #: wp-admin/includes/file.php:645 wp-admin/includes/file.php:731
-#: wp-admin/includes/file.php:772 wp-admin/includes/update-core.php:657
-#: wp-admin/includes/update-core.php:748 wp-admin/includes/update-core.php:840
+#: wp-admin/includes/file.php:772 wp-admin/includes/update-core.php:656
+#: wp-admin/includes/update-core.php:747 wp-admin/includes/update-core.php:839
 msgid "Could not copy file."
 msgstr "No ha sido posible copiar el archivo."
 
