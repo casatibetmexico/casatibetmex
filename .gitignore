@@ -5,3 +5,16 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+2013/wp-config.php
+2013/wp-content/uploads/
+2013/wp-content/blogs.dir/
+2013/wp-content/upgrade/
+2013/wp-content/backup-db/
+2013/wp-content/advanced-cache.php
+2013/wp-content/wp-cache-config.php
+2013/wp-content/cache/
+2013/wp-content/backups/
+sitemap.xml
+*.log
+sitemap.xml
+sitemap.xml.gz
