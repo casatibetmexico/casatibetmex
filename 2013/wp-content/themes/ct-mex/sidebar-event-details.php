@@ -20,11 +20,11 @@ $location = get_post_meta($post->ID, 'ct_event_location', true);
 		<?php if ($location['address']) : ?><?php echo $location['address']; ?><?php endif; ?></td>
 	</tr>
 	<?php endif; ?>
-	<?php if ($tickets['price']) : ?>
+	
 	<tr>
 		<td>Precio:</td>
-		<td><?php echo $tickets['price']; ?></td>
+		<td><?php if ($tickets['price']) : ?><?php echo $tickets['price']; ?><?php else : ?><?php _e('GRATUITA'); ?><?php endif; ?></td>
 	</tr>
-	<?php endif; ?>
+	
 </table>
 </div>

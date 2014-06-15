@@ -35,7 +35,7 @@ function bp_members_screen_display_profile() {
  * @uses apply_filters()
  */
 function bp_members_screen_index() {
-	if ( !bp_is_user() && bp_is_members_component() ) {
+	if ( bp_is_members_directory() ) {
 		bp_update_is_directory( true, 'members' );
 
 		do_action( 'bp_members_screen_index' );
@@ -67,10 +67,6 @@ function bp_core_screen_signup() {
 		return;
 	}
 
-	if ( !isset( $bp->signup ) ) {
-		$bp->signup = new stdClass;
-	}
-
 	$bp->signup->step = 'request-details';
 
  	if ( !bp_get_signup_allowed() ) {
@@ -78,6 +74,8 @@ function bp_core_screen_signup() {
 
 	// If the signup page is submitted, validate and save
 	} elseif ( isset( $_POST['signup_submit'] ) && bp_verify_nonce_request( 'bp_new_signup' ) ) {
+
+		do_action( 'bp_signup_pre_validate' );
 
 		// Check the base account details for problems
 		$account_details = bp_core_validate_user_signup( $_POST['signup_username'], $_POST['signup_email'] );
@@ -228,6 +226,19 @@ function bp_core_screen_activation() {
 	if ( !bp_is_current_component( 'activate' ) )
 		return false;
 
+	// If the user is logged in, redirect away from here
+	if ( is_user_logged_in() ) {
+		if ( bp_is_component_front_page( 'activate' ) ) {
+			$redirect_to = trailingslashit( bp_get_root_domain() . '/' . bp_get_members_root_slug() );
+		} else {
+			$redirect_to = trailingslashit( bp_get_root_domain() );
+		}
+
+		bp_core_redirect( apply_filters( 'bp_loggedin_activate_page_redirect_to', $redirect_to ) );
+
+		return;
+	}
+
 	// Check if an activation key has been passed
 	if ( isset( $_GET['key'] ) ) {
 
@@ -240,11 +251,7 @@ function bp_core_screen_activation() {
 			bp_core_redirect( trailingslashit( bp_get_root_domain() . '/' . $bp->pages->activate->slug ) );
 		}
 
-		// Check for an uploaded avatar and move that to the correct user folder
-		if ( is_multisite() )
-			$hashed_key = wp_hash( $_GET['key'] );
-		else
-			$hashed_key = wp_hash( $user );
+		$hashed_key = wp_hash( $_GET['key'] );
 
 		// Check if the avatar folder exists. If it does, move rename it, move
 		// it and delete the signup avatar dir
@@ -266,7 +273,7 @@ add_action( 'bp_screens', 'bp_core_screen_activation' );
  * The main theme compat class for BuddyPress Members.
  *
  * This class sets up the necessary theme compatability actions to safely output
- * group template parts to the_title and the_content areas of a theme.
+ * member template parts to the_title and the_content areas of a theme.
  *
  * @since BuddyPress (1.7)
  */
@@ -298,6 +305,7 @@ class BP_Members_Theme_Compat {
 
 			do_action( 'bp_members_screen_index' );
 
+			add_filter( 'bp_get_buddypress_template',                array( $this, 'directory_template_hierarchy' ) );
 			add_action( 'bp_template_include_reset_dummy_post_data', array( $this, 'directory_dummy_post' ) );
 			add_filter( 'bp_replace_the_content',                    array( $this, 'directory_content'    ) );
 
@@ -310,6 +318,7 @@ class BP_Members_Theme_Compat {
 
 			do_action( 'bp_members_screen_display_profile' );
 
+			add_filter( 'bp_get_buddypress_template',                array( $this, 'single_template_hierarchy' ) );
 			add_action( 'bp_template_include_reset_dummy_post_data', array( $this, 'single_dummy_post'    ) );
 			add_filter( 'bp_replace_the_content',                    array( $this, 'single_dummy_content' ) );
 
@@ -319,6 +328,30 @@ class BP_Members_Theme_Compat {
 	/** Directory *************************************************************/
 
 	/**
+	 * Add template hierarchy to theme compat for the members directory page.
+	 *
+	 * This is to mirror how WordPress has {@link https://codex.wordpress.org/Template_Hierarchy template hierarchy}.
+	 *
+	 * @since BuddyPress (1.8)
+	 *
+	 * @param string $templates The templates from bp_get_theme_compat_templates()
+	 * @return array $templates Array of custom templates to look for.
+	 */
+	public function directory_template_hierarchy( $templates = array() ) {
+
+		// Setup our templates based on priority
+		$new_templates = apply_filters( 'bp_template_hierarchy_members_directory', array(
+			'members/index-directory.php'
+		) );
+
+		// Merge new templates with existing stack
+		// @see bp_get_theme_compat_templates()
+		$templates = array_merge( (array) $new_templates, $templates );
+
+		return $templates;
+	}
+
+	/**
 	 * Update the global $post with directory data
 	 *
 	 * @since BuddyPress (1.7)
@@ -326,13 +359,13 @@ class BP_Members_Theme_Compat {
 	public function directory_dummy_post() {
 		bp_theme_compat_reset_post( array(
 			'ID'             => 0,
-			'post_title'     => __( 'Members', 'buddypress' ),
+			'post_title'     => bp_get_directory_title( 'members' ),
 			'post_author'    => 0,
 			'post_date'      => 0,
 			'post_content'   => '',
 			'post_type'      => 'bp_members',
 			'post_status'    => 'publish',
-			'is_archive'     => true,
+			'is_page'        => true,
 			'comment_status' => 'closed'
 		) );
 	}
@@ -343,10 +376,40 @@ class BP_Members_Theme_Compat {
 	 * @since BuddyPress (1.7)
 	 */
 	public function directory_content() {
-		bp_buffer_template_part( 'members/index' );
+		return bp_buffer_template_part( 'members/index', null, false );
 	}
 
 	/** Single ****************************************************************/
+
+	/**
+	 * Add custom template hierarchy to theme compat for member pages.
+	 *
+	 * This is to mirror how WordPress has {@link https://codex.wordpress.org/Template_Hierarchy template hierarchy}.
+	 *
+	 * @since BuddyPress (1.8)
+	 *
+	 * @param string $templates The templates from bp_get_theme_compat_templates()
+	 * @return array $templates Array of custom templates to look for.
+	 */
+	public function single_template_hierarchy( $templates ) {
+		// Setup some variables we're going to reference in our custom templates
+		$user_nicename = buddypress()->displayed_user->userdata->user_nicename;
+
+		// Setup our templates based on priority
+		$new_templates = apply_filters( 'bp_template_hierarchy_members_single_item', array(
+			'members/single/index-id-'        . sanitize_file_name( bp_displayed_user_id() ) . '.php',
+			'members/single/index-nicename-'  . sanitize_file_name( $user_nicename )         . '.php',
+			'members/single/index-action-'    . sanitize_file_name( bp_current_action() )    . '.php',
+			'members/single/index-component-' . sanitize_file_name( bp_current_component() ) . '.php',
+			'members/single/index.php'
+		) );
+
+		// Merge new templates with existing stack
+		// @see bp_get_theme_compat_templates()
+		$templates = array_merge( (array) $new_templates, $templates );
+
+		return $templates;
+	}
 
 	/**
 	 * Update the global $post with the displayed user's data
@@ -362,7 +425,7 @@ class BP_Members_Theme_Compat {
 			'post_content'   => '',
 			'post_type'      => 'bp_members',
 			'post_status'    => 'publish',
-			'is_archive'     => true,
+			'is_page'        => true,
 			'comment_status' => 'closed'
 		) );
 	}
@@ -373,7 +436,7 @@ class BP_Members_Theme_Compat {
 	 * @since BuddyPress (1.7)
 	 */
 	public function single_dummy_content() {
-		bp_buffer_template_part( 'members/single/home' );
+		return bp_buffer_template_part( 'members/single/home', null, false );
 	}
 }
 new BP_Members_Theme_Compat();
@@ -413,11 +476,37 @@ class BP_Registration_Theme_Compat {
 		bp_update_is_directory( false, 'register' );
 
 		// Setup actions
+		add_filter( 'bp_get_buddypress_template',                array( $this, 'template_hierarchy' ) );
 		add_action( 'bp_template_include_reset_dummy_post_data', array( $this, 'dummy_post'    ) );
 		add_filter( 'bp_replace_the_content',                    array( $this, 'dummy_content' ) );
 	}
 
 	/** Template ***********************************************************/
+
+	/**
+	 * Add template hierarchy to theme compat for registration / activation pages.
+	 *
+	 * This is to mirror how WordPress has {@link https://codex.wordpress.org/Template_Hierarchy template hierarchy}.
+	 *
+	 * @since BuddyPress (1.8)
+	 *
+	 * @param string $templates The templates from bp_get_theme_compat_templates()
+	 * @return array $templates Array of custom templates to look for.
+	 */
+	public function template_hierarchy( $templates ) {
+		$component = sanitize_file_name( bp_current_component() );
+
+		// Setup our templates based on priority
+		$new_templates = apply_filters( "bp_template_hierarchy_{$component}", array(
+			"members/index-{$component}.php"
+		) );
+
+		// Merge new templates with existing stack
+		// @see bp_get_theme_compat_templates()
+		$templates = array_merge( (array) $new_templates, $templates );
+
+		return $templates;
+	}
 
 	/**
 	 * Update the global $post with dummy data
@@ -430,7 +519,7 @@ class BP_Registration_Theme_Compat {
 			$title = __( 'Create an Account', 'buddypress' );
 
 			if ( 'completed-confirmation' == bp_get_current_signup_step() ) {
-				$title = __( 'Sign Up Complete!', 'buddypress' );
+				$title = __( 'Check Your Email To Activate Your Account!', 'buddypress' );
 			}
 
 		// Activation page
@@ -452,7 +541,7 @@ class BP_Registration_Theme_Compat {
 			'post_content'   => '',
 			'post_type'      => $post_type,
 			'post_status'    => 'publish',
-			'is_archive'     => true,
+			'is_page'        => true,
 			'comment_status' => 'closed'
 		) );
 	}
@@ -464,9 +553,9 @@ class BP_Registration_Theme_Compat {
 	 */
 	public function dummy_content() {
 		if ( bp_is_register_page() ) {
-			bp_buffer_template_part( 'members/register' );
+			return bp_buffer_template_part( 'members/register', null, false );
 		} else {
-			bp_buffer_template_part( 'members/activate' );
+			return bp_buffer_template_part( 'members/activate', null, false );
 		}
 	}
 }

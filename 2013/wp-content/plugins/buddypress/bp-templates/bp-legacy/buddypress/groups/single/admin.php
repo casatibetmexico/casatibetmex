@@ -22,14 +22,14 @@
 	<?php do_action( 'groups_custom_group_fields_editable' ); ?>
 
 	<p>
-		<label for="group-notifiy-members"><?php _e( 'Notify group members of changes via email', 'buddypress' ); ?></label>
-		<input type="radio" name="group-notify-members" value="1" /> <?php _e( 'Yes', 'buddypress' ); ?>&nbsp;
-		<input type="radio" name="group-notify-members" value="0" checked="checked" /> <?php _e( 'No', 'buddypress' ); ?>&nbsp;
+		<label for="group-notifiy-members">
+			<input type="checkbox" name="group-notify-members" value="1" /> <?php _e( 'Notify group members of these changes via email', 'buddypress' ); ?>
+		</label>
 	</p>
 
 	<?php do_action( 'bp_after_group_details_admin' ); ?>
 
-	<p><input type="submit" value="<?php _e( 'Save Changes', 'buddypress' ); ?>" id="save" name="save" /></p>
+	<p><input type="submit" value="<?php esc_attr_e( 'Save Changes', 'buddypress' ); ?>" id="save" name="save" /></p>
 	<?php wp_nonce_field( 'groups_edit_group_details' ); ?>
 
 <?php endif; ?>
@@ -87,34 +87,34 @@
 		</label>
 	</div>
 
-	<hr /> 
-	 
-	<h4><?php _e( 'Group Invitations', 'buddypress' ); ?></h4> 
+	<hr />
 
-	<p><?php _e( 'Which members of this group are allowed to invite others?', 'buddypress' ); ?></p> 
+	<h4><?php _e( 'Group Invitations', 'buddypress' ); ?></h4>
 
-	<div class="radio"> 
-		<label> 
-			<input type="radio" name="group-invite-status" value="members"<?php bp_group_show_invite_status_setting( 'members' ); ?> /> 
-			<strong><?php _e( 'All group members', 'buddypress' ); ?></strong> 
-		</label> 
+	<p><?php _e( 'Which members of this group are allowed to invite others?', 'buddypress' ); ?></p>
 
-		<label> 
-			<input type="radio" name="group-invite-status" value="mods"<?php bp_group_show_invite_status_setting( 'mods' ); ?> /> 
-			<strong><?php _e( 'Group admins and mods only', 'buddypress' ); ?></strong> 
+	<div class="radio">
+		<label>
+			<input type="radio" name="group-invite-status" value="members"<?php bp_group_show_invite_status_setting( 'members' ); ?> />
+			<strong><?php _e( 'All group members', 'buddypress' ); ?></strong>
 		</label>
-		
-		<label> 
-			<input type="radio" name="group-invite-status" value="admins"<?php bp_group_show_invite_status_setting( 'admins' ); ?> /> 
-			<strong><?php _e( 'Group admins only', 'buddypress' ); ?></strong> 
-		</label> 
- 	</div> 
 
-	<hr /> 
+		<label>
+			<input type="radio" name="group-invite-status" value="mods"<?php bp_group_show_invite_status_setting( 'mods' ); ?> />
+			<strong><?php _e( 'Group admins and mods only', 'buddypress' ); ?></strong>
+		</label>
+
+		<label>
+			<input type="radio" name="group-invite-status" value="admins"<?php bp_group_show_invite_status_setting( 'admins' ); ?> />
+			<strong><?php _e( 'Group admins only', 'buddypress' ); ?></strong>
+		</label>
+ 	</div>
+
+	<hr />
 
 	<?php do_action( 'bp_after_group_settings_admin' ); ?>
 
-	<p><input type="submit" value="<?php _e( 'Save Changes', 'buddypress' ); ?>" id="save" name="save" /></p>
+	<p><input type="submit" value="<?php esc_attr_e( 'Save Changes', 'buddypress' ); ?>" id="save" name="save" /></p>
 	<?php wp_nonce_field( 'groups_edit_group_settings' ); ?>
 
 <?php endif; ?>
@@ -128,7 +128,7 @@
 
 			<p>
 				<input type="file" name="file" id="file" />
-				<input type="submit" name="upload" id="upload" value="<?php _e( 'Upload Image', 'buddypress' ); ?>" />
+				<input type="submit" name="upload" id="upload" value="<?php esc_attr_e( 'Upload Image', 'buddypress' ); ?>" />
 				<input type="hidden" name="action" id="action" value="bp_avatar_upload" />
 			</p>
 
@@ -148,13 +148,13 @@
 
 		<h4><?php _e( 'Crop Avatar', 'buddypress' ); ?></h4>
 
-		<img src="<?php bp_avatar_to_crop(); ?>" id="avatar-to-crop" class="avatar" alt="<?php _e( 'Avatar to crop', 'buddypress' ); ?>" />
+		<img src="<?php bp_avatar_to_crop(); ?>" id="avatar-to-crop" class="avatar" alt="<?php esc_attr_e( 'Avatar to crop', 'buddypress' ); ?>" />
 
 		<div id="avatar-crop-pane">
-			<img src="<?php bp_avatar_to_crop(); ?>" id="avatar-crop-preview" class="avatar" alt="<?php _e( 'Avatar preview', 'buddypress' ); ?>" />
+			<img src="<?php bp_avatar_to_crop(); ?>" id="avatar-crop-preview" class="avatar" alt="<?php esc_attr_e( 'Avatar preview', 'buddypress' ); ?>" />
 		</div>
 
-		<input type="submit" name="avatar-crop-submit" id="avatar-crop-submit" value="<?php _e( 'Crop Image', 'buddypress' ); ?>" />
+		<input type="submit" name="avatar-crop-submit" id="avatar-crop-submit" value="<?php esc_attr_e( 'Crop Image', 'buddypress' ); ?>" />
 
 		<input type="hidden" name="image_src" id="image_src" value="<?php bp_avatar_to_crop_src(); ?>" />
 		<input type="hidden" id="x" name="x" />
@@ -172,14 +172,14 @@
 <?php if ( bp_is_group_admin_screen( 'manage-members' ) ) : ?>
 
 	<?php do_action( 'bp_before_group_manage_members_admin' ); ?>
-	
+
 	<div class="bp-widget">
 		<h4><?php _e( 'Administrators', 'buddypress' ); ?></h4>
 
 		<?php if ( bp_has_members( '&include='. bp_group_admin_ids() ) ) : ?>
-		
+
 		<ul id="admins-list" class="item-list single-line">
-			
+
 			<?php while ( bp_members() ) : bp_the_member(); ?>
 			<li>
 				<?php echo bp_core_fetch_avatar( array( 'item_id' => bp_get_member_user_id(), 'type' => 'thumb', 'width' => 30, 'height' => 30, 'alt' => sprintf( __( 'Profile picture of %s', 'buddypress' ), bp_get_member_name() ) ) ); ?>
@@ -188,40 +188,40 @@
 					<?php if ( count( bp_group_admin_ids( false, 'array' ) ) > 1 ) : ?>
 					<span class="small">
 						<a class="button confirm admin-demote-to-member" href="<?php bp_group_member_demote_link( bp_get_member_user_id() ); ?>"><?php _e( 'Demote to Member', 'buddypress' ); ?></a>
-					</span>			
+					</span>
 					<?php endif; ?>
-				</h5>		
+				</h5>
 			</li>
 			<?php endwhile; ?>
-		
+
 		</ul>
-		
+
 		<?php endif; ?>
 
 	</div>
-	
+
 	<?php if ( bp_group_has_moderators() ) : ?>
 		<div class="bp-widget">
-			<h4><?php _e( 'Moderators', 'buddypress' ); ?></h4>		
-			
+			<h4><?php _e( 'Moderators', 'buddypress' ); ?></h4>
+
 			<?php if ( bp_has_members( '&include=' . bp_group_mod_ids() ) ) : ?>
 				<ul id="mods-list" class="item-list single-line">
-				
-					<?php while ( bp_members() ) : bp_the_member(); ?>					
+
+					<?php while ( bp_members() ) : bp_the_member(); ?>
 					<li>
 						<?php echo bp_core_fetch_avatar( array( 'item_id' => bp_get_member_user_id(), 'type' => 'thumb', 'width' => 30, 'height' => 30, 'alt' => sprintf( __( 'Profile picture of %s', 'buddypress' ), bp_get_member_name() ) ) ); ?>
 						<h5>
 							<a href="<?php bp_member_permalink(); ?>"> <?php bp_member_name(); ?></a>
 							<span class="small">
-								<a href="<?php bp_group_member_promote_admin_link( array( 'user_id' => bp_get_member_user_id() ) ); ?>" class="button confirm mod-promote-to-admin" title="<?php _e( 'Promote to Admin', 'buddypress' ); ?>"><?php _e( 'Promote to Admin', 'buddypress' ); ?></a>
+								<a href="<?php bp_group_member_promote_admin_link( array( 'user_id' => bp_get_member_user_id() ) ); ?>" class="button confirm mod-promote-to-admin" title="<?php esc_attr_e( 'Promote to Admin', 'buddypress' ); ?>"><?php _e( 'Promote to Admin', 'buddypress' ); ?></a>
 								<a class="button confirm mod-demote-to-member" href="<?php bp_group_member_demote_link( bp_get_member_user_id() ); ?>"><?php _e( 'Demote to Member', 'buddypress' ); ?></a>
-							</span>		
-						</h5>		
-					</li>	
-					<?php endwhile; ?>			
-				
+							</span>
+						</h5>
+					</li>
+					<?php endwhile; ?>
+
 				</ul>
-			
+
 			<?php endif; ?>
 		</div>
 	<?php endif ?>
@@ -263,17 +263,17 @@
 
 							<?php if ( bp_get_group_member_is_banned() ) : ?>
 
-								<a href="<?php bp_group_member_unban_link(); ?>" class="button confirm member-unban" title="<?php _e( 'Unban this member', 'buddypress' ); ?>"><?php _e( 'Remove Ban', 'buddypress' ); ?></a>
+								<a href="<?php bp_group_member_unban_link(); ?>" class="button confirm member-unban" title="<?php esc_attr_e( 'Unban this member', 'buddypress' ); ?>"><?php _e( 'Remove Ban', 'buddypress' ); ?></a>
 
 							<?php else : ?>
 
-								<a href="<?php bp_group_member_ban_link(); ?>" class="button confirm member-ban" title="<?php _e( 'Kick and ban this member', 'buddypress' ); ?>"><?php _e( 'Kick &amp; Ban', 'buddypress' ); ?></a>
-								<a href="<?php bp_group_member_promote_mod_link(); ?>" class="button confirm member-promote-to-mod" title="<?php _e( 'Promote to Mod', 'buddypress' ); ?>"><?php _e( 'Promote to Mod', 'buddypress' ); ?></a>
-								<a href="<?php bp_group_member_promote_admin_link(); ?>" class="button confirm member-promote-to-admin" title="<?php _e( 'Promote to Admin', 'buddypress' ); ?>"><?php _e( 'Promote to Admin', 'buddypress' ); ?></a>
+								<a href="<?php bp_group_member_ban_link(); ?>" class="button confirm member-ban" title="<?php esc_attr_e( 'Kick and ban this member', 'buddypress' ); ?>"><?php _e( 'Kick &amp; Ban', 'buddypress' ); ?></a>
+								<a href="<?php bp_group_member_promote_mod_link(); ?>" class="button confirm member-promote-to-mod" title="<?php esc_attr_e( 'Promote to Mod', 'buddypress' ); ?>"><?php _e( 'Promote to Mod', 'buddypress' ); ?></a>
+								<a href="<?php bp_group_member_promote_admin_link(); ?>" class="button confirm member-promote-to-admin" title="<?php esc_attr_e( 'Promote to Admin', 'buddypress' ); ?>"><?php _e( 'Promote to Admin', 'buddypress' ); ?></a>
 
 							<?php endif; ?>
 
-								<a href="<?php bp_group_member_remove_link(); ?>" class="button confirm" title="<?php _e( 'Remove this member', 'buddypress' ); ?>"><?php _e( 'Remove from group', 'buddypress' ); ?></a>
+								<a href="<?php bp_group_member_remove_link(); ?>" class="button confirm" title="<?php esc_attr_e( 'Remove this member', 'buddypress' ); ?>"><?php _e( 'Remove from group', 'buddypress' ); ?></a>
 
 								<?php do_action( 'bp_group_manage_members_admin_item' ); ?>
 
@@ -303,39 +303,11 @@
 
 	<?php do_action( 'bp_before_group_membership_requests_admin' ); ?>
 
-	<?php if ( bp_group_has_membership_requests() ) : ?>
+		<div class="requests">
 
-		<ul id="request-list" class="item-list">
-			<?php while ( bp_group_membership_requests() ) : bp_group_the_membership_request(); ?>
+			<?php bp_get_template_part( 'groups/single/requests-loop' ); ?>
 
-				<li>
-					<?php bp_group_request_user_avatar_thumb(); ?>
-					<h4><?php bp_group_request_user_link(); ?> <span class="comments"><?php bp_group_request_comment(); ?></span></h4>
-					<span class="activity"><?php bp_group_request_time_since_requested(); ?></span>
-
-					<?php do_action( 'bp_group_membership_requests_admin_item' ); ?>
-
-					<div class="action">
-
-						<?php bp_button( array( 'id' => 'group_membership_accept', 'component' => 'groups', 'wrapper_class' => 'accept', 'link_href' => bp_get_group_request_accept_link(), 'link_title' => __( 'Accept', 'buddypress' ), 'link_text' => __( 'Accept', 'buddypress' ) ) ); ?>
-
-						<?php bp_button( array( 'id' => 'group_membership_reject', 'component' => 'groups', 'wrapper_class' => 'reject', 'link_href' => bp_get_group_request_reject_link(), 'link_title' => __( 'Reject', 'buddypress' ), 'link_text' => __( 'Reject', 'buddypress' ) ) ); ?>
-
-						<?php do_action( 'bp_group_membership_requests_admin_item_action' ); ?>
-
-					</div>
-				</li>
-
-			<?php endwhile; ?>
-		</ul>
-
-	<?php else: ?>
-
-		<div id="message" class="info">
-			<p><?php _e( 'There are no pending membership requests.', 'buddypress' ); ?></p>
 		</div>
-
-	<?php endif; ?>
 
 	<?php do_action( 'bp_after_group_membership_requests_admin' ); ?>
 
@@ -357,7 +329,7 @@
 	<?php do_action( 'bp_after_group_delete_admin' ); ?>
 
 	<div class="submit">
-		<input type="submit" disabled="disabled" value="<?php _e( 'Delete Group', 'buddypress' ); ?>" id="delete-group-button" name="delete-group-button" />
+		<input type="submit" disabled="disabled" value="<?php esc_attr_e( 'Delete Group', 'buddypress' ); ?>" id="delete-group-button" name="delete-group-button" />
 	</div>
 
 	<?php wp_nonce_field( 'groups_delete_group' ); ?>

@@ -25,6 +25,8 @@ require_once(dirname(__FILE__).'/ct-resources.php');
 require_once(dirname(__FILE__).'/ct-causes.php');
 require_once(dirname(__FILE__).'/ct-shortcodes.php');
 require_once(dirname(__FILE__).'/ct-utility.php');
+require_once(dirname(__FILE__).'/ct-login.php');
+require_once(dirname(__FILE__).'/ct-search.php');
 
 
 ?>

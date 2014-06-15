@@ -1,9 +1,10 @@
 <?php
 global $sbar_args, $post;
+$digest = ct_is_theme('ct-mex');
 
 $upcoming_dates = array();
 if ($sbar_args['show_upcoming']) {
-	$events = ct_event_get_upcoming(-1, array('fields'=>'ids'));
+	$events = ct_event_get_upcoming(-1, array('fields'=>'ids'), $digest);
 	foreach($events as $e) {
 		list($d, $h) = explode(' ', get_post_meta($e, 'ct_event_start', true));
 		$upcoming_dates[] = $d;

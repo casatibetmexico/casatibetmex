@@ -3,7 +3,7 @@
 Theme Name: Casa Tibet : Derechos Humanos
 Author: Joe Flumerfelt
 Template: ct-mex
-Version: 0.1
+Version: 1.0
 */
 
 @import url("../ct-mex/style.css");
@@ -17,6 +17,10 @@ a {
 
 /** HEADER **********************************************/
 
+#rm-header.interior {
+	height:74px;
+}
+
 .header .img {
 	background-image:url(img/ct_header_variants_green.png);
 }
@@ -28,6 +32,10 @@ a {
 }
 .nav_bar .menu li.on {
 	background:#25b301;
+}
+
+#rm-header.interior .main_menu {
+	border-top: 8px solid #25b301;
 }
 
 .main_menu li.on,
@@ -64,6 +72,7 @@ a {
 
 .page_header h1 {
 	color:#25b301;
+	font-size:32px;
 }
 
 .page_nav a:hover {

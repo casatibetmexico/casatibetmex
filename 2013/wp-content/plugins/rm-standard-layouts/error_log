@@ -1,0 +1,4 @@
+[26-Aug-2013 01:50:58] PHP Fatal error:  Call to undefined function  register_activation_hook() in /home/casatibe/public_html/2013/wp-content/plugins/rm-standard-layouts/bp-import.php on line 9
+[26-Aug-2013 01:50:58] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/rm-standard-layouts/rm-standard-layouts.php on line 11
+[26-Aug-2013 02:26:41] PHP Fatal error:  Call to undefined function  register_activation_hook() in /home/casatibe/public_html/2013/wp-content/plugins/rm-standard-layouts/bp-import.php on line 9
+[26-Aug-2013 02:26:41] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/rm-standard-layouts/rm-standard-layouts.php on line 11

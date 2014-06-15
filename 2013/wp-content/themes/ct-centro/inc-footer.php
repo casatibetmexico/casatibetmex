@@ -4,6 +4,13 @@
 	</ul>
 </div>
 <div class="copyright">
-Plaza La Salle Norte Local A-1 Francisco G. Sada #2925 Col. Chepevera Monterrey, Nuevo León<br />
-Tel. (81) 8123.2670 info@mty.casatibet.org.mx
+<?php 
+$center = ct_get_current_center();
+$locations = unserialize(get_post_meta($center, 'ct_center_locations', true));
+$primary = array_pop(array_splice($locations, get_post_meta($center, 'ct_center_primary_loc', true), 1));
+?>
+
+<?php echo $primary['address_1']; ?> <?php if ($primary['address_2']) echo ', '.$primary['address_2']; ?><br />
+<?php if ($primary['tel']) : ?>Tel. <?php echo implode('&nbsp;&bull;&nbsp;', $primary['tel']); ?> <?php endif; ?>
+<?php if ($primary['email']) : ?>&nbsp;&mdash;&nbsp;<?php echo $primary['email']; ?><?php endif; ?>
 </div>

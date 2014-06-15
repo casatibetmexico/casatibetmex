@@ -1,0 +1,28 @@
+/*
+Theme Name: 
+Author: 
+Version: 0.1
+License: GNU General Public License
+*/
+
+/* STANDARD LAYOUT STYLES *******************************/
+
+#rm-container {
+	background-position:0px px;
+}
+
+#rm-header {
+	height:px;
+}
+
+#rm-footer {
+	height: px;
+}
+
+.rm-main {
+	padding-bottom:px;
+}
+
+.rm-content {
+	width:px;
+}

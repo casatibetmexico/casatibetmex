@@ -83,8 +83,22 @@ function ct_intro_shortcode( $atts, $content='' ) {
 add_shortcode( 'ct-intro', 'ct_intro_shortcode' );
 
 function ct_section_shortcode( $atts, $content='' ) {
-	$html = '<div class="section">';
-	if ($atts['title']) $html .= '<div class="title">'.$atts['title'].'</div>';
+
+	$title = '';
+	
+	if ($atts['title']) {
+		$title = ($atts['href']) ? '<div class="title ui" data-href="'.ct_get_permalink($atts['href']).'">'.
+								   '<div class="icon view"></div>'.
+									$atts['title'].'</div>' 
+								 : '<div class="title">'.$atts['title'].'</div>';
+		
+		$html = ($atts['href']) ? '<div class="section listing">' : '<div class="section">';
+		$html .= $title;
+		
+	} else {
+		$html = '<div class="section">';
+	}
+	
 	$html .= do_shortcode($content);
 	$html .= '</div>';
 	return $html;

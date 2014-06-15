@@ -1,36 +1,42 @@
-=== WP Issuu ===
-Contributors: hongy20
+=== Issuu Embed ===
+Contributors: jk.issuu
 Tags: document, issuu, embed, viewer, flash, publication
-Requires at least: 2.1
-Tested up to: 3.1
-Stable tag: 2.15
+Requires at least: 2.9
+Tested up to: 3.9.1
+Stable tag: 3.0
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WNQ5ZYVPXRSSA&lc=GB&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted
 
-This plugin is for WordPress 2.1 and higher which simplifies the embedding of Issuu publications in blog posts.
+This plugin simplifies embedding of Issuu publications in blog posts. Simply copy/paste the publication URL from your browser into your blog post.
 
 == Description ==
 
-This plugin is for WordPress 2.1 and higher which simplifies the embedding of [Issuu](http://issuu.com) publications in blog posts. Simply copy the WordPress embed code provided by Issuu and paste it into your post.
+This plugin simplifies embedding of Issuu publications in blog posts. Simply copy the Issuu publication URL into the body of your post and it will automatically turn into an embedded publication.
 
 == Installation ==
 
 Here's how to install the plugin and how to make it work.
 
-1. Upload the `wp-issuu.php` file to the `/wp-content/plugins/` directory
-2. Activate the plugin through the `Plugins` menu in WordPress
-3. Copy WordPress embed code from Issuu.com and paste it to your post: `[issuu documentid=XXX width=400 height=350 ... ]`.
+1. Download and activate the plugin through the Plugins menu in WordPress admin
+2. Copy Issuu publication URL from your browser and just paste it into the body of your post. Example: http://issuu.com/iscience/docs/issue23
+3. If you are the owner of the publication on Issuu, you can use the link with the URL parameter e=xxxx/yyyy, which you get when sharing from the My Publications section on your Issuu account , to make use of styling options.
+
+Make sure that the URL is on a separate line in your blog post.
 
 == Frequently Asked Questions ==
 
-Have questions or feedback? Please refer to our [support forum](http://getsatisfaction.com/issuu).
+Have questions or feedback? Please refer to our [support forum](http://help.issuu.com).
 
 == Screenshots ==
 
-1. Copy WordPress.com embed code from Issuu.com.
-2. Paste the embed code into the post editor.
-3. An example of Issuu viewer embedded on a wordpress blog post.
+1. Copy the Issuu publication URL from the address bar.
+2. Paste the URL into the body of your blog post.
+3. An example of an embedded Issuu publication.
 
 == Changelog ==
+
+`Version 3.0`
+
+Complete plugin rewrite. This version basically adds Issuu to the internal whitelist of oEmbed providers to allow the Wordpress oEmbed support to use issuu.com
 
 `Version 2.15`
 

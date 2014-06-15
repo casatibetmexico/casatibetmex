@@ -23,7 +23,8 @@ $meta = get_post_custom($post->ID);
 	</div>
 	<div class="page_content">
 		<?php ct_sidebar('archive', array('title'=>__('Directorio'), 
-										  'country'=>($_REQUEST['country']) ? $_REQUEST['country'] : array('mexico','eua','guatemala'),
+										  'country'=>($_REQUEST['country']) ? $_REQUEST['country'] 
+										  									: array('mexico','eua','guatemala'),
 										  'center-type'=>($_REQUEST['center-type']) ? $_REQUEST['center-type'] : 'all',
 										  'post_type'=>'center', 'nopaging'=>true, 'listing'=>'center')); ?>
 		
@@ -33,9 +34,9 @@ $meta = get_post_custom($post->ID);
 <?php if ($sub_pages) :?>
 		<div class="section">
 		<ul class="listing page">
-		<?php foreach($sub_pages as $p) :?>
+		<?php foreach((array) $sub_pages as $p) :?>
 			<?php if ($p->post_name == 'directorio') : ?>
-			<?php foreach($types as $type) : ?>
+			<?php foreach((array) $types as $type) : ?>
 				<li data-href="<?php echo add_query_arg('center-type', $type->slug, $root_url); ?>">
 				<?php echo $type->name; ?></li>
 			<?php endforeach; ?>

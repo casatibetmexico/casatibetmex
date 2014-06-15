@@ -4,6 +4,10 @@ var jq = jQuery;
 // Global variable to prevent multiple AJAX requests
 var bp_ajax_request = null;
 
+// Global variables to temporarly store newest activities
+var newest_activities = '';
+var activity_last_recorded  = 0;
+
 jq(document).ready( function() {
 	/**** Page Load Actions *******************************************************/
 
@@ -17,28 +21,30 @@ jq(document).ready( function() {
 	bp_init_activity();
 
 	/* Object filter and scope set. */
-	var objects = [ 'members', 'groups', 'blogs', 'forums' ];
+	var objects = [ 'members', 'groups', 'blogs', 'forums', 'group_members' ];
 	bp_init_objects( objects );
 
 	/* @mention Compose Scrolling */
-	if ( jq.query.get('r') && jq('#whats-new').length ) {
+	var $whats_new = jq('#whats-new');
+	if ( jq.query.get('r') && $whats_new.length ) {
 		jq('#whats-new-options').animate({
 			height:'40px'
 		});
 		jq("#whats-new-form textarea").animate({
 			height:'50px'
 		});
-		jq.scrollTo( jq('#whats-new'), 500, {
+		jq.scrollTo( $whats_new, 500, {
 			offset:-125,
 			easing:'easeOutQuad'
 		} );
-		jq('#whats-new').focus();
+		var whats_new_content = $whats_new.val();
+		$whats_new.val('').focus().val(whats_new_content);
 	}
 
 	/**** Activity Posting ********************************************************/
 
 	/* Textarea focus */
-	jq('#whats-new').focus( function(){
+	$whats_new.focus( function(){
 		jq("#whats-new-options").animate({
 			height:'40px'
 		});
@@ -46,12 +52,48 @@ jq(document).ready( function() {
 			height:'50px'
 		});
 		jq("#aw-whats-new-submit").prop("disabled", false);
+
+		var $whats_new_form = jq("form#whats-new-form");
+		if ( $whats_new_form.hasClass("submitted") ) {
+			$whats_new_form.removeClass("submitted");
+		}
+
+		// Return to the 'All Members' tab and 'Everything' filter,
+		// to avoid inconsistencies with the heartbeat integration
+		var $activity_all = jq( '#activity-all' );
+		if ( $activity_all.length  ) {
+			if ( ! $activity_all.hasClass( 'selected' ) ) {
+				// reset to everyting
+				jq( '#activity-filter-select select' ).val( '-1' );
+				$activity_all.children( 'a' ).trigger( "click" );
+			} else if ( '-1' != jq( '#activity-filter-select select' ).val() ) {
+				jq( '#activity-filter-select select' ).val( '-1' );
+				jq( '#activity-filter-select select' ).trigger( 'change' );
+			}
+		}
+	});
+
+	/* On blur, shrink if it's empty */
+	$whats_new.blur( function(){
+		if ( document.activeElement != this ) {
+			if (!this.value.match(/\S+/)) {
+				this.value = "";
+				jq("#whats-new-options").animate({
+					height:'40px'
+				});
+				jq("form#whats-new-form textarea").animate({
+					height:'20px'
+				});
+				jq("#aw-whats-new-submit").prop("disabled", true);
+			}
+		}
 	});
 
 	/* New posts */
 	jq("#aw-whats-new-submit").on( 'click', function() {
+		var last_date_recorded = 0;
 		var button = jq(this);
-		var form = button.parent().parent().parent().parent();
+		var form = button.closest("form#whats-new-form");
 
 		form.children().each( function() {
 			if ( jq.nodeName(this, "textarea") || jq.nodeName(this, "input") )
@@ -62,11 +104,29 @@ jq(document).ready( function() {
 		jq('div.error').remove();
 		button.addClass('loading');
 		button.prop('disabled', true);
+		form.addClass("submitted");
 
 		/* Default POST values */
 		var object = '';
 		var item_id = jq("#whats-new-post-in").val();
 		var content = jq("#whats-new").val();
+		var firstrow = jq( '#buddypress ul.activity-list li' ).first();
+		var activity_row = firstrow;
+		var timestamp = null;
+
+		// Checks if at least one activity exists
+		if ( firstrow.length ) {
+
+			if ( activity_row.hasClass( 'load-newest' ) ) {
+				activity_row = firstrow.next();
+			}
+			
+			timestamp = activity_row.prop( 'class' ).match( /date-recorded-([0-9]+)/ );
+		}
+ 		
+ 		if ( timestamp ) {
+			last_date_recorded = timestamp[1];
+		}
 
 		/* Set object for non-profile posts */
 		if ( item_id > 0 ) {
@@ -75,11 +135,12 @@ jq(document).ready( function() {
 
 		jq.post( ajaxurl, {
 			action: 'post_update',
-			'cookie': encodeURIComponent(document.cookie),
+			'cookie': bp_get_cookies(),
 			'_wpnonce_post_update': jq("#_wpnonce_post_update").val(),
 			'content': content,
 			'object': object,
 			'item_id': item_id,
+			'since': last_date_recorded,
 			'_bp_as_nonce': jq('#_bp_as_nonce').val() || ''
 		},
 		function(response) {
@@ -101,8 +162,13 @@ jq(document).ready( function() {
 					jq("div.activity").append( '<ul id="activity-stream" class="activity-list item-list">' );
 				}
 
+				if ( firstrow.hasClass( 'load-newest' ) )
+					firstrow.remove();
+
 				jq("#activity-stream").prepend(response);
-				jq("#activity-stream li:first").addClass('new-update');
+
+				if ( ! last_date_recorded )
+					jq("#activity-stream li:first").addClass('new-update just-posted');
 
 				if ( 0 != jq("#latest-update").length ) {
 					var l = jq("#activity-stream li.new-update .activity-content .activity-inner p").html();
@@ -125,6 +191,10 @@ jq(document).ready( function() {
 				jq("li.new-update").hide().slideDown( 300 );
 				jq("li.new-update").removeClass( 'new-update' );
 				jq("#whats-new").val('');
+
+				// reset vars to get newest activities
+				newest_activities = '';
+				activity_last_recorded  = 0;
 			}
 
 			jq("#whats-new-options").animate({
@@ -195,7 +265,7 @@ jq(document).ready( function() {
 
 			jq.post( ajaxurl, {
 				action: 'activity_mark_' + type,
-				'cookie': encodeURIComponent(document.cookie),
+				'cookie': bp_get_cookies(),
 				'id': parent_id
 			},
 			function(response) {
@@ -233,7 +303,7 @@ jq(document).ready( function() {
 				}
 
 				if ( 'activity-favorites' == jq( '.item-list-tabs li.selected').attr('id') )
-					target.parent().parent().parent().slideUp(100);
+					target.closest( '.activity-item' ).slideUp( 100 );
 			});
 
 			return false;
@@ -245,6 +315,7 @@ jq(document).ready( function() {
 			var id        = li.attr('id').substr( 9, li.attr('id').length );
 			var link_href = target.attr('href');
 			var nonce     = link_href.split('_wpnonce=');
+			var timestamp = li.prop( 'class' ).match( /date-recorded-([0-9]+)/ );
 
 			nonce = nonce[1];
 
@@ -252,7 +323,7 @@ jq(document).ready( function() {
 
 			jq.post( ajaxurl, {
 				action: 'delete_activity',
-				'cookie': encodeURIComponent(document.cookie),
+				'cookie': bp_get_cookies(),
 				'id': id,
 				'_wpnonce': nonce
 			},
@@ -263,6 +334,12 @@ jq(document).ready( function() {
 					li.children('#message').hide().fadeIn(300);
 				} else {
 					li.slideUp(300);
+
+					// reset vars to get newest activities
+					if ( timestamp && activity_last_recorded == timestamp[1] ) {
+						newest_activities = '';
+						activity_last_recorded  = 0;
+					}
 				}
 			});
 
@@ -271,7 +348,8 @@ jq(document).ready( function() {
 
 		// Spam activity stream items
 		if ( target.hasClass( 'spam-activity' ) ) {
-			var li = target.parents( 'div.activity ul li' );
+			var li        = target.parents( 'div.activity ul li' );
+			var timestamp = li.prop( 'class' ).match( /date-recorded-([0-9]+)/ );
 			target.addClass( 'loading' );
 
 			jq.post( ajaxurl, {
@@ -287,6 +365,11 @@ jq(document).ready( function() {
 					li.children( '#message' ).hide().fadeIn(300);
 				} else {
 					li.slideUp( 300 );
+					// reset vars to get newest activities
+					if ( timestamp && activity_last_recorded == timestamp[1] ) {
+						newest_activities = '';
+						activity_last_recorded  = 0;
+					}
 				}
 			});
 
@@ -304,10 +387,17 @@ jq(document).ready( function() {
 
 			var oldest_page = ( jq.cookie('bp-activity-oldestpage') * 1 ) + 1;
 
+			var just_posted = [];
+
+			jq('.activity-list li.just-posted').each( function(){
+				just_posted.push( jq(this).attr('id').replace( 'activity-','' ) );
+			});
+
 			jq.post( ajaxurl, {
 				action: 'activity_get_older_updates',
-				'cookie': encodeURIComponent(document.cookie),
-				'page': oldest_page
+				'cookie': bp_get_cookies(),
+				'page': oldest_page,
+				'exclude_just_posted': just_posted.join(',')
 			},
 			function(response)
 			{
@@ -322,10 +412,38 @@ jq(document).ready( function() {
 
 			return false;
 		}
+
+		/* Load newest updates at the top of the list */
+		if ( target.parent().hasClass('load-newest') ) {
+
+			event.preventDefault();
+
+			target.parent().hide();
+
+			/** 
+			 * If a plugin is updating the recorded_date of an activity 
+			 * it will be loaded as a new one. We need to look in the
+			 * stream and eventually remove similar ids to avoid "double".
+			 */
+			activity_html = jq.parseHTML( newest_activities );
+			
+			jq.each( activity_html, function( i, el ){
+				if( 'LI' == el.nodeName && jq(el).hasClass( 'just-posted' ) ) {
+					if( jq( '#' + jq(el).attr( 'id' ) ).length )
+						jq( '#' + jq(el).attr( 'id' ) ).remove();
+				}
+			} );
+
+			// Now the stream is cleaned, prepend newest
+			jq( '#buddypress ul.activity-list' ).prepend( newest_activities );
+
+			// reset the newest activities now they're displayed
+			newest_activities = '';
+		}
 	});
 
 	// Activity "Read More" links
-	jq('.activity-read-more a').on('click', function(event) {
+	jq('div.activity').on('click', '.activity-read-more a', function(event) {
 		var target = jq(event.target);
 		var link_id = target.parent().attr('id').split('-');
 		var a_id = link_id[3];
@@ -422,7 +540,7 @@ jq(document).ready( function() {
 
 			var ajaxdata = {
 				action: 'new_activity_comment',
-				'cookie': encodeURIComponent(document.cookie),
+				'cookie': bp_get_cookies(),
 				'_wpnonce_new_activity_comment': jq("#_wpnonce_new_activity_comment").val(),
 				'comment_id': comment_id,
 				'form_id': form_id[2],
@@ -443,26 +561,34 @@ jq(document).ready( function() {
 				if ( response[0] + response[1] == '-1' ) {
 					form.append( jq( response.substr( 2, response.length ) ).hide().fadeIn( 200 ) );
 				} else {
+					var activity_comments = form.parent();
 					form.fadeOut( 200, function() {
-						if ( 0 == form.parent().children('ul').length ) {
-							if ( form.parent().hasClass('activity-comments') ) {
-								form.parent().prepend('<ul></ul>');
+						if ( 0 == activity_comments.children('ul').length ) {
+							if ( activity_comments.hasClass('activity-comments') ) {
+								activity_comments.prepend('<ul></ul>');
 							} else {
-								form.parent().append('<ul></ul>');
+								activity_comments.append('<ul></ul>');
 							}
 						}
 
 						/* Preceeding whitespace breaks output with jQuery 1.9.0 */
 						var the_comment = jq.trim( response );
 
-						form.parent().children('ul').append( jq( the_comment ).hide().fadeIn( 200 ) );
+						activity_comments.children('ul').append( jq( the_comment ).hide().fadeIn( 200 ) );
 						form.children('textarea').val('');
-						form.parent().parent().addClass('has-comments');
+						activity_comments.parent().addClass('has-comments');
 					} );
 					jq( '#' + form.attr('id') + ' textarea').val('');
 
 					/* Increase the "Reply (X)" button count */
 					jq('#activity-' + form_id[2] + ' a.acomment-reply span').html( Number( jq('#activity-' + form_id[2] + ' a.acomment-reply span').html() ) + 1 );
+
+					// Increment the 'Show all x comments' string, if present
+					var show_all_a = activity_comments.find('.show-all').find('a');
+					if ( show_all_a ) {
+						var new_count = jq('li#activity-' + form_id[2] + ' a.acomment-reply span').html();
+						show_all_a.html( BP_DTheme.show_x_comments.replace( '%d', new_count ) );
+					}
 				}
 
 				jq(target).prop("disabled", false);
@@ -495,7 +621,7 @@ jq(document).ready( function() {
 
 			jq.post( ajaxurl, {
 				action: 'delete_activity_comment',
-				'cookie': encodeURIComponent(document.cookie),
+				'cookie': bp_get_cookies(),
 				'_wpnonce': nonce,
 				'id': comment_id
 			},
@@ -510,12 +636,20 @@ jq(document).ready( function() {
 						if ( !jq(this).is(':hidden') )
 							child_count++;
 					});
-					comment_li.fadeOut(200);
+					comment_li.fadeOut(200, function() {
+						comment_li.remove();
+					});
 
 					/* Decrease the "Reply (X)" button count */
 					var count_span = jq('#' + comment_li.parents('#activity-stream > li').attr('id') + ' a.acomment-reply span');
 					var new_count = count_span.html() - ( 1 + child_count );
 					count_span.html(new_count);
+
+					// Change the 'Show all x comments' text
+					var show_all_a = comment_li.siblings('.show-all').find('a');
+					if ( show_all_a ) {
+						show_all_a.html( BP_DTheme.show_x_comments.replace( '%d', new_count ) );
+					}
 
 					/* If that was the last comment for the item, remove the has-comments class to clean up the styling */
 					if ( 0 == new_count ) {
@@ -584,7 +718,7 @@ jq(document).ready( function() {
 			return false;
 		}
 
-		// Canceling an activity comment	
+		// Canceling an activity comment
 		if ( target.hasClass( 'ac-reply-cancel' ) ) {
 			jq(target).closest('.ac-form').slideUp( 200 );
 			return false;
@@ -618,7 +752,7 @@ jq(document).ready( function() {
 	/**** Directory Search ****************************************************/
 
 	/* The search form on all directory pages */
-	jq('.dir-search').on( 'click', function(event) {
+	jq( '.dir-search, .groups-members-search' ).on( 'click', function(event) {
 		if ( jq(this).hasClass('no-ajax') )
 			return;
 
@@ -627,8 +761,15 @@ jq(document).ready( function() {
 		if ( target.attr('type') == 'submit' ) {
 			var css_id = jq('.item-list-tabs li.selected').attr('id').split( '-' );
 			var object = css_id[0];
+			var template = null;
 
-			bp_filter_request( object, jq.cookie('bp-' + object + '-filter'), jq.cookie('bp-' + object + '-scope') , 'div.' + object, target.parent().children('label').children('input').val(), 1, jq.cookie('bp-' + object + '-extras') );
+			// The Group Members page specifies its own template
+			if ( 'members' == object && 'groups' == css_id[1] ) {
+				object = 'group_members';
+				template = 'groups/single/members';
+			}
+
+			bp_filter_request( object, jq.cookie('bp-' + object + '-filter'), jq.cookie('bp-' + object + '-scope') , 'div.' + object, target.parent().children('label').children('input').val(), 1, jq.cookie('bp-' + object + '-extras'), null, template );
 
 			return false;
 		}
@@ -672,14 +813,28 @@ jq(document).ready( function() {
 		var scope = css_id[1];
 		var filter = jq(this).val();
 		var search_terms = false;
+		var template = null;
 
 		if ( jq('.dir-search input').length )
 			search_terms = jq('.dir-search input').val();
 
+		// The Group Members page has a different selector for its
+		// search terms box
+		var $gm_search = jq( '.groups-members-search input' );
+		if ( $gm_search.length ) {
+			search_terms = $gm_search.val();
+		}
+
+		// On the Groups Members page, we specify a template
+		if ( 'members' == object && 'groups' == scope ) {
+			object = 'group_members';
+			template = 'groups/single/members';
+		}
+
 		if ( 'friends' == object )
 			object = 'members';
 
-		bp_filter_request( object, filter, scope, 'div.' + object, search_terms, 1, jq.cookie('bp-' + object + '-extras') );
+		bp_filter_request( object, filter, scope, 'div.' + object, search_terms, 1, jq.cookie('bp-' + object + '-extras'), null, template );
 
 		return false;
 	});
@@ -700,22 +855,45 @@ jq(document).ready( function() {
 			else
 				var el = jq('li.filter select');
 
-			var page_number = 1;
 			var css_id = el.attr('id').split( '-' );
 			var object = css_id[0];
 			var search_terms = false;
+			var pagination_id = jq(target).closest('.pagination-links').attr('id');
+			var template = null;
 
+			var page_number = target.attr('href').split( '=' );
+			page_number = page_number[1];
+
+			// Search terms
 			if ( jq('div.dir-search input').length )
 				search_terms = jq('.dir-search input').val();
 
-			if ( jq(target).hasClass('next') )
-				var page_number = Number( jq('.pagination span.current').html() ) + 1;
-			else if ( jq(target).hasClass('prev') )
-				var page_number = Number( jq('.pagination span.current').html() ) - 1;
-			else
-				var page_number = Number( jq(target).html() );
+			// The Group Members page has a different selector for
+			// its search terms box
+			var $gm_search = jq( '.groups-members-search input' );
+			if ( $gm_search.length ) {
+				search_terms = $gm_search.val();
+			}
 
-			bp_filter_request( object, jq.cookie('bp-' + object + '-filter'), jq.cookie('bp-' + object + '-scope'), 'div.' + object, search_terms, page_number, jq.cookie('bp-' + object + '-extras') );
+			// On the Groups Members page, we specify a template
+			if ( 'members' == object && 'groups' == css_id[1] ) {
+				object = 'group_members';
+				template = 'groups/single/members';
+			}
+
+			// On the Admin > Requests page, we need to reset the object,
+			// since "admin" isn't specific enough
+			if ( 'admin' == object && jq( 'body' ).hasClass( 'membership-requests' ) ) {
+				object = 'requests';
+			}
+
+			if ( pagination_id.indexOf( 'pag-bottom' ) !== -1 ) {
+				var caller = 'pag-bottom';
+			} else {
+				var caller = null;
+			}
+
+			bp_filter_request( object, jq.cookie('bp-' + object + '-filter'), jq.cookie('bp-' + object + '-scope'), 'div.' + object, search_terms, page_number, jq.cookie('bp-' + object + '-extras'), caller, template );
 
 			return false;
 		}
@@ -757,45 +935,72 @@ jq(document).ready( function() {
 	/** Invite Friends Interface ****************************************/
 
 	/* Select a user from the list of friends and add them to the invite list */
-	jq("#invite-list input").on( 'click', function() {
+	jq("#send-invite-form").on( 'click', '#invite-list input', function() {
+		// invites-loop template contains a div with the .invite class
+		// We use the existence of this div to check for old- vs new-
+		// style templates.
+		var invites_new_template = jq( "#send-invite-form > .invite" ).length;
+
 		jq('.ajax-loader').toggle();
+
+		// Dim the form until the response arrives
+		if ( invites_new_template ) {
+			jq( this ).parents( 'ul' ).find( 'input' ).prop( 'disabled', true );
+		}
 
 		var friend_id = jq(this).val();
 
-		if ( jq(this).prop('checked') == true )
+		if ( jq(this).prop('checked') == true ) {
 			var friend_action = 'invite';
-		else
+		} else {
 			var friend_action = 'uninvite';
+		}
 
-		jq('.item-list-tabs li.selected').addClass('loading');
+		if ( ! invites_new_template ) {
+			jq( '.item-list-tabs li.selected' ).addClass( 'loading' );
+		}
 
 		jq.post( ajaxurl, {
 			action: 'groups_invite_user',
 			'friend_action': friend_action,
-			'cookie': encodeURIComponent(document.cookie),
+			'cookie': bp_get_cookies(),
 			'_wpnonce': jq("#_wpnonce_invite_uninvite_user").val(),
 			'friend_id': friend_id,
 			'group_id': jq("#group_id").val()
 		},
 		function(response)
 		{
-			if ( jq("#message") )
+			if ( jq("#message") ) {
 				jq("#message").hide();
-
-			jq('.ajax-loader').toggle();
-
-			if ( friend_action == 'invite' ) {
-				jq('#friend-list').append(response);
-			} else if ( friend_action == 'uninvite' ) {
-				jq('#friend-list li#uid-' + friend_id).remove();
 			}
 
-			jq('.item-list-tabs li.selected').removeClass('loading');
+			if ( invites_new_template ) {
+				// With new-style templates, we refresh the
+				// entire list
+				bp_filter_request( 'invite', 'bp-invite-filter', 'bp-invite-scope', 'div.invite', false, 1, '', '', '' );
+			} else {
+				// Old-style templates manipulate only the
+				// single invitation element
+				jq('.ajax-loader').toggle();
+
+				if ( friend_action == 'invite' ) {
+					jq('#friend-list').append(response);
+				} else if ( friend_action == 'uninvite' ) {
+					jq('#friend-list li#uid-' + friend_id).remove();
+				}
+
+				jq('.item-list-tabs li.selected').removeClass('loading');
+			}
 		});
 	});
 
 	/* Remove a user from the list of users to invite to a group */
-	jq("#friend-list").on('click', 'li a.remove', function() {
+	jq("#send-invite-form").on('click', 'a.remove', function() {
+		// invites-loop template contains a div with the .invite class
+		// We use the existence of this div to check for old- vs new-
+		// style templates.
+		var invites_new_template = jq("#send-invite-form > .invite").length;
+
 		jq('.ajax-loader').toggle();
 
 		var friend_id = jq(this).attr('id');
@@ -805,43 +1010,62 @@ jq(document).ready( function() {
 		jq.post( ajaxurl, {
 			action: 'groups_invite_user',
 			'friend_action': 'uninvite',
-			'cookie': encodeURIComponent(document.cookie),
+			'cookie': bp_get_cookies(),
 			'_wpnonce': jq("#_wpnonce_invite_uninvite_user").val(),
 			'friend_id': friend_id,
 			'group_id': jq("#group_id").val()
 		},
 		function(response)
 		{
-			jq('.ajax-loader').toggle();
-			jq('#friend-list #uid-' + friend_id).remove();
-			jq('#invite-list #f-' + friend_id).prop('checked', false);
+			if ( invites_new_template ) {
+				// With new-style templates, we refresh the
+				// entire list
+				bp_filter_request( 'invite', 'bp-invite-filter', 'bp-invite-scope', 'div.invite', false, 1, '', '', '' );
+			} else {
+				// Old-style templates manipulate only the
+				// single invitation element
+				jq('.ajax-loader').toggle();
+				jq('#friend-list #uid-' + friend_id).remove();
+				jq('#invite-list #f-' + friend_id).prop('checked', false);
+			}
 		});
 
 		return false;
 	});
 
 	/** Profile Visibility Settings *********************************/
-	jq('.field-visibility-settings').hide();
-	jq('.visibility-toggle-link').on( 'click', function() {
-		var toggle_div = jq(this).parent();
+	jq( '.visibility-toggle-link' ).on( 'click', function( event ) {
+		event.preventDefault();
 
-		jq(toggle_div).fadeOut( 600, function(){
-			jq(toggle_div).siblings('.field-visibility-settings').slideDown(400);
-		});
-
-		return false;
+		jq( this ).parent().hide()
+			.siblings( '.field-visibility-settings' ).show();
 	} );
 
-	jq('.field-visibility-settings-close').on( 'click', function() {
-		var settings_div = jq(this).parent();
+	jq( '.field-visibility-settings-close' ).on( 'click', function( event ) {
+		event.preventDefault();
 
-		jq(settings_div).slideUp( 400, function(){
-			jq(settings_div).siblings('.field-visibility-settings-toggle').fadeIn(800);
-		});
+		var settings_div = jq( this ).parent(),
+			vis_setting_text = settings_div.find( 'input:checked' ).parent().text();
 
-		return false;
+		settings_div.hide()
+			.siblings( '.field-visibility-settings-toggle' )
+				.children( '.current-visibility-level' ).text( vis_setting_text ).end()
+			.show();
 	} );
 
+	jq("#profile-edit-form input:not(:submit), #profile-edit-form textarea, #profile-edit-form select, #signup_form input:not(:submit), #signup_form textarea, #signup_form select").change( function() {
+		var shouldconfirm = true;
+
+		jq('#profile-edit-form input:submit, #signup_form input:submit').on( 'click', function() {
+			shouldconfirm = false;
+		});
+
+		window.onbeforeunload = function(e) {
+			if ( shouldconfirm ) {
+				return BP_DTheme.unsaved_changes;
+			}
+		};
+	});
 
 	/** Friendship Requests **************************************/
 
@@ -872,7 +1096,7 @@ jq(document).ready( function() {
 
 		jq.post( ajaxurl, {
 			action: action,
-			'cookie': encodeURIComponent(document.cookie),
+			'cookie': bp_get_cookies(),
 			'id': id,
 			'_wpnonce': nonce
 		},
@@ -899,7 +1123,7 @@ jq(document).ready( function() {
 	});
 
 	/* Add / Remove friendship buttons */
-	jq('#members-dir-list').on('click', '.friendship-button a', function() {
+	jq( '#members-dir-list, #members-group-list' ).on('click', '.friendship-button a', function() {
 		jq(this).parent().addClass('loading');
 		var fid = jq(this).attr('id');
 		fid = fid.split('-');
@@ -914,7 +1138,7 @@ jq(document).ready( function() {
 
 		jq.post( ajaxurl, {
 			action: 'addremove_friend',
-			'cookie': encodeURIComponent(document.cookie),
+			'cookie': bp_get_cookies(),
 			'fid': fid,
 			'_wpnonce': nonce
 		},
@@ -949,6 +1173,13 @@ jq(document).ready( function() {
 
 	/** Group Join / Leave Buttons **************************************/
 
+	// Confirmation when clicking Leave Group in group headers
+	jq('#buddypress').on('click', '.group-button .leave-group', function() {
+		if ( false == confirm( BP_DTheme.leave_group_confirm ) ) {
+			return false;
+		}
+	});
+
 	jq('#groups-dir-list').on('click', '.group-button a', function() {
 		var gid = jq(this).parent().attr('id');
 		gid = gid.split('-');
@@ -961,9 +1192,15 @@ jq(document).ready( function() {
 
 		var thelink = jq(this);
 
+		// Leave Group confirmation within directories - must intercept
+		// AJAX request
+		if ( thelink.hasClass( 'leave-group' ) && false == confirm( BP_DTheme.leave_group_confirm ) ) {
+			return false;
+		}
+
 		jq.post( ajaxurl, {
 			action: 'joinleave_group',
-			'cookie': encodeURIComponent(document.cookie),
+			'cookie': bp_get_cookies(),
 			'gid': gid,
 			'_wpnonce': nonce
 		},
@@ -971,14 +1208,41 @@ jq(document).ready( function() {
 		{
 			var parentdiv = thelink.parent();
 
-			if ( !jq('body.directory').length )
+			// user groups page
+			if ( ! jq('body.directory').length ) {
 				location.href = location.href;
-			else {
+
+			// groups directory
+			} else {
 				jq(parentdiv).fadeOut(200,
 					function() {
 						parentdiv.fadeIn(200).html(response);
+
+						var mygroups = jq('#groups-personal span');
+						var add      = 1;
+
+						if( thelink.hasClass( 'leave-group' ) ) {
+							// hidden groups slide up
+							if ( parentdiv.hasClass( 'hidden' ) ) {
+								parentdiv.closest('li').slideUp( 200 );
+							}
+
+							add = 0;
+						} else if ( thelink.hasClass( 'request-membership' ) ) {
+							add = false;
+						}
+
+						// change the "My Groups" value
+						if ( mygroups.length && add !== false ) {
+							if ( add ) {
+								mygroups.text( ( mygroups.text() >> 0 ) + 1 );
+							} else {
+								mygroups.text( ( mygroups.text() >> 0 ) - 1 );
+							}
+						}
+
 					}
-					);
+				);
 			}
 		});
 		return false;
@@ -986,7 +1250,7 @@ jq(document).ready( function() {
 
 	/** Button disabling ************************************************/
 
-	jq('.pending').click(function() {
+	jq('#buddypress').on( 'click', '.pending', function() {
 		return false;
 	});
 
@@ -1020,7 +1284,7 @@ jq(document).ready( function() {
 
 			jq.post( ajaxurl, {
 				action: 'messages_send_reply',
-				'cookie': encodeURIComponent(document.cookie),
+				'cookie': bp_get_cookies(),
 				'_wpnonce': jq("#send_message_nonce").val(),
 
 				'content': jq("#message_content").val(),
@@ -1104,36 +1368,38 @@ jq(document).ready( function() {
 	});
 
 	/* Selecting unread and read messages in inbox */
-	jq("#message-type-select").change(
-		function() {
-			var selection = jq("#message-type-select").val();
-			var checkboxes = jq("td input[type='checkbox']");
-			checkboxes.each( function(i) {
-				checkboxes[i].checked = "";
-			});
+	jq( 'body.messages #item-body div.messages' ).on( 'change', '#message-type-select', function() {
+		var selection = this.value;
+		var checkboxes = jq( "td input[type='checkbox']" );
 
-			switch(selection) {
-				case 'unread':
-					var checkboxes = jq("tr.unread td input[type='checkbox']");
-					break;
-				case 'read':
-					var checkboxes = jq("tr.read td input[type='checkbox']");
-					break;
-			}
-			if ( selection != '' ) {
-				checkboxes.each( function(i) {
-					checkboxes[i].checked = "checked";
-				});
-			} else {
-				checkboxes.each( function(i) {
-					checkboxes[i].checked = "";
-				});
-			}
+		checkboxes.each( function(i) {
+			checkboxes[i].checked = "";
+		});
+
+		var checked_value = "checked";
+		switch ( selection ) {
+			case 'unread' :
+				checkboxes = jq("tr.unread td input[type='checkbox']");
+				break;
+			case 'read' :
+				checkboxes = jq("tr.read td input[type='checkbox']");
+				break;
+			case '' :
+				checked_value = "";
+				break;
 		}
-	);
+
+		checkboxes.each( function(i) {
+			checkboxes[i].checked = checked_value;
+		});
+	});
 
 	/* Bulk delete messages */
-	jq("#delete_inbox_messages, #delete_sentbox_messages").on( 'click', function() {
+	jq( 'body.messages #item-body div.messages' ).on( 'click', '.messages-options-nav a', function() {
+		if ( -1 == jq.inArray( this.id, Array( 'delete_sentbox_messages', 'delete_inbox_messages' ) ) ) {
+			return;
+		}
+
 		checkboxes_tosend = '';
 		checkboxes = jq("#message-threads tr td input[type='checkbox']");
 
@@ -1160,14 +1426,19 @@ jq(document).ready( function() {
 				jq('#message-threads').before( '<div id="message" class="updated"><p>' + response + '</p></div>' );
 
 				jq(checkboxes).each( function(i) {
-					if( jq(this).is(':checked') )
+					if( jq(this).is(':checked') ) {
+						// We need to uncheck because message is only hidden
+						// Otherwise, AJAX will be fired again with same data
+						jq(this).attr( 'checked', false );
 						jq(this).parent().parent().fadeOut(150);
+					}
 				});
 			}
 
 			jq('#message').hide().slideDown(150);
 			jq("#delete_inbox_messages, #delete_sentbox_messages").removeClass('loading');
 		});
+
 		return false;
 	});
 
@@ -1227,11 +1498,63 @@ jq(document).ready( function() {
 			} );
 		});
 	});
-	
+
 	/* if js is enabled then replace the no-js class by a js one */
 	if( jq('body').hasClass('no-js') )
 		jq('body').attr('class', jq('body').attr('class').replace( /no-js/,'js' ) );
+
+	/** Activity HeartBeat ************************************************/
+
+	// Set the interval and the namespace event
+	if ( typeof wp != 'undefined' && typeof wp.heartbeat != 'undefined' && typeof BP_DTheme.pulse != 'undefined' ) {
+
+		wp.heartbeat.interval( Number( BP_DTheme.pulse ) );
+
+		jq.fn.extend({
+			'heartbeat-send': function() {
+			return this.bind( 'heartbeat-send.buddypress' );
+	        },
+	    });
+
+	}
+
+	// Set the last id to request after
+	jq( document ).on( 'heartbeat-send.buddypress', function( e, data ) {
 		
+		firstrow = 0;
+
+		// First row is default latest activity id
+		if ( jq( '#buddypress ul.activity-list li' ).first().prop( 'id' ) ) {
+			// getting the timestamp
+			timestamp = jq( '#buddypress ul.activity-list li' ).first().prop( 'class' ).match( /date-recorded-([0-9]+)/ );
+
+			if ( timestamp ) {
+				firstrow = timestamp[1];
+			}
+		}
+
+		if ( 0 == activity_last_recorded || Number( firstrow ) > activity_last_recorded )
+			activity_last_recorded = Number( firstrow );
+
+		data['bp_activity_last_recorded'] = activity_last_recorded;
+	});
+
+	// Increment newest_activities and activity_last_recorded if data has been returned
+	jq( document ).on( 'heartbeat-tick', function( e, data ) {
+
+		// Only proceed if we have newest activities
+		if ( ! data['bp_activity_newest_activities'] ) {
+			return;
+		}
+
+		newest_activities = data['bp_activity_newest_activities']['activities'] + newest_activities;
+		activity_last_recorded  = Number( data['bp_activity_newest_activities']['last_recorded'] );
+
+		if ( jq( '#buddypress ul.activity-list li' ).first().hasClass( 'load-newest' ) )
+			return;
+
+		jq( '#buddypress ul.activity-list' ).prepend( '<li class="load-newest"><a href="#newest">' + BP_DTheme.newest + '</a></li>' );
+	});
 });
 
 /* Setup activity scope and filter based on the current cookie settings. */
@@ -1269,7 +1592,7 @@ function bp_init_objects(objects) {
 }
 
 /* Filter the current content list (groups/members/blogs/topics) */
-function bp_filter_request( object, filter, scope, target, search_terms, page, extras ) {
+function bp_filter_request( object, filter, scope, target, search_terms, page, extras, caller, template ) {
 	if ( 'activity' == object )
 		return false;
 
@@ -1298,28 +1621,43 @@ function bp_filter_request( object, filter, scope, target, search_terms, page, e
 	jq('.item-list-tabs li.selected').addClass('loading');
 	jq('.item-list-tabs select option[value="' + filter + '"]').prop( 'selected', true );
 
-	if ( 'friends' == object )
+	if ( 'friends' == object || 'group_members' == object ) {
 		object = 'members';
+	}
 
 	if ( bp_ajax_request )
 		bp_ajax_request.abort();
 
 	bp_ajax_request = jq.post( ajaxurl, {
 		action: object + '_filter',
-		'cookie': encodeURIComponent(document.cookie),
+		'cookie': bp_get_cookies(),
 		'object': object,
 		'filter': filter,
 		'search_terms': search_terms,
 		'scope': scope,
 		'page': page,
-		'extras': extras
+		'extras': extras,
+		'template': template
 	},
 	function(response)
 	{
-		jq(target).fadeOut( 100, function() {
-			jq(this).html(response);
-			jq(this).fadeIn(100);
-		});
+		/* animate to top if called from bottom pagination */
+		if ( caller == 'pag-bottom' && jq('#subnav').length ) {
+			var top = jq('#subnav').parent();
+			jq('html,body').animate({scrollTop: top.offset().top}, 'slow', function() {
+				jq(target).fadeOut( 100, function() {
+					jq(this).html(response);
+					jq(this).fadeIn(100);
+			 	});
+			});
+
+		} else {
+			jq(target).fadeOut( 100, function() {
+				jq(this).html(response);
+				jq(this).fadeIn(100);
+		 	});
+		}
+
 		jq('.item-list-tabs li.selected').removeClass('loading');
 	});
 }
@@ -1354,7 +1692,7 @@ function bp_activity_request(scope, filter) {
 
 	bp_ajax_request = jq.post( ajaxurl, {
 		action: 'activity_widget_filter',
-		'cookie': encodeURIComponent(document.cookie),
+		'cookie': bp_get_cookies(),
 		'_wpnonce_activity_filter': jq("#_wpnonce_activity_filter").val(),
 		'scope': scope,
 		'filter': filter
@@ -1405,7 +1743,7 @@ function bp_legacy_theme_hide_comments() {
 				jq(this).toggle();
 
 				if ( !i )
-					jq(this).before( '<li class="show-all"><a href="#' + parent_li.attr('id') + '/show-all/" title="' + BP_DTheme.show_all_comments + '">' + BP_DTheme.show_all + ' ' + comment_count + ' ' + BP_DTheme.comments + '</a></li>' );
+					jq(this).before( '<li class="show-all"><a href="#' + parent_li.attr('id') + '/show-all/" title="' + BP_DTheme.show_all_comments + '">' + BP_DTheme.show_x_comments.replace( '%d', comment_count ) + '</a></li>' );
 			}
 		});
 
@@ -1428,24 +1766,58 @@ function checkAll() {
 	}
 }
 
-function clear(container) {
-	if( !document.getElementById(container) ) return;
+/**
+ * Deselects any select options or input options for the specified field element.
+ *
+ * @param {String} container HTML ID of the field
+ * @since BuddyPress (1.2.0)
+ */
+function clear( container ) {
+	container = document.getElementById( container );
+	if ( ! container ) {
+		return;
+	}
 
-	var container = document.getElementById(container);
+	var radioButtons = container.getElementsByTagName( 'INPUT' ),
+		options = container.getElementsByTagName( 'OPTION' ),
+		i       = 0;
 
-	if ( radioButtons = container.getElementsByTagName('INPUT') ) {
-		for(var i=0; i<radioButtons.length; i++) {
+	if ( radioButtons ) {
+		for ( i = 0; i < radioButtons.length; i++ ) {
 			radioButtons[i].checked = '';
 		}
 	}
 
-	if ( options = container.getElementsByTagName('OPTION') ) {
-		for(var i=0; i<options.length; i++) {
+	if ( options ) {
+		for ( i = 0; i < options.length; i++ ) {
 			options[i].selected = false;
 		}
 	}
+}
 
-	return;
+/* Returns a querystring of BP cookies (cookies beginning with 'bp-') */
+function bp_get_cookies() {
+	// get all cookies and split into an array
+	var allCookies   = document.cookie.split(";");
+
+	var bpCookies    = {};
+	var cookiePrefix = 'bp-';
+
+	// loop through cookies
+	for (var i = 0; i < allCookies.length; i++) {
+		var cookie    = allCookies[i];
+		var delimiter = cookie.indexOf("=");
+		var name      = jq.trim( unescape( cookie.slice(0, delimiter) ) );
+		var value     = unescape( cookie.slice(delimiter + 1) );
+
+		// if BP cookie, store it
+		if ( name.indexOf(cookiePrefix) == 0 ) {
+			bpCookies[name] = value;
+		}
+	}
+
+	// returns BP cookies as querystring
+	return encodeURIComponent( jq.param(bpCookies) );
 }
 
 /* ScrollTo plugin - just inline and minified */

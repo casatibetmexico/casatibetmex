@@ -11,7 +11,7 @@ for($i=0; $i<$rows; $i++) : ?>
 			<?php
 				$index = ($i*$cols)+$j;
 				$t = $ct_list[$index];
-			?>
+			?>	
 			<td><?php if ($t) : ?>
 			<div class="teacher secondary" data-href="<?php echo ct_get_permalink($t->ID); ?>">
 				<div class="info">

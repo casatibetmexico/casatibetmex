@@ -29,6 +29,8 @@ register_taxonomy('center-type',array('center'),array( 'hierarchical' => true, '
 
 register_taxonomy('region',array('center'),array( 'hierarchical' => true, 'label' => 'Región','show_ui' => true,'query_var' => false,'rewrite' => false, 'singular_label' => 'Región') );
 
+ct_get_current_center();
+
  
 }
 
@@ -155,7 +157,7 @@ function ct_ctr_meta_page_options($post) {
 	$show_menu = get_post_meta($post->ID, 'ct_page_show_menu', true);
 	$sections = array();
 	$sections[] = get_page_by_path('/nosotros');
-	$sections[] = get_page_by_path('/educacion');
+	$sections[] = get_page_by_path('/programa');
 ?>
 	<div id="ct_page_options">
 	<p><strong>Seccion:</strong><br />
@@ -216,18 +218,7 @@ function ct_ctr_meta_community($post) {
 
 function ct_ctr_meta_attach_to_center($post) {
 	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_ctr_noncename' );
-	$args = array('post_type'=>'center', 'order'=>'ASC', 'orderby'=>'title', 'nopaging'=>true,
-				  'tax_query'=>array(array(
-								'taxonomy' => 'center-type',
-								'field' => 'slug',
-								'terms' => 'sangha-sede'
-							),
-							array('taxonomy' => 'country',
-								'field' => 'slug',
-								'terms' => 'otra',
-								'operator' => 'NOT IN')
-							));
-	$q = new WP_Query($args);
+	$centers = ct_ctr_get_all_centers();
 	$center = get_post_meta($post->ID, 'ct_center', true);
 	
 	$u = wp_get_current_user();
@@ -235,13 +226,13 @@ function ct_ctr_meta_attach_to_center($post) {
 ?>
 	
 	<select id="ct_center" name="ct_center" style="width:100%;">
-		<option value="0">-- Elige un sede para esta contenido --</option>
-<?php foreach((array) $q->posts as $c) : ?>
+		<option value="0">Casa Tibet México (Nacional)</option>
+<?php foreach((array) $centers as $c) : ?>
 		<option value="<?php echo $c->ID; ?>"><?php echo $c->post_title; ?></option>
 <?php endforeach; ?>
 	</select>
 	<script type="text/javascript">
-		jQuery('#ct_center').val('<?php echo $center; ?>');
+		jQuery('#ct_center').val('<?php echo (int) $center; ?>');
 		<?php if (!current_user_can('administrator')) : ?>
 		jQuery('#ct_center').attr('disabled', "true");
 		<?php endif; ?>
@@ -259,15 +250,22 @@ function ct_ctr_meta_attach_to_center($post) {
 function ct_ctr_meta_info($post) {
 	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_ctr_noncename' );
 	$info = get_post_meta($post->ID, 'ct_center_info', true);
+	$active = get_option('ct_active_centers');
 ?>
-	<!--
-<b>Página de Internet:</b><br />
+	
+	<p><input id="is_active" type="checkbox" name="ct_center_active" value="1" />&nbsp; Activar este sede.</p>
+	
+	<b>Página de Internet:</b><br />
 	<input type="text" name="ct_center_info[website]" value="<?php echo $info['website']; ?>" style="width:100%;margin-bottom:5px;"/><br />
--->
 	<b>Facebook:</b><br />
 	<input type="text" name="ct_center_info[facebook]" value="<?php echo $info['facebook']; ?>" style="width:100%;margin-bottom:5px;"/><br />
 	<b>Twitter:</b><br />
 	<input type="text" name="ct_center_info[twitter]" value="<?php echo $info['twitter']; ?>" style="width:100%;margin-bottom:5px;"/><br />
+	<script type="text/javascript">
+		<?php if (in_array($post->ID, $active)) : ?>
+		jQuery('#is_active').attr('checked', true);
+		<?php endif; ?>
+	</script>
 <?php
 }
 
@@ -476,6 +474,20 @@ function ct_ctr_save_postdata( $post_id ) {
 	
 	
 	if ($post_type == 'center') {
+		
+		
+		$active_centers = get_option('ct_active_centers');
+		if (!$active_centers) $active_centers = array();
+			
+		if (isset($_POST['ct_center_active'])) {
+			$active_centers[] = $post_id;
+			array_unique($active_centers);
+		} else {
+			if(($key = array_search($post_id, $active_centers)) !== false) {
+			    unset($active_centers[$key]);
+			}
+		}
+		update_option('ct_active_centers', $active_centers);
 		
 		
 		if (isset($_POST['ct_center_info'])) {
@@ -728,23 +740,29 @@ function ct_ctr_remove_domainTheme($domain) {
 /** ADMIN CONTROL *************************************/
 
 function ct_ctr_posts_by_center($query) {
+
+	//return $query;
 	
-	if($query->is_admin && 
-	   !current_user_can('administrator') &&
-	   !current_user_can('editor')) {
+	if($query->is_admin && $query->is_main_query() &&
+	   !current_user_can('administrator') && 
+	   current_user_can('ct_coordinator')) {
 		global $user_ID;
 		$type = $query->query_vars['post_type'];
 		$center = get_user_meta($user_ID, 'ct_center', true); 
 		switch($type) {
 			default:
-				$query->set('meta_key', 'ct_center');
-       			$query->set('meta_value', $center);
+				$mq = ($query->query_vars['meta_query']) ? $query->query_vars['meta_query'] : array();
+				$mq[] = array('key'=>'ct_center',
+							  'value'=>$center,
+							  'type'=>'NUMERIC');
+				$query->set('meta_query', $mq);
 				break;
 		}
+		
 	}
 	return $query;
 }
-add_filter('pre_get_posts', 'ct_ctr_posts_by_center');
+add_filter('pre_get_posts', 'ct_ctr_posts_by_center', 10, 1);
 
 /* FILTERS *****************************************************/
 
@@ -794,17 +812,30 @@ function ct_ctr_archive_filter($args) {
 }
 add_filter('ct_archive-center', 'ct_ctr_archive_filter', 10, 1);
 
-function ct_ctr_query_args($args=array()) {
+function ct_ctr_query_args($args=array(), $digest=null) {
 	$center = ct_get_current_center();
+	if ($digest) {
+		$val = get_option('ct_active_centers');
+		$val[] = $center;
+	} else {
+		$val = array($center);
+	}
+	array_unique($val);
+	
 	//if ($center > 0) {
 		if (!$args['meta_query']) $args['meta_query'] = array();
-		$args['meta_query'][] = array('key'=>'ct_center', 'value'=>$center, 'type'=>'NUMERIC');	
+		$args['meta_query'][] = array('key'=>'ct_center', 'value'=>$val, 'compare'=>'IN');	
 	//}
     return $args;
 }
 add_filter('ct_query_args', 'ct_ctr_query_args', 10, 1);
 
 /** API FUNCTIONS ***************************************************/
+
+function ct_ctr_is_active($id) {
+	$centers = get_option('ct_active_centers');
+	return in_array($id, (array) $centers);
+}
 
 function ct_get_current_center($ob=false) {
 	global $current_center, $domainTheme;
@@ -813,11 +844,13 @@ function ct_get_current_center($ob=false) {
 					  'meta_key'=>'ct_center_domain', 
 					  'meta_value' => $domainTheme->currentdomain);
 		$q = new WP_Query($args);
+		$q->get_posts();
 		if ($q->post) {
 			$current_center = $q->post->ID;
 		} else {
 			$current_center = 0;
 		}
+		wp_reset_query();
 	}
 	return ($ob) ? get_post($current_center) : $current_center;
 }
@@ -884,6 +917,27 @@ function ct_query_args_for_center($center, $args) {
 	if (!$args['meta_query']) $args['meta_query'] = array();
 	$args['meta_query'][] = array('key'=>'ct_center', 'value'=>$center, 'type'=>'NUMERIC');
     return $args;
+}
+
+function ct_ctr_get_locations($user=false) {
+	return unserialize(get_post_meta(($user) ? ct_get_user_center() : ct_get_current_center(), 'ct_center_locations', true));
+}
+
+function ct_ctr_get_all_centers() {
+
+	$args = array('post_type'=>'center', 'order'=>'ASC', 'orderby'=>'title', 'nopaging'=>true,
+				  'tax_query'=>array(array(
+								'taxonomy' => 'center-type',
+								'field' => 'slug',
+								'terms' => 'sangha-sede'
+							),
+							array('taxonomy' => 'country',
+								'field' => 'slug',
+								'terms' => 'otra',
+								'operator' => 'NOT IN')
+							));
+	$q = new WP_Query($args);
+	return $q->posts;
 }
 
 

@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta name="viewport" content="width=1021" />
-<title><?php bloginfo('name'); ?><?php wp_title( '|', true, 'left' ); ?></title>
+<title><?php bloginfo('name'); ?> <?php wp_title( '|', true, 'left' ); ?></title>
 <?php wp_head();?>
 </head>
 <body>
 <div id="rm-container">
-	<div id="rm-header">
+	<div id="rm-header" <?php if (!is_front_page()) echo 'class="interior"'; ?>>
 		<div class="rm-content">
 			<?php get_template_part('inc', 'header'); ?>
 		</div>

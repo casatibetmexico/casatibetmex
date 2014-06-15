@@ -19,7 +19,7 @@ get_header();?>
 		<?php get_banners('programs', ct_query_args(array('slug'=>'programas'))); ?>
 	</div>
 	<?php ct_sidebar('archive', array('limit'=>5, 'title'=>__('Noticias'), 'href'=>ct_get_permalink('/noticias'), 
-					 	'post_type'=>'news', 'listing'=>'news')); ?>
+					 	'post_type'=>'news', 'listing'=>'news-main')); ?>
 	<?php ct_sidebar('latest-activity'); ?>
 </div>
 

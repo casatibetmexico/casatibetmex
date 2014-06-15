@@ -24,10 +24,12 @@ var ct = {
 		
 	},
 	goTo: function(url, full, target) {
-		if(target == '_blank') {
-			window.open(url);
-		} else {
-			document.location.href = (full) ? url : this.siteurl+url;
+		if (url != undefined) {
+			if(target == '_blank') {
+				window.open(url);
+			} else {
+				document.location.href = (full) ? url : this.siteurl+url;
+			}
 		}
 	},
 	
@@ -76,12 +78,24 @@ var ct = {
 				switch(action) {
 					case 'login':
 						item.click(function() {
-							ct.goTo('/login');
+							var href = jQuery(this).data('href');
+							if (href) {
+								ct.goTo(href, true);
+							} else {
+								var domain = jQuery(this).data('domain');
+								if (domain) {
+									ct.goTo(domain+'/login', true);
+								} else {
+									ct.goTo('/login');
+								}
+							}
+							
+							
 						});
 						break;
 					case 'register':
 						item.click(function() {
-							ct.goTo('/register');
+							ct.goTo(jQuery(this).data('href'), true);
 						});
 						break;
 					case 'groups':
@@ -96,6 +110,12 @@ var ct = {
 						});
 						break;
 					case 'logout':
+						var href = item.data('href');
+						item.click(function() {
+							ct.goTo(href, true);
+						});
+						break;
+					default:
 						var href = item.data('href');
 						item.click(function() {
 							ct.goTo(href, true);

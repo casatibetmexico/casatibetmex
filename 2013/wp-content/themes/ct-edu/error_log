@@ -1,0 +1,10 @@
+[19-Nov-2013 11:48:46] PHP Fatal error:  Call to undefined function  get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[03-Dec-2013 15:29:50] PHP Fatal error:  Call to undefined function  get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[08-Jan-2014 17:31:19 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[21-Jan-2014 08:11:16 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[11-Feb-2014 18:42:21 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[25-Feb-2014 12:22:02 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[19-Mar-2014 11:10:40 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[01-Apr-2014 19:56:01 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[22-Apr-2014 11:24:59 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3
+[03-Jun-2014 19:13:19 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-edu/index.php on line 3

@@ -8,7 +8,7 @@ get_header();?>
 	<?php get_banners('features', ct_query_args(array('slug'=>'destacados'))); ?>
 </div>
 <div class="col side">
-	<?php ct_sidebar('login'); ?>
+	<?php ct_sidebar('search'); ?>
 	<?php ct_sidebar('social-facebook', array('url'=>$info['facebook'])); ?>
 	<?php ct_sidebar('social-twitter'); ?>
 </div>

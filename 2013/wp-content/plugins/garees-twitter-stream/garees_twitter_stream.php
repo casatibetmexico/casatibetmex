@@ -3,13 +3,13 @@
 Plugin Name: Garee's Twitter Stream
 Plugin URI: http://www.garee.ch/wordpress/garees-twitter-stream/
 Description: Garee's Twitter Stream allows you to integrate tweets on your blog 
-Version: 1.0
+Version: 1.1
 Author: Sebastian Forster
 Author URI: http://www.garee.ch/wordpress/
 License: GPL2
 */
 
-/*  Copyright 2011  Sebastian Forster  (email : garee@gmx.net)
+/*  Copyright 2013  Sebastian Forster  (email : garee@gmx.net)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -24,6 +24,12 @@ License: GPL2
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
+
+define("GAREE_TWITTER_STREAM_CONSUMER_KEY", "KsciC26tbgvqbqhTNWWOCw");
+define("GAREE_TWITTER_STREAM_CONSUMER_SECRET", "zK8UUKAuwaSkCPId4dHvgdjDtaW9LrWoBJ5QNRxO4");
 
 if(!defined('GAREE_MUSTACHEPHP')) {
 	include_once('Mustache.php');
@@ -90,28 +96,26 @@ function garees_twitter_stream_relative_time($date) {
 	return $output;
 }
 
-/**
- * Build and encode the query
- **/ 
-function garees_twitter_stream_build_http_query( $query ){
-    $query_array = array();
-    foreach( $query as $key => $key_value ){
-        $query_array[] = $key . '=' . urlencode( $key_value );
-    }
-    return implode( '&', $query_array );
-}
 
 /**
  * Output an error
  **/ 
 function garees_twitter_stream_error($msg) {
-	return "<span style='color:red'>Garee's Twitter Stream Error : ".$msg."</span>";
+	return "<br><span style='color:red'>Garee's Twitter Stream Error : ".$msg."</span>";
 }
 
 /**
  * Main-Function: Get the IDs and run gallery-shortcode
  **/ 
 function garees_twitter_stream($atts, $content = "") {
+
+	$oauth_access_token = get_option("garee_twitter_stream_access_token");
+	$oauth_access_token_secret = get_option("garee_twitter_stream_access_token_secret");
+	
+	if ($oauth_access_token==false && $oauth_access_token_secret==false) {
+		echo garees_twitter_stream_error("Please set up Twitter-Access for the plugin");
+		return;
+	}
 	
 	extract(shortcode_atts(array(
 	  'id' => null,
@@ -147,19 +151,21 @@ function garees_twitter_stream($atts, $content = "") {
 		'exclude_replies' => $exclude_replies,
 		'include_rts' => $include_rts,	
 		//'geocode' => $geocode,
-		'page' => 1,
+		//'page' => 1,
 	);
 	
 	if (isset($id)) {   // get just one particular tweet  http://api.twitter.com/1/statuses/show/136931605234192384.json
-		$query = "http://api.twitter.com/1/statuses/show/" . urlencode($id) . ".json?" . garees_twitter_stream_build_http_query($query_attributes);
+		$query = "statuses/show";
+		$query_attributes['id'] = $id;
 	} else if (isset($list)) {   // format "garee76/tech"
 		$list_parts = explode("/", $list);
 		if (count($list_parts) == 2) {
 			$query_attributes['slug'] = $list_parts[1];
 			$query_attributes['owner_screen_name'] = $list_parts[0];
-			$query = "http://api.twitter.com/1/lists/statuses.json?" . garees_twitter_stream_build_http_query($query_attributes);	
+			$query = "lists/statuses";
 		} else 	{
-			return garees_twitter_stream_error("Wrong format for 'list'! Needs to be user/list");
+			echo garees_twitter_stream_error("Wrong format for 'list'! Needs to be user/list");
+			return;
 		}
 	} else if (isset($user)) {
 		$query_attributes['screen_name'] = urlencode($user);
@@ -167,9 +173,10 @@ function garees_twitter_stream($atts, $content = "") {
 			$query_attributes['since_id'] = urlencode($since_id);
 		if (isset($max_id))
 			$query_attributes['max_id'] = urlencode($max_id);
-		$query = "http://api.twitter.com/1/statuses/user_timeline.json?" . garees_twitter_stream_build_http_query($query_attributes);
+		$query = "statuses/user_timeline";
 	} else if (isset($favorites)) {
-		$query = "http://api.twitter.com/1/favorites/" . urlencode($favorites) . ".json?" . garees_twitter_stream_build_http_query($query_attributes);
+		$query = "favorites/list";
+		$query_attributes['screen_name'] = urlencode($favorites);
 	} else if (isset($search) || isset($geocode)) {
 		$query_attributes['q'] = urlencode($search);
 		$query_attributes['geocode'] = urlencode($geocode);
@@ -177,12 +184,12 @@ function garees_twitter_stream($atts, $content = "") {
 			$query_attributes['since_id'] = urlencode($since_id);
 		if (isset($until))
 			$query_attributes['until'] = urlencode($until);	
-		$query = "http://search.twitter.com/search.json?" . garees_twitter_stream_build_http_query($query_attributes);
+		$query = "search/tweets";
 	} else {
-		$query = "http://api.twitter.com/1/statuses/public_timeline.json?" . garees_twitter_stream_build_http_query($query_attributes);
+		echo garees_twitter_stream_error("Missing attribute: id, user, favorites or search");
+		return;
 	}	
 	
-	//return $query;
 	
 	$m = new Mustache;
 	
@@ -196,21 +203,29 @@ function garees_twitter_stream($atts, $content = "") {
 	} else {
 		$tmpl = wp_remote_fopen(plugin_dir_url(__FILE__) . 'templates/default.html');		
 	}
+
 		
-	//$stream = wp_remote_fopen($query);
-	//print_r(json_decode($stream, true));
-	
-	$cache_name = "garee" . md5($query);
+	$cache_name = "garee" . md5($query.implode($query_attributes));
 	
 	if ( false === ( $tweets = get_transient( $cache_name ) ) ) {
 		$data['origin'] = "query";
 		
-		$stream = wp_remote_fopen($query);
-		if (strstr($stream,'{"error":"Rate limit exceeded'))   // detect {"error":"Rate limit exceeded. Clients may not make more than 150 requests per hour.","request":"\/statuses\/show\/29640123173.json"}
-			return garees_twitter_stream_error("Rate limit exceeded! (check your cache-time-setting)");
+		require_once('twitteroauth/twitteroauth.php');
+	
+		$connection = new TwitterOAuth(GAREE_TWITTER_STREAM_CONSUMER_KEY, GAREE_TWITTER_STREAM_CONSUMER_SECRET, $oauth_access_token, $oauth_access_token_secret);	
 		
+		
+		$stream = $connection->get($query, $query_attributes);
+		if (isset($stream->errors)) {
+			echo garees_twitter_stream_error("Twitter-Errorcode ".$stream->errors[0]->code. " (".$stream->errors[0]->message.")");
+			return;
+		} else if ($connection->http_code != 200) {
+			echo garees_twitter_stream_error("HTTP-Errorcode ".$connection->http_code);
+			return;
+		}
+
+		// error management?
 		$tweets = garees_twitter_stream_filter($stream);
-		//$stream = "test";
 		unset($stream);
 		set_transient($cache_name, $tweets, 60*$cache_time );
 	} else {
@@ -226,26 +241,40 @@ function garees_twitter_stream($atts, $content = "") {
 	// exclude the following attributes from gallery-shortcode
 	$forget = array();
 	// include other attributes in gallery-shortcode
-	foreach ($atts as $key => $value) {
-		if (!in_array($key, $forget))
-			$data[$key] = $value;
+	if ($atts!=null) { 
+		foreach ($atts as $key => $value) {
+			if (!in_array($key, $forget))
+				$data[$key] = $value;
+		}
 	}
 			
-	// render the template		
-	//return print_r($data);				
+	// render the template						
 	return $m->render($tmpl, $data);
+	
 }
-
+/**
+ * Debug Array or String
+ */
+function garee_twitter_stream_debug($item) {
+	echo "<pre>";
+	if (is_object($item) || is_array($item)) {
+		print_r($item);
+	} else {
+		echo $item;
+	}
+	echo "</pre>";
+}
 
 /**
  * Decode json-stream and keep stuff that we need (called when getting new data)
  */
 function garees_twitter_stream_filter($stream) {
-	$tweets = json_decode($stream, true);
+	//garee_twitter_stream_debug($stream);
+	$tweets = $stream;
 	
-	if (isset($tweets['results'])) 
-		$input = $tweets['results'];
-	else if (isset($tweets['id'])) 
+	if (isset($tweets->statuses)) 
+		$input = $tweets->statuses;
+	else if (isset($tweets->id)) 
 		$input[0] = $tweets;
 	else
 		$input = $tweets;
@@ -256,45 +285,45 @@ function garees_twitter_stream_filter($stream) {
 	
 	$i = 0;
 	foreach($input as $tweet_in) {
-		
-		$tweet_out['tweet_is_retweet'] = isset($tweet_in['retweeted_status']);
+		//garee_twitter_stream_debug($tweet_in);
+		$tweet_out['tweet_is_retweet'] = isset($tweet_in->retweeted_status);
 		
 		if ($tweet_out['tweet_is_retweet']) {
-			$tweet_out['retweeted_by_name'] = isset($tweet_in['from_user_name']) ? $tweet_in['from_user_name'] : $tweet_in['user']['name'];
-			$tweet_out['retweeted_by_screen_name'] = isset($tweet_in['from_user']) ? $tweet_in['from_user'] : $tweet_in['user']['screen_name'];
-			$tweet_out['avatar_url'] = $tweet_in['retweeted_status']['user']['profile_image_url'];
-			$tweet_out['tweet_text_raw'] = $tweet_in['retweeted_status']['text'];
-			$tweet_out['user_screen_name'] = $tweet_in['retweeted_status']['user']['screen_name'];
-			$tweet_out['user_name'] = $tweet_in['retweeted_status']['user']['name'];
+			$tweet_out['retweeted_by_name'] = isset($tweet_in->from_user_name) ? $tweet_in->from_user_name : $tweet_in->user->name;
+			$tweet_out['retweeted_by_screen_name'] = isset($tweet_in->from_user) ? $tweet_in->from_user : $tweet_in->user->screen_name;
+			$tweet_out['avatar_url'] = $tweet_in->retweeted_status->user->profile_image_url;
+			$tweet_out['tweet_text_raw'] = $tweet_in->retweeted_status->text;
+			$tweet_out['user_screen_name'] = $tweet_in->retweeted_status->user->screen_name;
+			$tweet_out['user_name'] = $tweet_in->retweeted_status->user->name;
 			
-			$tweet_out['reply_user_id'] = $tweet_in['retweeted_status']['in_reply_to_user_id_str'];
-			$tweet_out['reply_tweet_id'] = $tweet_in['retweeted_status']['in_reply_to_status_id_str'];
-			$tweet_out['reply_user_name'] = $tweet_in['retweeted_status']['in_reply_to_screen_name'];
+			$tweet_out['reply_user_id'] = $tweet_in->retweeted_status->in_reply_to_user_id_str;
+			$tweet_out['reply_tweet_id'] = $tweet_in->retweeted_status->in_reply_to_status_id_str;
+			$tweet_out['reply_user_name'] = $tweet_in->retweeted_status->in_reply_to_screen_name;
 			
 		} else {			
 			$tweet_out['retweeted_by_name'] = "";
 			$tweet_out['retweeted_by_screen_name'] = "";
-			$tweet_out['avatar_url'] = isset($tweet_in['profile_image_url']) ? $tweet_in['profile_image_url'] : $tweet_in['user']['profile_image_url'];
-			$tweet_out['tweet_text_raw'] = $tweet_in['text'];		
-			$tweet_out['user_screen_name'] = isset($tweet_in['from_user']) ? $tweet_in['from_user'] : $tweet_in['user']['screen_name'];
-			$tweet_out['user_name'] = isset($tweet_in['from_user_name']) ? $tweet_in['from_user_name'] : $tweet_in['user']['name'];
+			$tweet_out['avatar_url'] = isset($tweet_in->profile_image_url) ? $tweet_in->profile_image_url : $tweet_in->user->profile_image_url;
+			$tweet_out['tweet_text_raw'] = $tweet_in->text;		
+			$tweet_out['user_screen_name'] = isset($tweet_in->from_user) ? $tweet_in->from_user : $tweet_in->user->screen_name;
+			$tweet_out['user_name'] = isset($tweet_in->from_user_name) ? $tweet_in->from_user_name : $tweet_in->user->name;
 			
-			if (isset($tweet_in['iso_language_code'])) {   // search
-				$tweet_out['reply_user_id'] = isset($tweet_in['to_user_id_str']) ? $tweet_in['to_user_id_str'] : null;
-				$tweet_out['reply_user_name'] = isset($tweet_in['to_user']) ? $tweet_in['to_user'] : null;
+			if (isset($tweet_in->iso_language_code)) {   // search
+				$tweet_out['reply_user_id'] = isset($tweet_in->to_user_id_str) ? $tweet_in->to_user_id_str : null;
+				$tweet_out['reply_user_name'] = isset($tweet_in->to_user) ? $tweet_in->to_user : null;
 			} else {
-				$tweet_out['reply_user_id'] = $tweet_in['in_reply_to_user_id_str'];
-				$tweet_out['reply_user_name'] = $tweet_in['in_reply_to_screen_name'];
+				$tweet_out['reply_user_id'] = $tweet_in->in_reply_to_user_id_str;
+				$tweet_out['reply_user_name'] = $tweet_in->in_reply_to_screen_name;
 			}
-			$tweet_out['reply_tweet_id'] = isset($tweet_in['in_reply_to_status_id_str']) ? $tweet_in['in_reply_to_status_id_str'] : null;
+			$tweet_out['reply_tweet_id'] = isset($tweet_in->in_reply_to_status_id_str) ? $tweet_in->in_reply_to_status_id_str : null;
 		}		
 	
 		
-		$tweet_out['tweet_source'] = $tweet_in['source'];
+		$tweet_out['tweet_source'] = $tweet_in->source;
 			
-		$tweet_out['tweet_time_raw'] = $tweet_in['created_at'];		
+		$tweet_out['tweet_time_raw'] = $tweet_in->created_at;		
 
-		$tweet_out['tweet_id'] = $tweet_in['id_str'];
+		$tweet_out['tweet_id'] = $tweet_in->id_str;
 	
 		$twitter_base = 'https://twitter.com/';
 		$tweet_out['user_url'] = $twitter_base . $tweet_out['user_screen_name'];
@@ -302,24 +331,18 @@ function garees_twitter_stream_filter($stream) {
 		$tweet_out['reply_url'] = $twitter_base . 'intent/tweet?in_reply_to=' . $tweet_out['tweet_id'];
 		$tweet_out['retweet_url'] = $twitter_base . 'intent/retweet?tweet_id=' . $tweet_out['tweet_id'];
 		$tweet_out['favorite_url'] = $twitter_base . 'intent/favorite?tweet_id=' . $tweet_out['tweet_id'];			
-	
- 		//$tweet_out['user'] = $m->render('<a class="tweet_user" href="{{user_url}}">{{user_screen_name}}</a>', $tweet_out); 
-        //$tweet_out['avatar'] = $m->render('<a class="tweet_avatar" href="{{user_url}}"><img src="{{avatar_url}}" alt="{{user_screen_name}}\'s avatar" title="{{user_screen_name}}\'s avatar" border="0"/></a>', $tweet_out) ;
 		
         $tweet_out['reply_action'] = $m->render('<a class="tweet_action tweet_reply" href="{{reply_url}}">reply</a>', $tweet_out);
         $tweet_out['retweet_action'] = $m->render('<a class="tweet_action tweet_retweet" href="{{retweet_url}}">retweet</a>', $tweet_out);
         $tweet_out['favorite_action'] = $m->render('<a class="tweet_action tweet_favorite" href="{{favorite_url}}">favorite</a>', $tweet_out);	
 		
-		$tweet_out['tweet_has_image'] = isset($tweet_in['entities']['media'][0]['type']) ? ($tweet_in['entities']['media'][0]['type'] == "photo") : false;
+		$tweet_out['tweet_has_image'] = isset($tweet_in->entities->media[0]->type) ? ($tweet_in->entities->media[0]->type == "photo") : false;
 		if ($tweet_out['tweet_has_image']) {
-			$tweet_out['tweet_image_url'] = $tweet_in['entities']['media'][0]['url'];
-			$tweet_out['tweet_image_expanded_url'] = $tweet_in['entities']['media'][0]['expanded_url'];
-			$tweet_out['tweet_image_media_url'] = $tweet_in['entities']['media'][0]['media_url'];
-			$tweet_out['tweet_image_display_url'] = $tweet_in['entities']['media'][0]['display_url'];		
-			//$tweet_out['tweet_image_link'] = $m->render('<a href="{{tweet_image_url}}" class="tweet_action tweet_show_image" target="_blank">{{tweet_image_display_url}}</a>', $tweet_out);
-			//$tweet_out['tweet_image'] = $m->render('<a href="{{tweet_image_url}}" target="_blank"><img src="{{tweet_image_media_url}}:thumb" title="{{tweet_text_raw}}" alt="{{tweet_text_raw}}" class="tweet_image" /></a>', $tweet_out);
+			$tweet_out['tweet_image_url'] = $tweet_in->entities->media[0]->url;
+			$tweet_out['tweet_image_expanded_url'] = $tweet_in->entities->media[0]->expanded_url;
+			$tweet_out['tweet_image_media_url'] = $tweet_in->entities->media[0]->media_url;
+			$tweet_out['tweet_image_display_url'] = $tweet_in->entities->media[0]->display_url;		
 		}
-		//$tweet_out['tweet_text'] = garees_twitter_stream_link($tweet_out['tweet_has_image'] ? str_replace($tweet_out['tweet_image_url'], "", $tweet_out['tweet_text_raw'] ) : $tweet_out['tweet_text_raw']);
 		$output[$i] = $tweet_out;
 		$i++;
 	}
@@ -446,11 +469,6 @@ function garees_twitter_stream_head() {
 			define('GAREE_ADMINCSS_IS_LOADED', true);
 		}
 				
-		// Javascript für Flattr einfügen
-	//	if(!defined('GAREE_FLATTRSCRIPT_IS_LOADED')) {
-	//		echo '<script type="text/javascript" src="' . GAREE_FLATTRSCRIPT . '"></script>';
-	//		define('GAREE_FLATTRSCRIPT_IS_LOADED', true);
-	//	}
 	}
 }
 
@@ -502,6 +520,39 @@ var w=window,d=document,e=d.documentElement,g=d.getElementsByTagName('body')[0],
 </script>
 <div id='gareeMain'>
   <h1>Garee's Twitter Stream</h1>
+  <h2>Requirements</h2>
+<?php
+	require_once('twitteroauth/twitteroauth.php');
+	$oauth_access_token = get_option("garee_twitter_stream_access_token");
+	$oauth_access_token_secret = get_option("garee_twitter_stream_access_token_secret");
+	
+	if ($oauth_access_token==false || $oauth_access_token_secret==false) {
+		echo '<p>Click to set up Twitter-Access for this plugin:</p>';
+		echo "<a href='".plugin_dir_url(__FILE__)."garees_twitter_stream_redirect.php'><img src='".plugin_dir_url(__FILE__)."images/sign-in-with-twitter-gray.png'></a>";
+	} else {
+		/* Create a TwitterOauth object with consumer/user tokens. */
+		$connection = new TwitterOAuth(GAREE_TWITTER_STREAM_CONSUMER_KEY, GAREE_TWITTER_STREAM_CONSUMER_SECRET, $oauth_access_token, $oauth_access_token_secret);
+		
+		/* If method is set change API call made. Test is called by default. */
+		$content = $connection->get('account/verify_credentials');
+		
+		//garee_twitter_stream_debug($content);
+		
+		if (isset($content->errors)) {
+			echo "<p>The plugin encountered an error while trying to connnect to Twitter:";
+			echo garees_twitter_stream_error($content->errors[0]->code." (".$content->errors[0]->message.")</p>");
+			echo "<p>clear the stored access-token to set up the plugin from scratch: <a href='".plugin_dir_url(__FILE__)."garees_twitter_stream_revoke.php' onclick='return window.confirm(\"Do you really want to delete the stored access tokens?\")'>clear !</a></p>";
+		} else {
+			echo "<p>The plugin is set up with the following Twitter-Account:</p>";
+			echo "<img src='".$content->profile_image_url."' style='float:left;margin-right:12px;margin-left:24px;'>";
+			echo "<p>".$content->screen_name." (".$content->name.")</p>";
+			echo "<br style='clear:all'>";
+			echo "<p><a href='".plugin_dir_url(__FILE__)."garees_twitter_stream_revoke.php' onclick='return window.confirm(\"Do you really want to delete the stored access tokens?\")'>revoke!</a> ";
+			echo "<small>(this only removes the stored access-tokens. To completely revoke access login to Twitter, go to settings, apps and revoke access for the plugin.)</small></p>";
+		}
+	}
+?>
+  <h2>Usage</h2>
   <p>Just insert the following shortcode anywhere in your blog (for use in a widget: use the text-widget and insert the shortcode there) </p>
   <pre>[twitter_stream user='your_twitter_account'] </pre>
   <h2>Attributes</h2>
@@ -622,8 +673,8 @@ if ($handle = opendir(plugin_dir_path(__FILE__) . "templates")) {
   show only images with the image-template
   <pre>[twitter_stream template="images" user="garee76" count=100]</pre>
   <h3>Example 9</h3>
-  Showing avatars of 12 tweet-users of the public twitter-timeline. Set cache-time to 60 minutes.
-  <pre>[twitter_stream template="avatars" cache_time=60 count=12]</pre>
+  Showing avatars of 12 twitter-users of the Coupacafe-List. Set cache-time to 60 minutes.
+  <pre>[twitter_stream template="avatars" list="CoupaCafe/conversationlist" cache_time=60 count=12]</pre>
   <h3>Example 10</h3>
   Define your own template and show in a sentence the time of user's last tweet
   <pre>[twitter_stream_template user="garee76" count=1]My latest tweet was sent {{#items}}{{tweet_time_relative}}{{/items}}[/twitter_stream_template]</pre>

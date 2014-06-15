@@ -2,7 +2,7 @@
 Theme Name: Casa Tibet : Educación
 Author: Joe Flumerfelt
 Template: ct-mex
-Version: 0.1
+Version: 1.0
 */
 
 @import url("../ct-mex/style.css");
@@ -15,6 +15,10 @@ a {
 
 /** HEADER **********************************************/
 
+#rm-header.interior {
+	height:74px;
+}
+
 .header .img {
 	background-image:url(img/ct_header_variants_blue.png);
 }
@@ -26,6 +30,10 @@ a {
 }
 .nav_bar .menu li.on {
 	background:#1f41aa;
+}
+
+#rm-header.interior .main_menu {
+	border-top: 8px solid #1f41aa;
 }
 
 .main_menu li.on,

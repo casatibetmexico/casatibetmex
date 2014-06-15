@@ -53,7 +53,6 @@ function ct_teacher_add_meta_boxes($postType) {
 
 	switch($postType) {
 		case 'teacher':
-		case 'page':
 			add_meta_box( 
 		        'ct_teacher_sidebar', 'Información Lateral', 'ct_teacher_meta_sidebar',
 		        $postType, 'normal'
@@ -209,6 +208,7 @@ function ct_get_teachers($term='', $args=array()) {
 	$args['order'] = 'ASC';
 	$args['orderby'] = 'menu_order title';
 	$args['tax_query'] = array();
+	$args['nopaging'] = true;
 	
 	if ($term) {
 		
@@ -233,6 +233,25 @@ function ct_get_teachers($term='', $args=array()) {
 	}
 	
 	$q = new WP_Query($args);
+	return $q->posts;
+}
+
+function ct_teacher_get_events($teacher) {
+	$args = array('post_type'=>'event',
+				 'nopaging'=>true,
+				 'order'=>'ASC',
+				 'meta_key'=>'ct_event_start',
+				 'orderby'=>'meta_value',
+				 'meta_query'=>array(
+				 	array(
+					 	'key'=>'ct_teacher',
+					 	'value'=>$teacher,
+					 	'compare'=>'=='
+					 )
+				  ));
+				  
+	$q = new WP_Query($args);
+	usort($q->posts, 'ct_event_sort_inverse');
 	return $q->posts;
 }
 

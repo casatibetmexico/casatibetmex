@@ -6,7 +6,6 @@ $meta = get_post_custom($post->ID);
 <?php get_header();?>
 
 <div class="col side">
-	<?php ct_sidebar('login'); ?>
 	<?php echo do_shortcode('[ct-related children="true"]'); ?>
 </div>
 <div class="col main">

@@ -5,8 +5,14 @@ $config = apply_filters('ct_archive-'.$sbar_args['post_type'], $sbar_args);
 
 if ($config) :
 
-$q = new WP_Query($config['args']);
+if ($config['query']) {
+	$q = $config['query'];
+} else {
+	$q = new WP_Query($config['args']);
+}
+
 $items = $q->posts;
+
 ?>
 <div class="section listing <?php if ($sbar_args['listing']) echo $sbar_args['listing']; ?>">
 <?php if (!$sbar_args['no_title']) : ?>

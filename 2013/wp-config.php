@@ -1,5 +1,16 @@
 <?php
-/** 
+
+if ( !defined('WP_MEMORY_LIMIT') )
+	define('WP_MEMORY_LIMIT', '500M');
+
+/** Enable W3 Total Cache Edge Mode */
+define('W3TC_EDGE_MODE', true); // Added by W3 Total Cache
+
+/** Enable W3 Total Cache */
+define('WP_CACHE', true); // Added by W3 Total Cache
+
+
+/**
  * Configuración básica de WordPress.
  *
  * Este archivo contiene las siguientes configuraciones: ajustes de MySQL, prefijo de tablas,
@@ -14,9 +25,11 @@
  * @package WordPress
  */
 
+define('QUICK_CACHE_ALLOWED', TRUE);
+
 // ** Ajustes de MySQL. Solicita estos datos a tu proveedor de alojamiento web. ** //
 /** El nombre de tu base de datos de WordPress */
-define('DB_NAME', 'ct');
+define('DB_NAME', 'casatibe_2013');
 
 /** Tu nombre de usuario de MySQL */
 define('DB_USER', 'root');

@@ -1,0 +1,48 @@
+[26-Aug-2013 01:51:07] PHP Fatal error:  Call to undefined function  register_taxonomy() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-news.php on line 5
+[26-Aug-2013 01:51:07] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-faq.php on line 5
+[26-Aug-2013 01:51:07] PHP Fatal error:  Class 'Walker_Nav_Menu' not found in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-menu.php on line 2
+[26-Aug-2013 01:51:07] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-admin.php on line 5
+[26-Aug-2013 01:51:07] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-sites.php on line 3
+[26-Aug-2013 01:51:07] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-users.php on line 5
+[26-Aug-2013 01:51:07] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-causes.php on line 5
+[26-Aug-2013 01:51:07] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-events.php on line 5
+[26-Aug-2013 01:51:07] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-courses.php on line 7
+[26-Aug-2013 01:51:08] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-centers.php on line 5
+[26-Aug-2013 01:51:08] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-utility.php on line 5
+[26-Aug-2013 01:51:08] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-modules.php on line 45
+[26-Aug-2013 01:51:08] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-admin.php on line 5
+[26-Aug-2013 01:51:08] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-editorial.php on line 5
+[26-Aug-2013 01:51:08] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-teachers.php on line 5
+[26-Aug-2013 01:51:08] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-resources.php on line 75
+[26-Aug-2013 01:51:08] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-shortcodes.php on line 3
+[26-Aug-2013 02:26:46] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-faq.php on line 5
+[26-Aug-2013 02:26:46] PHP Fatal error:  Call to undefined function  register_taxonomy() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-news.php on line 5
+[26-Aug-2013 02:26:46] PHP Fatal error:  Class 'Walker_Nav_Menu' not found in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-menu.php on line 2
+[26-Aug-2013 02:26:46] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-admin.php on line 5
+[26-Aug-2013 02:26:46] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-sites.php on line 3
+[26-Aug-2013 02:26:46] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-users.php on line 5
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-causes.php on line 5
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-events.php on line 5
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-courses.php on line 7
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-utility.php on line 5
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-centers.php on line 5
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-modules.php on line 45
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-admin.php on line 5
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-teachers.php on line 5
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-editorial.php on line 5
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-resources.php on line 75
+[26-Aug-2013 02:26:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-shortcodes.php on line 3
+[07-Jan-2014 15:59:37 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[07-Jan-2014 21:24:59 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[08-Jan-2014 06:17:04 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[09-Jan-2014 16:02:15 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[13-Jan-2014 17:37:40 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[13-Jan-2014 17:38:49 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[16-Jan-2014 01:59:00 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[16-Jan-2014 02:03:29 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[16-Jan-2014 04:34:28 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[16-Jan-2014 04:38:20 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[16-Jan-2014 04:40:36 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[20-Jan-2014 05:34:55 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[20-Jan-2014 05:35:19 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21
+[22-Jan-2014 03:46:48 UTC] PHP Fatal error:  Call to a member function add_role() on a non-object in /home1/casatibe/public_html/2013/wp-content/plugins/casa-tibet/ct-register.php on line 21

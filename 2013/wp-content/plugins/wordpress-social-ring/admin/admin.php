@@ -3,6 +3,7 @@
 class WordPress_Social_Ring_Admin {
 	
 	private $options;
+	private $retrocompatibility;
 	private $languages = array(	
 		
 		'Afrikaans' => array(
@@ -160,6 +161,7 @@ class WordPress_Social_Ring_Admin {
 	
 	function __construct() {
 		$this->options = get_option(WP_SOCIAL_RING.'_options');
+		$this->retrocompatibility = get_option(WP_SOCIAL_RING.'_retrocompatibility');
 		$this->set_default_options();
 		add_action('admin_menu', array($this, 'register_option_page'));
 		add_action('admin_init', array($this, 'register_options'));
@@ -178,6 +180,111 @@ class WordPress_Social_Ring_Admin {
 		if(!isset($this->options['twitter_language'])) {
 			$this->options['twitter_language'] = 'en';
 		}
+		
+		//ciclo su pulsanti già attivi e ricostruisco array per retrocompatibilità con 1.2.4
+		if(!isset($this->retrocompatibility) || $this->retrocompatibility == 0)
+		{
+		
+			$social_visible_buttons_list_temp = "";
+			$social_available_buttons_list_temp = "";
+			
+			if(isset($this->options['social_facebook_like_button'])) {
+				if($this->options['social_facebook_like_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_facebook_like_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_facebook_like_button|';
+				}
+			}
+			if(isset($this->options['social_twitter_button'])) {
+				if($this->options['social_twitter_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_twitter_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_twitter_button|';
+				}
+			}
+			if(isset($this->options['social_facebook_share_button'])) {
+				if($this->options['social_facebook_share_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_facebook_share_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_facebook_share_button|';
+				}
+			}
+			if(isset($this->options['social_google_button'])) {
+				if($this->options['social_google_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_google_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_google_button|';
+				}
+			}
+			if(isset($this->options['social_google_share_button'])) {
+				if($this->options['social_google_share_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_google_share_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_google_share_button|';
+				}
+			}
+			if(isset($this->options['social_pin_it_button'])) {
+				if($this->options['social_pin_it_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_pin_it_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_pin_it_button|';
+				}
+			}
+			if(isset($this->options['social_linkedin_button'])) {
+				if($this->options['social_linkedin_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_linkedin_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_linkedin_button|';
+				}
+			}
+			if(isset($this->options['social_stumble_button'])) {
+				if($this->options['social_stumble_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_stumble_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_stumble_button|';
+				}
+			}
+			if(isset($this->options['social_print_button'])) {
+				if($this->options['social_print_button'] == 1 || $this->options['social_create_pdf_button'] == 1 || $this->options['social_send_email_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_print_button|social_create_pdf_button|social_send_email_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_print_button|social_create_pdf_button|social_send_email_button|';
+				}
+			}
+			
+			$this->options['social_visible_buttons_list'] = $social_visible_buttons_list_temp;
+			$this->options['social_available_buttons_list'] = $social_available_buttons_list_temp;
+			
+			update_option(WP_SOCIAL_RING.'_retrocompatibility',1);
+		}
+		
 	}
 	
 	function register_option_page() {
@@ -186,17 +293,25 @@ class WordPress_Social_Ring_Admin {
 	}
 	
 	function print_option_page() {
-	?>
+	?>    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+    <script src="https://raw.github.com/furf/jquery-ui-touch-punch/master/jquery.ui.touch-punch.min.js"></script>
+      
+        
 	<div class="wrap">
 		<?php screen_icon('plugins'); ?>
 		<h2><?php _e('Social Network Settings',WP_SOCIAL_RING); ?></h2>
+	  
 		<div id="wp-social-ring">
 			<div class="postbox-container" style="width:70%;">
-				<form action="options.php" method="post">
+					<form id="form-primary" action="options.php" method="post">
 						<div class="postbox">
 							<?php settings_fields(WP_SOCIAL_RING.'_options'); ?>
 							<?php do_settings_sections(WP_SOCIAL_RING); ?>
 						</div>
+						
+						<input name="submit" class="button-primary" type="submit" value="<?php _e('Save Changes',WP_SOCIAL_RING); ?>" />
+						<br/><br/>
 						<div class="postbox">
 							<h3><?php _e('Extra',WP_SOCIAL_RING); ?></h3>
 							<div style="margin-left:10px;">
@@ -219,7 +334,7 @@ class WordPress_Social_Ring_Admin {
 								<pre style="margin-bottom:20px;">[socialring]</pre>
 							</div>
 						</div>
-						<input name="submit" class="button-primary" type="submit" value="<?php _e('Save Changes',WP_SOCIAL_RING); ?>" />
+						
 				</form>
 			</div>
 			<div class="postbox-container" style="margin-left:15px;">
@@ -293,6 +408,13 @@ class WordPress_Social_Ring_Admin {
 			WP_SOCIAL_RING.'_setting_section'
 		);
 		add_settings_field(
+			'wp_social_ring_preview',
+			__('Preview',WP_SOCIAL_RING),
+			array($this, 'preview_setting'),
+			WP_SOCIAL_RING,
+			WP_SOCIAL_RING.'_setting_section'
+		);
+		add_settings_field(
 			'wp_social_ring_position',
 			__('Position',WP_SOCIAL_RING),
 			array($this, 'position_setting'),
@@ -324,7 +446,7 @@ class WordPress_Social_Ring_Admin {
 	
 	function settings_description() {
 	?>
-		<div class="explain"><?php _e('Choose sharing buttons position and behavior', WP_SOCIAL_RING); ?></div>
+		<div class="explain"><?php _e("Drag the Available buttons in the area of those Visible to activate them on your blog", WP_SOCIAL_RING); ?></div>
 	<?php
 	}
 	
@@ -346,6 +468,7 @@ class WordPress_Social_Ring_Admin {
 	}
 	
 	function position_setting() {
+		
 		?>
 			<ul>
 				<li>
@@ -361,18 +484,132 @@ class WordPress_Social_Ring_Admin {
 	}
 	
 	function active_buttons_setting() {
-	?>
-		<ul>
+	?><style>
+        #available, #visible { list-style-type: none; margin: 0; padding: 0; float: left; margin:0px 10px 10px 0px; background: #eee; padding: 5px; width: 200px;}
+        #available li, #visible li, #available p, #visible p { margin: 5px; padding: 5px; font-size: 1.2em; width: 180px; }
+		#available p, #visible p { color:#2EA2CC; }
+		#available li:hover { cursor:move; }
+		#visible li:hover { cursor:move; }
+        </style>
+        <script>
+		
+		av_buttons_preview = new Array();
+			
+		//list of all social buttons with html code
+		av_buttons_preview["social_facebook_like_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-fb-like.png', __FILE__); ?>" /></div>';
+		av_buttons_preview["social_facebook_share_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-fb-share.png', __FILE__); ?>" /></div>';
+		av_buttons_preview["social_twitter_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-twitter.png', __FILE__); ?>" /></div>';
+		av_buttons_preview["social_google_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-g+.png', __FILE__); ?>" /></div>';
+		av_buttons_preview["social_google_share_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-g+-share.png', __FILE__); ?>" /></div>';
+		av_buttons_preview["social_pin_it_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-pinterest.png', __FILE__); ?>" /></div>';
+		av_buttons_preview["social_linkedin_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-linkedin.png', __FILE__); ?>" /></div>';
+		av_buttons_preview["social_stumble_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-stumbleupon.png', __FILE__); ?>" /></div>';
+		av_buttons_preview["social_print_pdf_email_button"] = '<div style="float:left;margin-right:10px;"><img src="<?php echo plugins_url('/images/sr-print-mail-pdf.png', __FILE__); ?>" /></div>';
+		
+		$( document ).ready(function() {
+			$("div.av_pre_buttons").html("");
+			$("ul#visible li").each( function() {
+				$("div.av_pre_buttons").append(av_buttons_preview[$(this).attr('id')]);
+			});
+		});
+		
+		function updatePreviewButton()
+		{
+			$("div.av_pre_buttons").html("");
+			$("ul#visible li").each( function() {
+				$("div.av_pre_buttons").append(av_buttons_preview[$(this).attr('id')]);
+			});
+		}
+		
+		
+		// ordinamento
+		$(function() {
+          $( "ul.droptrue" ).sortable({
+            connectWith: "ul",
+			cursor: 'move',
+			items: "> li",
+			stop: function(ui, event){
+				//var id = event.item.attr('id');
+				//alert(id);
+				updatePreviewButton();
+			}
+          });
+
+          $( "ul.dropfalse" ).sortable({
+            connectWith: "ul",
+            dropOnEmpty: false,
+			cursor: 'move',
+			items: "> li"
+          });
+		  
+          $( "#available, #visible" ).disableSelection();
+        });
+		
+		</script>
+		
+	<ul id="available" class='droptrue'>
+		<p><strong><?php _e('Available Buttons',WP_SOCIAL_RING) ?></strong></p>
+		<!-- <li class="ui-state-default" id=""><?php _e("Print, PDF, Email",WP_SOCIAL_RING) ?></li> -->
+		<?php
+		
+		$social_all_buttons_list = array( array( 'social_facebook_like_button', 'Facebook Like' ), array( 'social_facebook_share_button', 'Facebook Share' ), array( 'social_twitter_button', 'Twitter' ), array( 'social_google_button', 'Google +1' ), array( 'social_google_share_button', 'Google +1 Share' ), array( 'social_pin_it_button', 'Pin it' ), array( 'social_linkedin_button', 'LinkedIn' ), array( 'social_stumble_button', 'StumbleUpon' ), array( 'social_print_pdf_email_button', 'Print, PDF, Email' ) );
+		if( isset( $this->options['social_visible_buttons_list'] ) ) {
+			$sr_buttons = explode("|", $this->options['social_visible_buttons_list']);
+		} else {
+			$sr_buttons = array();
+		}
+		
+		for($i = 0; $i < count($social_all_buttons_list); $i++)
+		{
+			if(!in_array( $social_all_buttons_list[$i][0], $sr_buttons))
+			{
+		?>
+			<li class="ui-state-default" id="<?php echo $social_all_buttons_list[$i][0]; ?>"><?php _e($social_all_buttons_list[$i][1],WP_SOCIAL_RING) ?></li>
+		<?php
+			}
+		}
+		?>
+	 </ul>
+
+      <ul id="visible" class='droptrue'>
+		<p><strong><?php _e('Visible Buttons',WP_SOCIAL_RING) ?></strong></p>
+		<?php
+		if(isset($this->options['social_visible_buttons_list']))
+		{	
+			for($i = 0; $i < count($sr_buttons)-1; $i++)
+			{	
+				for($j = 0; $j < count($social_all_buttons_list); $j++)
+				{
+					if($sr_buttons[$i] == $social_all_buttons_list[$j][0])
+					{
+					?>
+						<li class="ui-state-default" id="<?php echo $social_all_buttons_list[$j][0]; ?>"><?php _e($social_all_buttons_list[$j][1],WP_SOCIAL_RING) ?></li>
+					<?php
+					}
+				}
+			}
+		}
+		?>
+      </ul>
+	  
+	  <input id='social_visible_buttons_list' name='wp_social_ring_options[social_visible_buttons_list]' type='hidden' value="" />
+	  
+	  <script>
+	  $( '#form-primary' ).submit(function() {
+			$("#social_visible_buttons_list").val("");
+			$("ul#visible li").each( function() {
+				$("#social_visible_buttons_list").val( $("#social_visible_buttons_list").val() + $(this).attr('id') + "|");
+			}); 
+			return true;
+		});
+		</script>
+	
+	
+	<!--	<ul>
 			<li style="clear:both;">
 				<div style="float:left;"><input id='social_facebook_like_button' name='wp_social_ring_options[social_facebook_like_button]' type='checkbox' value="1" <?php checked($this->options['social_facebook_like_button'], 1); ?> /></div>
 				<div style="float:left;margin-left:20px;width:150px;"><?php _e('Facebook Like',WP_SOCIAL_RING) ?></div>
 				<div style="float:left;margin-left:20px;"><fb:like href="http://www.facebook.com/pages/DrWordPress/166397626712895" send="false" showfaces="false" width="108" layout="button_count" action="like"/></fb:like></div>
-			</li>
-			<li style="clear:both;padding-top:10px;">
-				<div style="float:left;"><input id='social_facebook_send_button' name='wp_social_ring_options[social_facebook_send_button]' type='checkbox' value="1" <?php checked($this->options['social_facebook_send_button'], 1); ?> /></div>
-				<div style="float:left;margin-left:20px;width:150px;"><?php _e('Facebook Send',WP_SOCIAL_RING) ?></div>
-				<div style="float:left;margin-left:20px;"><fb:like href="http://www.facebook.com/pages/DrWordPress/166397626712895" send="true" showfaces="false" width="164" layout="button_count" action="like"/></fb:like></div>
-				<div id="fb-root"></div>
 			</li>
 			<li style="clear:both;padding-top:10px;">
 				<div style="float:left;"><input id='social_facebook_share_button' name='wp_social_ring_options[social_facebook_share_button]' type='checkbox' value="1" <?php checked($this->options['social_facebook_share_button'], 1); ?> /></div>
@@ -388,6 +625,16 @@ class WordPress_Social_Ring_Admin {
 				<div style="float:left;"><input id='social_google_button' name='wp_social_ring_options[social_google_button]' type='checkbox' value="1" <?php checked($this->options['social_google_button'], 1); ?> /></div>
 				<div style="float:left;margin-left:20px;width:150px;"><?php _e('Google +1',WP_SOCIAL_RING) ?></div>
 				<div style="float:left;margin-left:20px;"><g:plusone href="<?php _e('http://wordpress.altervista.org/', WP_SOCIAL_RING); ?>" size="medium" callback="plusone_vote"></g:plusone></div>
+				<script type="text/javascript">
+					window.___gcfg = {
+					  lang: '<?php echo $this->options['google_language']; ?>'
+					};
+				</script>
+			</li>
+			<li style="clear:both;padding-top:10px;">
+				<div style="float:left;"><input id='social_google_share_button' name='wp_social_ring_options[social_google_share_button]' type='checkbox' value="1" <?php checked($this->options['social_google_share_button'], 1); ?> /></div>
+				<div style="float:left;margin-left:20px;width:150px;"><?php _e('Google +1 Share',WP_SOCIAL_RING) ?></div>
+				<div style="float:left;margin-left:20px;"><div class="g-plus" data-href="<?php _e('http://wordpress.altervista.org/', WP_SOCIAL_RING); ?>" data-action="share" data-annotation="bubble"></div>
 				<script type="text/javascript">
 					window.___gcfg = {
 					  lang: '<?php echo $this->options['google_language']; ?>'
@@ -411,8 +658,29 @@ class WordPress_Social_Ring_Admin {
 				<div style="float:left;margin-left:20px;width:150px;"><?php _e('StumbleUpon',WP_SOCIAL_RING) ?></div>
 				<div style="float:left;margin-left:20px;"><su:badge layout="1"></su:badge></div>
 			</li>
-		</ul>
+			<li style="clear:both;padding-top:10px;">
+				<div style="float:left;"><input id='social_print_button' name='wp_social_ring_options[social_print_button]' type='checkbox' value="1" <?php checked($this->options['social_print_button'], 1); ?> /></div>
+				<div style="float:left;margin-left:20px;width:150px;"><?php _e('Print',WP_SOCIAL_RING) ?></div>
+				<div style="float:left;margin-left:20px;"><img src="<?php echo plugins_url('/images/sr-print.png', __FILE__); ?>" /></div>
+			</li>
+			<li style="clear:both;padding-top:10px;">
+				<div style="float:left;"><input id='social_create_pdf_button' name='wp_social_ring_options[social_create_pdf_button]' type='checkbox' value="1" <?php checked($this->options['social_create_pdf_button'], 1); ?> /></div>
+				<div style="float:left;margin-left:20px;width:150px;"><?php _e('Create PDF',WP_SOCIAL_RING) ?></div>
+				<div style="float:left;margin-left:20px;"><img src="<?php echo plugins_url('/images/sr-pdf.png', __FILE__); ?>" /></div>
+			</li>
+			<li style="clear:both;padding-top:10px;">
+				<div style="float:left;"><input id='social_send_email_button' name='wp_social_ring_options[social_send_email_button]' type='checkbox' value="1" <?php checked($this->options['social_send_email_button'], 1); ?> /></div>
+				<div style="float:left;margin-left:20px;width:150px;"><?php _e('Send via Email',WP_SOCIAL_RING) ?></div>
+				<div style="float:left;margin-left:20px;"><img src="<?php echo plugins_url('/images/sr-email.png', __FILE__); ?>" /></div>
+			</li>
+		</ul> -->
 	<?php
+	}
+	
+	function preview_setting() {
+		?>
+			<div class="av_pre_buttons"></div>
+		<?php
 	}
 	
 	function show_on_setting() {
@@ -454,17 +722,18 @@ class WordPress_Social_Ring_Admin {
 	}
 
 	function validate_options( $input ) {
+		$valid['social_visible_buttons_list'] = (isset( $input['social_visible_buttons_list'])) ? $input['social_visible_buttons_list'] : 0;
 		$valid['social_facebook_like_button'] = (isset( $input['social_facebook_like_button'])) ? 1 : 0;
-		$valid['social_facebook_send_button'] = (isset( $input['social_facebook_send_button'])) ? 1 : 0;
-		if($valid['social_facebook_send_button'] == 1) {
-			$valid['social_facebook_like_button'] = 1;
-		}
 		$valid['social_facebook_share_button'] = (isset( $input['social_facebook_share_button'])) ? 1 : 0;
 		$valid['social_twitter_button'] = (isset( $input['social_twitter_button'])) ? 1 : 0;
 		$valid['social_google_button'] = (isset( $input['social_google_button'])) ? 1 : 0;
+		$valid['social_google_share_button'] = (isset( $input['social_google_share_button'])) ? 1 : 0;
 		$valid['social_pin_it_button'] = (isset( $input['social_pin_it_button'])) ? 1 : 0;
 		$valid['social_linkedin_button'] = (isset( $input['social_linkedin_button'])) ? 1 : 0;
 		$valid['social_stumble_button'] = (isset( $input['social_stumble_button'])) ? 1 : 0;
+		$valid['social_print_button'] = (isset( $input['social_print_button'])) ? 1 : 0;
+		$valid['social_create_pdf_button'] = (isset( $input['social_create_pdf_button'])) ? 1 : 0;
+		$valid['social_send_email_button'] = (isset( $input['social_send_email_button'])) ? 1 : 0;
 		$valid['social_on_home'] = (isset( $input['social_on_home'])) ? 1 : 0;
 		$valid['social_on_pages'] = (isset( $input['social_on_pages'])) ? 1 : 0;
 		$valid['social_on_posts'] = (isset( $input['social_on_posts'])) ? 1 : 0;

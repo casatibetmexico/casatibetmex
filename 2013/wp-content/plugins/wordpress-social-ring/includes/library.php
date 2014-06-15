@@ -1,9 +1,10 @@
 <?php
 
-
 class WordPress_Social_Ring {
 	
 	private $options;
+	private $retrocompatibility;
+	private $post_id;
 	private $post_url;
 	private $post_encoded_url;
 	private $post_title;
@@ -11,14 +12,21 @@ class WordPress_Social_Ring {
 	
 	function __construct() {
 		$this->options = get_option(WP_SOCIAL_RING.'_options');
+		$this->retrocompatibility = get_option(WP_SOCIAL_RING.'_retrocompatibility');
 		$this->set_default_options();
 		add_action('wp_head', array($this, 'frontend_css'));
-		add_filter('the_content', array($this, 'add_sharing_buttons'));
+		add_filter('the_content', array($this, 'add_sharing_buttons'), 100);
 		add_action('wp_footer', array($this, 'add_footer_js'));
 		add_shortcode('socialring', array($this, 'shortcode'));
 	}
 	
 	function set_default_options() {
+		if(!isset($this->options['social_visible_buttons_list'])) {
+			$this->options['social_visible_buttons_list'] = "social_facebook_like_button|social_facebook_share_button|social_twitter_button|social_google_button|social_pin_it_button|";
+		}
+		if(!isset($this->options['social_available_buttons_list'])) {
+			$this->options['social_available_buttons_list'] = "social_google_share_button|social_linkedin_button|social_stumble_button|social_print_button|social_create_pdf_button|social_send_email_button|";
+		}
 		if(!isset($this->options['social_facebook_like_button'])) {
 			$this->options['social_facebook_like_button'] = 1;
 		}
@@ -26,19 +34,31 @@ class WordPress_Social_Ring {
 			$this->options['social_twitter_button'] = 1;
 		}
 		if(!isset($this->options['social_facebook_share_button'])) {
-			$this->options['social_facebook_share_button'] = 0;
+			$this->options['social_facebook_share_button'] = 1;
 		}
 		if(!isset($this->options['social_google_button'])) {
 			$this->options['social_google_button'] = 1;
 		}
+		if(!isset($this->options['social_google_share_button'])) {
+			$this->options['social_google_share_button'] = 0;
+		}
 		if(!isset($this->options['social_pin_it_button'])) {
-			$this->options['social_pin_it_button'] = 0;
+			$this->options['social_pin_it_button'] = 1;
 		}
 		if(!isset($this->options['social_linkedin_button'])) {
 			$this->options['social_linkedin_button'] = 0;
 		}
 		if(!isset($this->options['social_stumble_button'])) {
 			$this->options['social_stumble_button'] = 0;
+		}
+		if(!isset($this->options['social_print_button'])) {
+			$this->options['social_print_button'] = 0;
+		}
+		if(!isset($this->options['social_create_pdf_button'])) {
+			$this->options['social_create_pdf_button'] = 0;
+		}
+		if(!isset($this->options['social_send_email_button'])) {
+			$this->options['social_send_email_button'] = 0;
 		}
 		if(!isset($this->options['social_on_home'])) {
 			$this->options['social_on_home'] = 0;
@@ -76,6 +96,111 @@ class WordPress_Social_Ring {
 		if(!isset($this->options['button_counter'])) {
 			$this->options['button_counter'] = 'horizontal';
 		}
+		
+		//ciclo su pulsanti già attivi e ricostruisco array per retrocompatibilità con 1.2.4
+		if(!isset($this->retrocompatibility) || $this->retrocompatibility == 0)
+		{		
+			$social_visible_buttons_list_temp = "";
+			$social_available_buttons_list_temp = "";
+			
+			if(isset($this->options['social_facebook_like_button'])) {
+				if($this->options['social_facebook_like_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_facebook_like_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_facebook_like_button|';
+				}
+			}
+			if(isset($this->options['social_twitter_button'])) {
+				if($this->options['social_twitter_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_twitter_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_twitter_button|';
+				}
+			}
+			if(isset($this->options['social_facebook_share_button'])) {
+				if($this->options['social_facebook_share_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_facebook_share_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_facebook_share_button|';
+				}
+			}
+			if(isset($this->options['social_google_button'])) {
+				if($this->options['social_google_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_google_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_google_button|';
+				}
+			}
+			if(isset($this->options['social_google_share_button'])) {
+				if($this->options['social_google_share_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_google_share_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_google_share_button|';
+				}
+			}
+			if(isset($this->options['social_pin_it_button'])) {
+				if($this->options['social_pin_it_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_pin_it_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_pin_it_button|';
+				}
+			}
+			if(isset($this->options['social_linkedin_button'])) {
+				if($this->options['social_linkedin_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_linkedin_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_linkedin_button|';
+				}
+			}
+			if(isset($this->options['social_stumble_button'])) {
+				if($this->options['social_stumble_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_stumble_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_stumble_button|';
+				}
+			}
+			if(isset($this->options['social_print_button'])) {
+				if($this->options['social_print_button'] == 1 || $this->options['social_create_pdf_button'] == 1 || $this->options['social_send_email_button'] == 1)
+				{
+					$social_visible_buttons_list_temp .= 'social_print_button|social_create_pdf_button|social_send_email_button|';
+				}
+				else
+				{
+					$social_available_buttons_list_temp .= 'social_print_button|social_create_pdf_button|social_send_email_button|';
+				}
+			}
+			
+			$this->options['social_visible_buttons_list'] = $social_visible_buttons_list_temp;
+			$this->options['social_available_buttons_list'] = $social_available_buttons_list_temp;
+			
+			update_option(WP_SOCIAL_RING.'_retrocompatibility',1);
+		}
+		
+		
 	}
 	
 	function add_sharing_buttons($content) {
@@ -95,17 +220,17 @@ class WordPress_Social_Ring {
 	?> 
 		<style type="text/css">
 			.social-ring:after {
-			    clear: both;
-			    content: " ";
-			    display: block;
-			    font-size: 0;
-			    height: 0;
-			    line-height: 0;
-			    visibility: hidden;
-			    width: 0;
-			}	
+				 clear: both;
+			}
+				   
+			.social-ring:before,
+			.social-ring:after {
+				 content: "";
+				 display: table;
+			}
+			
 			.social-ring {
-				margin: 0 !important;
+				margin: 0 0 0.5em !important;
 				padding: 0 !important;
 				line-height: 20px !important;
 				height: auto;
@@ -130,48 +255,68 @@ class WordPress_Social_Ring {
 	
 	function buttons_html() {
 		global $post;
+		$this->post_id = $post->ID;
 		$this->post_url = (string) get_permalink($post->ID);
 		$this->post_encoded_url = (string) urlencode($this->post_url);
 		$this->post_title =  (string) $post->post_title;
 		$this->post_encoded_title = (string) urlencode(esc_attr(strip_tags(stripslashes($post->post_title))));
 		$html = '<!-- Social Ring Buttons Start --><div class="social-ring">'."\n";
-		if($this->options['social_twitter_button'] == 1) {
-			$html .= $this->button_before();
-			$html .= $this->twitter_html();
-			$html .= $this->button_after();	
+		
+		if($this->options['social_visible_buttons_list'] != "")
+		{
+			$sr_buttons = explode("|", $this->options['social_visible_buttons_list']);
+			for($i = 0; $i < count($sr_buttons); $i++)
+			{
+				if($sr_buttons[$i] == 'social_twitter_button') {
+					$html .= $this->button_before();
+					$html .= $this->twitter_html();
+					$html .= $this->button_after();	
+				}
+				elseif($sr_buttons[$i] == 'social_google_button') {
+					$html .= $this->button_before();
+					$html .= $this->google_plus_one_html();
+					$html .= $this->button_after();	
+				}
+				elseif($sr_buttons[$i] == 'social_google_share_button') {
+					$html .= $this->button_before();
+					$html .= $this->google_plus_one_share_html();
+					$html .= $this->button_after();	
+				}
+				elseif($sr_buttons[$i] == 'social_facebook_share_button') {
+					$html .= $this->button_before();
+					$html .= $this->facebook_share_html();
+					$html .= $this->button_after();	
+				}
+				elseif($sr_buttons[$i] == 'social_facebook_like_button') {
+					$html .= $this->button_before();
+					$html .= $this->facebook_like_html();
+					$html .= $this->button_after();
+				}
+				elseif($sr_buttons[$i] == 'social_pin_it_button') {
+					$html .= $this->button_before();
+					$html .= $this->pin_it_html();
+					$html .= $this->button_after();
+				}
+				elseif($sr_buttons[$i] == 'social_linkedin_button') {
+					$html .= $this->button_before();
+					$html .= $this->linkedin_html();
+					$html .= $this->button_after();
+				}
+				elseif($sr_buttons[$i] == 'social_stumble_button') {
+					$html .= $this->button_before();
+					$html .= $this->stumple_upon_html();
+					$html .= $this->button_after();
+				}
+				elseif($sr_buttons[$i] == 'social_print_pdf_email_button') {
+					$html .= $this->button_before();
+					$html .= $this->print_pdf_email_html();
+					$html .= $this->button_after();
+				}
+			}
 		}
-		if($this->options['social_google_button'] == 1) {
-			$html .= $this->button_before();
-			$html .= $this->google_plus_one_html();
-			$html .= $this->button_after();	
-		}
-		if($this->options['social_facebook_share_button'] == 1) {
-			$html .= $this->button_before();
-			$html .= $this->facebook_share_html();
-			$html .= $this->button_after();	
-		}
-		if($this->options['social_facebook_like_button'] == 1) {
-			$html .= $this->button_before();
-			$html .= $this->facebook_like_html();
-			$html .= $this->button_after();
-		}
-		if($this->options['social_pin_it_button'] == 1) {
-			$html .= $this->button_before();
-			$html .= $this->pin_it_html();
-			$html .= $this->button_after();
-		}
-		if($this->options['social_linkedin_button'] == 1) {
-			$html .= $this->button_before();
-			$html .= $this->linkedin_html();
-			$html .= $this->button_after();
-		}
-		if($this->options['social_stumble_button'] == 1) {
-			$html .= $this->button_before();
-			$html .= $this->stumple_upon_html();
-			$html .= $this->button_after();
-		}
+	
 		$html .= '</div>';
-		$html .= '<div style="clear:both;">&nbsp;</div><!-- Social Ring Buttons End -->'."\n";
+		$html .= '<!-- Social Ring Buttons End -->'."\n";
 		return $html;
 		
 	}
@@ -185,7 +330,7 @@ class WordPress_Social_Ring {
 	}
 	
 	function twitter_html() {
-		$twitter_html = '<a href="http://twitter.com/share" lang="'.$this->options['twitter_language'].'" data-url="'.$this->post_url.'" data-text="'.$this->post_title.'" ';
+		$twitter_html = '<a rel="nofollow" href="http://twitter.com/share" lang="'.$this->options['twitter_language'].'" data-url="'.$this->post_url.'" data-text="'.$this->post_title.'" ';
 		if($this->options['button_counter'] == "horizontal") {
 			$twitter_html .= 'data-count="horizontal"';
 		} elseif($this->options['button_counter'] == "vertical") {
@@ -198,7 +343,7 @@ class WordPress_Social_Ring {
 	}
 	
 	function google_plus_one_html() {
-		$google_html = '<div class="g-plusone" ';
+		$google_html = '<div class="g-plusone" data-href="' . $this->post_url . '" ';
 		if($this->options['button_counter'] == "horizontal") {
 			$google_html .= 'data-size="medium" ';
 		} elseif($this->options['button_counter'] == "vertical") {
@@ -210,28 +355,33 @@ class WordPress_Social_Ring {
 		return $google_html;
 	}
 	
-	function facebook_share_html() {
-		$fb_share_html = '<fb:share-button expr:href="'.$this->post_url.'" width="140" ';
+	function google_plus_one_share_html() {
+		$google_share_html = '<div class="g-plus" data-annotation="bubble" data-action="share" data-href="' . $this->post_url . '" ';
 		if($this->options['button_counter'] == "horizontal") {
-			$fb_share_html .= 'type="button_count"';
+			$google_share_html .= 'data-size="medium" ';
 		} elseif($this->options['button_counter'] == "vertical") {
-			$fb_share_html .= 'type="box_count"';
+			$google_share_html .= 'data-size="tall" ';
 		} elseif($this->options['button_counter'] == "none") {
-			$fb_share_html .= 'type="button"';
+			$google_share_html .= 'data-size="medium" data-annotation="none" ';
 		}
-		$fb_share_html .= '></fb:share>';
+		$google_share_html .= '></div>';
+		return $google_share_html;
+	}
+	
+	function facebook_share_html() {
+		$fb_share_lang = "share";
+		if( $this->options['facebook_language'] == "it_IT" ) {
+			$fb_share_lang = "condividi";
+		}
+		$fb_share_html = '<a href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]='.$this->post_url.'" target="_blank"
+							onclick="window.open(\'https://www.facebook.com/sharer/sharer.php?s=100&p[url]='.$this->post_url.'\', \'newwindow\', \'width=600, height=450\'); return false;" >
+							<img style="display:block; background: none; padding: 0px; border:0px;" src="' . plugins_url('../admin/images/sr-fb-' . $fb_share_lang . '.png', __FILE__) . '" alt="' . __('Share') . '"/>
+						</a>';
 		return $fb_share_html;
 	}
  	
 	function facebook_like_html() {
-		if($this->options['social_facebook_send_button'] == 1) {
-			$send = 'true';
-			$width = 180;
-		} else {
-			$send = 'false';
-			$width = 140;
-		}
-		$fb_like_html = '<fb:like href="'.$this->post_url.'" width="'.$width.'" send="'.$send.'" showfaces="false" ';
+		$fb_like_html = '<fb:like href="'.$this->post_url.'" showfaces="false" ';
 		if($this->options['button_counter'] == "vertical") {
 			$fb_like_html .= 'layout="box_count"';
 		} else {
@@ -242,7 +392,7 @@ class WordPress_Social_Ring {
 	}
 	
 	function pin_it_html() {
-		$pin_it_html = '<a href="http://pinterest.com/pin/create/button/?url='.$this->post_encoded_url;
+		$pin_it_html = '<a rel="nofollow" href="http://pinterest.com/pin/create/button/?url='.$this->post_encoded_url;
 		$image = $this->get_first_image();
 		if($image > '') {
 			$pin_it_html .= '&media='.urlencode($image);
@@ -260,7 +410,7 @@ class WordPress_Social_Ring {
 	}
 	
 	function linkedin_html() {
-		$linkedin_html = '<script src="//platform.linkedin.com/in.js" type="text/javascript"></script><script type="IN/Share" data-url="'.$this->post_encoded_url.'" ';
+		$linkedin_html = '<script src="//platform.linkedin.com/in.js" type="text/javascript"></script><script type="IN/Share" data-url="'.$this->post_url.'" ';
 		if($this->options['button_counter'] == "horizontal") {
 			$linkedin_html .= 'data-counter="right" ';
 		} elseif($this->options['button_counter'] == "vertical") {
@@ -284,6 +434,42 @@ class WordPress_Social_Ring {
 		}
 		$stumble_upon_html .= '></su:badge>';
 		return $stumble_upon_html;
+	}
+	
+	function print_pdf_email_html() {
+		
+		$print_pdf_email_html = '<script>
+						var pfHeaderTagline = \'' . $this->post_title . '\';
+						var pfdisableClickToDel = 0;
+						var pfHideImages = 0;
+						var pfImageDisplayStyle = \'center\';
+						var pfDisablePDF = 0;
+						var pfDisableEmail = 0;
+						var pfDisablePrint = 0;
+						var pfCustomCSS = \'\';
+						var pfBtVersion=\'1\';
+						(function(){var js, pf;pf = document.createElement(\'script\');
+						pf.type = \'text/javascript\';
+						if(\'https:\' == document.location.protocol)
+							{js=\'https://pf-cdn.printfriendly.com/ssl/main.js\'}
+						else
+							{js=\'http://cdn.printfriendly.com/printfriendly.js\'}
+						pf.src=js;document.getElementsByTagName(\'head\')[0].appendChild(pf)})();
+						</script>
+						<a href="http://www.printfriendly.com/print?url=' . $this->post_url . '" 
+							style="color:#6D9F00;text-decoration:none;" 
+							class="printfriendly" onclick="window.print();return false;" 
+							title="Print or Send">';
+						$print_pdf_email_html .= '<img style="background: none; padding: 0px; border:none;-webkit-box-shadow:none;box-shadow:none;margin-right:5px;" border="0" height="20" width="30"
+											src="' . plugins_url('../admin/images/sr-print.png', __FILE__) . '"	alt=""/>';
+						$print_pdf_email_html .= '<img style="background: none; padding: 0px; border:none;-webkit-box-shadow:none;box-shadow:none;margin-right:5px;" border="0" height="20" width="30"
+											src="' . plugins_url('../admin/images/sr-pdf.png', __FILE__) . '" 
+										alt=""/>';
+						$print_pdf_email_html .= '<img style="background: none; padding: 0px; border:none;-webkit-box-shadow:none;box-shadow:none;margin-right:5px;" border="0" height="20" width="30"
+											src="' . plugins_url('../admin/images/sr-email.png', __FILE__) . '" 
+										alt=""/>';
+						$print_pdf_email_html .= '</a>';
+		return $print_pdf_email_html;
 	}
 	
 	function get_first_image() {
@@ -318,8 +504,11 @@ class WordPress_Social_Ring {
 			      $image = $matches[1][0];
 			}
 		}
-
-		return $image;
+		if( ! empty( $image ) ) {
+			return $image;
+		} else {
+			return null;
+		}
 	}
 	
 	/*
@@ -331,31 +520,56 @@ class WordPress_Social_Ring {
 	}
 	
 	function add_footer_js() {
+		if( $this->print_check() == 1 ) {
 	?>
-		<!-- Social Ring JS Start -->
-	<div id="fb-root"></div><script src="http://connect.facebook.net/<?php echo $this->options['facebook_language']; ?>/all.js#xfbml=1"></script>
-	<script type="text/javascript">
-		window.___gcfg = {
-		  lang: '<?php echo $this->options['google_language']; ?>'
-		};
-		(function() {
-			var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-			po.src = 'https://apis.google.com/js/plusone.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-		})();
-	</script>
-	<script type='text/javascript' src='https://apis.google.com/js/plusone.js'></script>
-	<script type='text/javascript' src='http://platform.twitter.com/widgets.js'></script>
-        <script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script>
-	<script type="text/javascript">
-		(function() {
-		  var li = document.createElement('script'); li.type = 'text/javascript'; li.async = true;
-		  li.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//platform.stumbleupon.com/1/widgets.js';
-		  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(li, s);
-		})();
-	</script>
+			<!-- Social Ring JS Start -->
+			<?php
+			if($this->options['social_visible_buttons_list'] != "")
+			{
+				$google_loaded = false;
+				$facebook_loaded = false;
+				$sr_buttons = explode("|", $this->options['social_visible_buttons_list']);
+				for($i = 0; $i < count($sr_buttons); $i++)
+				{
+					if($sr_buttons[$i] == 'social_twitter_button') {
+						echo "<script type='text/javascript' src='http://platform.twitter.com/widgets.js'></script>";
+					}
+					elseif( ( $sr_buttons[$i] == 'social_google_button' || $sr_buttons[$i] == 'social_google_share_button' ) && !$google_loaded ) {
+						$google_loaded = true;
+						echo "<script type=\"text/javascript\">
+								window.___gcfg = {
+								  lang: '" . $this->options['google_language'] . "'
+								};
+								(function() {
+									var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+									po.src = 'https://apis.google.com/js/plusone.js';
+									var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+								})();
+							</script>
+							<script type='text/javascript' src='https://apis.google.com/js/plusone.js'></script>";
+					}
+					elseif( ( $sr_buttons[$i] == 'social_facebook_share_button' || $sr_buttons[$i] == 'social_facebook_like_button' ) && !$facebook_loaded ) {
+						$facebook_loaded = true;
+						echo "<div id=\"fb-root\"></div><script src=\"http://connect.facebook.net/" . $this->options['facebook_language'] . "/all.js#xfbml=1\"></script>";
+					}
+					elseif($sr_buttons[$i] == 'social_pin_it_button') {
+						echo '<script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script>';
+					}
+					elseif($sr_buttons[$i] == 'social_stumble_button') {
+						echo "<script type=\"text/javascript\">
+								(function() {
+								  var li = document.createElement('script'); li.type = 'text/javascript'; li.async = true;
+								  li.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//platform.stumbleupon.com/1/widgets.js';
+								  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(li, s);
+								})();
+							</script>";
+					}
+				}
+			}
+		?>
 		<!-- Social Ring JS End -->
 	<?php
+		}
 	}
 	
 	function print_check() {
@@ -378,19 +592,15 @@ class WordPress_Social_Ring {
 	}
 	
 }
-
 /*
  function social_ring_show() is a template tag.
  It must be used inside the loop
 */
 function social_ring_show() {
-
 	$wp_social = new WordPress_Social_Ring();
 	echo $wp_social->buttons_html();
 	return;
 	
 }
-
-new WordPress_Social_Ring();
-
+$GLOBALS['wp_social_ring'] = new WordPress_Social_Ring();
 ?>

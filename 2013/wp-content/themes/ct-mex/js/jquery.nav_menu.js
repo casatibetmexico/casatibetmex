@@ -5,19 +5,20 @@ var CTNavMenu = Class.create({
 	cur: null,
 	timeout: null,
 	
-	init: function(ob, options) {
+	init: function(ob, options, config) {
 	
 		var me = this;
 	
 		this.ob = jQuery(ob);
-		this.ob.append('<li class="cap" />');
+		
+		if (!config.no_caps) this.ob.append('<li class="cap" />');
 		
 		if (options) {
 	
 		
 			for(var i=0; i<options.length; i++) {
 				var item = options[i];
-				if (i>0) this.ob.append('<li class="separator" />');
+				if (i>0 && !config.no_separator) this.ob.append('<li class="separator" />');
 				var li = jQuery('<li>'+item.label+'</li>');
 							
 				li.addClass('ui');
@@ -41,7 +42,7 @@ var CTNavMenu = Class.create({
 				this.ob.append(li);
 			}
 			
-			this.ob.append('<li class="cap" />');
+			if (!config.no_caps) this.ob.append('<li class="cap" />');
 				
 			this.center();
 			
@@ -140,14 +141,16 @@ var CTNavMenu = Class.create({
 	
 	var methods = {
 	 
-	     init : function( options ) {
+	     init : function( items, options ) {
+	     
+	     	if (!options) options = {};
 	     	     
 	       return this.each(function(){
 	       
 	       		var data = $(this).data('navMenu');
 	             if ( ! data ) {
 		           $(this).data('navMenu', {
-		           	   ob:new CTNavMenu(this, options)
+		           	   ob:new CTNavMenu(this, items, options)
 		           });
 		           data = $(this).data('navMenu');
 		         }				
@@ -161,7 +164,7 @@ var CTNavMenu = Class.create({
   $.fn.navMenu = function(method) {
   
     if ( methods[method] ) {
-      return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+      return methods[method].apply( this, Array.prototype.slice.call( arguments, 2 ));
     } else if ( typeof method === 'object' || ! method ) {
       return methods.init.apply( this, arguments );
     } else {

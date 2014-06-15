@@ -59,7 +59,8 @@ function ct_news_archive_filter($args) {
 		$config['title'] = $args['title'];
 	}	
 	
-	$config['args'] = ct_ctr_query_args($config['args']);
+	if (ct_is_theme('ct-centro') || ct_is_theme('ct-mex')) 
+		$config['args'] = ct_ctr_query_args($config['args'], ct_is_theme('ct-mex'));
 
 	return $config;
 }
@@ -74,6 +75,7 @@ function ct_news_add_meta_boxes($postType) {
 
 	switch($postType) {
 		case 'post':
+		case 'page': 
 			add_meta_box( 
 		        'ct_news_details', 'Detalles', 'ct_news_meta_details',
 		        $postType, 'side', 'core'
@@ -126,7 +128,19 @@ function ct_news_get_latest($limit = 5) {
 	if ($post) {
 		$args['post__not_in'] = array($post->ID);
 	}
-	$args = ct_ctr_query_args($args);
+	
+	if (!ct_is_theme('ct-mex')) {
+		global $domainTheme;
+		$args['tax_query'][] =  array(
+							'taxonomy' => 'site',
+							'field' => 'slug',
+							'terms' => $domainTheme->stylesheet
+							);
+	}
+	
+	
+	if (ct_is_theme('ct-centro') || ct_is_theme('ct-mex')) $args = ct_ctr_query_args($args, ct_is_theme('ct-mex'));
+	
 	$q = new WP_Query($args); 
 	return $q->posts;
 }

@@ -2,256 +2,356 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Social Ring\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-29 00:08+0100\n"
-"PO-Revision-Date: 2012-10-29 00:12+0100\n"
+"POT-Creation-Date: 2014-02-21 13:46+0100\n"
+"PO-Revision-Date: 2014-02-21 13:46+0100\n"
 "Last-Translator: Niccolo Tapparo\n"
 "Language-Team: AlterVista\n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e;esc_attr__;esc_attr_e\n"
 "X-Poedit-Basepath: ../\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/admin.php:168
+#: admin/admin.php:184
 msgid "Social Sharing"
 msgstr "Condivisione Social Network"
 
-#: admin/admin.php:176
+#: admin/admin.php:196
 msgid "Social Network Settings"
 msgstr "Impostazioni Condivisione Social Network"
 
-#: admin/admin.php:185
-msgid "Extra"
-msgstr "Extra"
-
-#: admin/admin.php:188
-msgid "<b>Custom position</b>"
-msgstr "<b>Posizione personalizzata</b>"
-
-#: admin/admin.php:191
-msgid "You can give Social buttons a custom position by calling this function in your theme."
-msgstr "I bottoni social possono essere posizionati a piacere inserendo nel tema il seguente codice:"
-
-#: admin/admin.php:195
-msgid "Pay Attention: it must called <b>inside the loop</b> to work properly!"
-msgstr "Attenzione: deve essere utilizzato <b>all'interno del loop</b> per funzionare correttamente."
-
-#: admin/admin.php:198
-msgid "<b>Shortcode</b>"
-msgstr "<b>Shortcode</b>"
-
-#: admin/admin.php:201
-msgid "You can also place social buttons inside your posts by using the shortcode:"
-msgstr "I bottoni social possono essere anche inseriti all'interno dei post utilizzando il seguente shortcode:"
-
-#: admin/admin.php:206
+#: admin/admin.php:201 admin/admin.php:229
 msgid "Save Changes"
 msgstr "Salva Impostazioni"
 
+#: admin/admin.php:208
+msgid "Extra"
+msgstr "Extra"
+
 #: admin/admin.php:211
+msgid "<b>Custom position</b>"
+msgstr "<b>Posizione personalizzata</b>"
+
+#: admin/admin.php:214
+msgid ""
+"You can give Social buttons a custom position by calling this function in "
+"your theme."
+msgstr ""
+"I bottoni social possono essere posizionati a piacere inserendo nel tema il "
+"seguente codice:"
+
+#: admin/admin.php:218
+msgid "Pay Attention: it must called <b>inside the loop</b> to work properly!"
+msgstr ""
+"Attenzione: deve essere utilizzato <b>all'interno del loop</b> per "
+"funzionare correttamente."
+
+#: admin/admin.php:221
+msgid "<b>Shortcode</b>"
+msgstr "<b>Shortcode</b>"
+
+#: admin/admin.php:224
+msgid ""
+"You can also place social buttons inside your posts by using the shortcode:"
+msgstr ""
+"I bottoni social possono essere anche inseriti all'interno dei post "
+"utilizzando il seguente shortcode:"
+
+#: admin/admin.php:234
 msgid "Help"
 msgstr "Aiuto"
 
-#: admin/admin.php:218
+#: admin/admin.php:241
 msgid "News"
 msgstr "News"
 
-#: admin/admin.php:236
+#: admin/admin.php:261
 msgid "http://en.altervista.org/create-free-blog.html?ref=socialring"
 msgstr "http://it.altervista.org/crea-blog-gratis.php?ref=socialring"
 
-#: admin/admin.php:237
+#: admin/admin.php:262
 msgid "Create your free blog!"
 msgstr "Crea il tuo blog gratis!"
 
-#: admin/admin.php:266
+#: admin/admin.php:291
 msgid "General Settings"
 msgstr "Impostazioni Generali"
 
-#: admin/admin.php:272
+#: admin/admin.php:297
 msgid "Buttons"
 msgstr "Pulsanti"
 
-#: admin/admin.php:279
+#: admin/admin.php:304
+msgid "Preview"
+msgstr "Anteprima"
+
+#: admin/admin.php:311
 msgid "Position"
 msgstr "Posizione"
 
-#: admin/admin.php:286
+#: admin/admin.php:318
 msgid "Show on"
 msgstr "Mostra su"
 
-#: admin/admin.php:293
+#: admin/admin.php:325
 msgid "Counter"
 msgstr "Contatore"
 
-#: admin/admin.php:300
+#: admin/admin.php:332
 msgid "Buttons Language"
 msgstr "Lingua dei Bottoni"
 
-#: admin/admin.php:309
-msgid "Choose sharing buttons position and behavior"
-msgstr "Scegli la posizione e il comportamento dei pulsanti di condivisione sui social network"
+#: admin/admin.php:341
+msgid ""
+"Drag the Available buttons in the area of those Visible to activate them on "
+"your blog"
+msgstr ""
+"Trascina i pulsanti Disponibili nell'area di quelli Visibili per attivarli "
+"sul tuo blog"
 
-#: admin/admin.php:317
+#: admin/admin.php:349
 msgid "Horizontal"
 msgstr "Orizzontale"
 
-#: admin/admin.php:321
+#: admin/admin.php:353
 msgid "Vertical"
 msgstr "Verticale"
 
-#: admin/admin.php:325
+#: admin/admin.php:357
 msgid "None"
 msgstr "Nessuno"
 
-#: admin/admin.php:335
+#: admin/admin.php:367
 msgid "Before content"
 msgstr "Prima del contenuto"
 
-#: admin/admin.php:339
+#: admin/admin.php:371
 msgid "After content"
 msgstr "Dopo il contenuto"
 
-#: admin/admin.php:350
+#: admin/admin.php:440
+msgid "Available Buttons"
+msgstr "Pulsanti Disponibili"
+
+#: admin/admin.php:441
+msgid "Print, PDF, Email"
+msgstr "Stampa, PDF, Email"
+
+#: admin/admin.php:460
+msgid "Visible Buttons"
+msgstr "Pulsanti Visibili"
+
+#: admin/admin.php:496
 msgid "Facebook Like"
 msgstr "Facebook Mi Piace"
 
-#: admin/admin.php:355
-msgid "Facebook Send"
-msgstr "Facebook Invia"
-
-#: admin/admin.php:361
+#: admin/admin.php:501
 msgid "Facebook Share"
 msgstr "Facebook Condividi"
 
-#: admin/admin.php:366
+#: admin/admin.php:506
 msgid "Twitter"
 msgstr "Twitter"
 
-#: admin/admin.php:367
+#: admin/admin.php:507
 msgid "I use WordPress Social Ring on my blog"
 msgstr "Io uso WordPress Social Ring sul mio blog"
 
-#: admin/admin.php:371
+#: admin/admin.php:511
 msgid "Google +1"
 msgstr "Google +1"
 
-#: admin/admin.php:372
-#: admin/admin.php:384
+#: admin/admin.php:512 admin/admin.php:522 admin/admin.php:539
 msgid "http://wordpress.altervista.org/"
 msgstr "http://wordpress.altervista.org/"
 
-#: admin/admin.php:377
+#: admin/admin.php:521
+msgid "Google +1 Share"
+msgstr "Google +1 Condividi"
+
+#: admin/admin.php:532
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: admin/admin.php:383
+#: admin/admin.php:538
 msgid "Pin it"
 msgstr "Pin it"
 
-#: admin/admin.php:384
+#: admin/admin.php:539
 msgid "WordPress tutorials, plugin and themes."
 msgstr "Tutorial WordPress, temi e plugin."
 
-#: admin/admin.php:388
+#: admin/admin.php:543
 msgid "StumbleUpon"
 msgstr "StumbleUpon"
 
-#: admin/admin.php:400
+#: admin/admin.php:548
+msgid "Print"
+msgstr "Stampa"
+
+#: admin/admin.php:553
+msgid "Create PDF"
+msgstr "Crea PDF"
+
+#: admin/admin.php:558
+msgid "Send via Email"
+msgstr "Invia Email"
+
+#: admin/admin.php:576
 msgid "Home"
 msgstr "Home"
 
-#: admin/admin.php:404
+#: admin/admin.php:580
 msgid "Pages"
 msgstr "Pagine"
 
-#: admin/admin.php:408
+#: admin/admin.php:584
 msgid "Posts"
 msgstr "Post"
 
-#: admin/admin.php:412
+#: admin/admin.php:588
 msgid "Categories"
 msgstr "Categorie"
 
-#: admin/admin.php:416
+#: admin/admin.php:592
 msgid "Archive"
 msgstr "Archivi"
 
-#: admin/admin.php:429
+#: admin/admin.php:605
 msgid "LinkedIn, Pin It and StumbleUpon don't support localization"
 msgstr "LinkedIn, Pin It e StumbleUpon non supportano la traduzione"
 
-#: includes/widgets.php:11
-msgid "Use this widget to add Tweet, Facebook Like and Google Plus One to your sidebar"
-msgstr "Usa questo widget per aggiungere il bottoni Tweet, Google +1 e Facebook like alla sidebar"
+#: includes/widgets.php:16
+msgid ""
+"Use this widget to add Tweet, Facebook Like and Google Plus One to your "
+"sidebar"
+msgstr ""
+"Usa questo widget per aggiungere il bottoni Tweet, Google +1 e Facebook like "
+"alla sidebar"
 
-#: includes/widgets.php:17
-msgid "Social Ring Widget"
-msgstr "Widget Social Ring"
+#: includes/widgets.php:22
+msgid "Social Network Buttons - Social Ring"
+msgstr "Social Network Buttons - Social Ring"
 
-#: includes/widgets.php:23
+#: includes/widgets.php:28 includes/widgets.php:176
 msgid "Follow "
 msgstr "Segui "
 
-#: includes/widgets.php:40
+#: includes/widgets.php:45
 msgid "This widget needs a sidebar of 200 pixels or more to display properly"
-msgstr "Il widget ha bisogno di una sidebar di almeno 200 pixel per essere visualizzato correttamente"
+msgstr ""
+"Il widget ha bisogno di una sidebar di almeno 200 pixel per essere "
+"visualizzato correttamente"
 
-#: includes/widgets.php:44
+#: includes/widgets.php:49 includes/widgets.php:198
 msgid "Widget Title"
 msgstr "Titolo Widget"
 
-#: includes/widgets.php:46
+#: includes/widgets.php:51
 msgid "Facebook Like Options"
 msgstr "Impostazioni Facebook Like"
 
-#: includes/widgets.php:50
-#: includes/widgets.php:57
-#: includes/widgets.php:64
+#: includes/widgets.php:55 includes/widgets.php:62 includes/widgets.php:69
 msgid "Url"
 msgstr "Url"
 
-#: includes/widgets.php:53
+#: includes/widgets.php:58
 msgid "Google Plus One Options"
 msgstr "Impostazioni Google +1"
 
-#: includes/widgets.php:60
+#: includes/widgets.php:65
 msgid "Twitter Options"
 msgstr "Impostazioni Twitter"
 
-#: includes/widgets.php:68
+#: includes/widgets.php:73
 msgid "Text"
 msgstr "Testo"
 
-#: includes/widgets.php:72
-#: includes/widgets.php:79
+#: includes/widgets.php:77 includes/widgets.php:84
 msgid "Account"
 msgstr "Account"
 
-#: includes/widgets.php:75
-msgid "Recommend a Twitter account for users to follow after they share content from your website"
+#: includes/widgets.php:80
+msgid ""
+"Recommend a Twitter account for users to follow after they share content "
+"from your website"
 msgstr "Dopo la condivisione, consiglia un account Twitter da seguire"
 
-#: includes/widgets.php:83
+#: includes/widgets.php:88
 msgid "Description"
 msgstr "Descrizione"
 
-#: includes/widgets.php:86
+#: includes/widgets.php:91
 msgid "Style Options"
 msgstr "Impostazioni Grafiche"
 
-#: includes/widgets.php:90
+#: includes/widgets.php:95
 msgid "Button Margin"
 msgstr "Margine bottoni"
 
-#: includes/widgets.php:94
+#: includes/widgets.php:99
 msgid "Widget Padding"
 msgstr "Padding Widget"
 
-#: includes/widgets.php:98
+#: includes/widgets.php:103
 msgid "Border Color"
 msgstr "Colore Bordo"
+
+#: includes/widgets.php:164
+msgid "Use this widget to add the Facebook fanbox to your sidebar"
+msgstr ""
+"Usa questo widget per aggiungere la fanbox di Facebook like alla sidebar"
+
+#: includes/widgets.php:170
+msgid "Facebook Fanpage - Social Ring "
+msgstr "Facebook Fanpage - Social Ring "
+
+#: includes/widgets.php:192
+msgid "This widget needs a sidebar of 300 pixels or more to display properly"
+msgstr ""
+"Il widget ha bisogno di una sidebar di almeno 300 pixel per essere "
+"visualizzato correttamente"
+
+#: includes/widgets.php:204
+msgid "FB Page URL"
+msgstr "URL Pagina FB"
+
+#: includes/widgets.php:213
+msgid "Colorscheme"
+msgstr "Colore"
+
+#: includes/widgets.php:222
+msgid "Show Faces"
+msgstr "Mostra Visi"
+
+#: includes/widgets.php:231
+msgid "Header"
+msgstr "Intestazione"
+
+#: includes/widgets.php:240
+msgid "Stream"
+msgstr "Stream"
+
+#: includes/widgets.php:249
+msgid "Show Border"
+msgstr "Mostra bordi"
+
+#~ msgid "Choose sharing buttons position and behavior"
+#~ msgstr ""
+#~ "Scegli la posizione e il comportamento dei pulsanti di condivisione sui "
+#~ "social network"
+
+#~ msgid "Facebook Send"
+#~ msgstr "Facebook Invia"
+
+#~ msgid "Social Ring Widget"
+#~ msgstr "Widget Social Ring"
+
+#~ msgid "Social Ring Fanbox Widget"
+#~ msgstr "Social Ring Fanbox Widget"
 
 #~ msgid "WordPress Social Ring Settings"
 #~ msgstr "Impostazioni WordPress Social Ring"
@@ -363,9 +463,6 @@ msgstr "Colore Bordo"
 
 #~ msgid "Blogging Sites"
 #~ msgstr "Siti per blog"
-
-#~ msgid "Create blog"
-#~ msgstr "Creare blog"
 
 #~ msgid "Credits settings"
 #~ msgstr "Impostazioni credits"

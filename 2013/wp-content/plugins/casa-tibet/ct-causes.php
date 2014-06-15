@@ -24,7 +24,7 @@ register_post_type('cause', array(	'label' => 'Causas', 'description' => '','pub
 ),) );
 
 
-register_post_type('org', array(	'label' => 'Organizaciones', 'description' => '','public' => true,'show_ui' => true,'show_in_menu' => true,'capability_type' => 'page', 'map_meta_cap' => true, 'hierarchical' => false,'rewrite' => 'organizaciones','query_var' => true,'has_archive' =>false,'menu_position' => 5,'supports' => array('title','editor','thumbnail'),'labels' => array (
+register_post_type('org', array(	'label' => 'Organizaciones', 'description' => '','public' => true,'show_ui' => true,'show_in_menu' => true,'capability_type' => 'page', 'map_meta_cap' => true, 'hierarchical' => false,'rewrite' => 'organizaciones','query_var' => true,'has_archive' =>false,'menu_position' => 5,'supports' => array('title','editor','thumbnail','page-attributes'),'labels' => array (
   'name' => 'Organizaciones',
   'singular_name' => 'Organización',
   'menu_name' => 'Organizaciones',
@@ -72,7 +72,7 @@ function ct_cause_org_archive_filter($args) {
 	$config['args'] = array('post_type'=>'org',
 							'nopaging'=>true,
 							 'order'=>'ASC',
-							 'orderby'=>'title',
+							 'orderby'=>'menu_order title',
 							 'tax_query'=>array(),
 							 'meta_query'=>array());
 	

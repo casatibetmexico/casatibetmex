@@ -1,6 +1,7 @@
 <?php
 global $sbar_args;
-$events = ct_event_get_upcoming($sbar_args['limit']);
+$digest = ct_is_theme('ct-mex');
+$events = ct_event_get_upcoming($sbar_args['limit'], array(), $digest);
 ?>
 <div class="section listing">
 <div class="title" data-href="<?php echo ct_get_permalink('calendario');?>">

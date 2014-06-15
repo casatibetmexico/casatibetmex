@@ -14,7 +14,7 @@ foreach((array) $ct_list as $e) {
 	$event_type = array_pop(wp_get_post_terms( $e->ID, 'event-type' ));
 	$teacher = get_post($meta['ct_teacher'][0]);
 ?>
-	<li class="event_sidebar_item" data-href="<?php echo get_permalink($e->ID); ?>">
+	<li class="event_sidebar_item" data-href="<?php echo ct_get_permalink($e->ID); ?>">
 		<?php 
 		$thumb = ct_event_get_thumbnail($e, 'sidebar-thumb');
 		if ($thumb) : ?><div class="thumbnail ct-image-fader"><?php  echo $thumb; ?></div><?php endif; ?>

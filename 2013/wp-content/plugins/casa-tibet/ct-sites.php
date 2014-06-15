@@ -13,40 +13,45 @@ function ct_site_init() {
 	      'ct-editorial-menu' => __( 'Editorial : Menu Principal' ),
 	      'ct-derechos-menu' => __( 'Altruismo : Menu Principal' ),
 	      'ct-centro-menu' => __( 'Centros : Menu Principal' ),
-	      'ct-mex-menu' => __( 'Casa Tibet México : Menu Principal' )
+	      'ct-mex-menu' => __( 'Casa Tibet México : Menu Principal' ),
+	      'ct-user-menu' => __( 'Usuarios : Menu Principal' )
 	    )
 	);
 	
 register_taxonomy('site',array('post', 'banner'),array( 'hierarchical' => true, 'label' => 'Sitios','show_ui' => true,'query_var' => true,'rewrite' => false, 'singular_label' => 'Sitio') );
+
+register_taxonomy('page_category',array('page'),array( 'hierarchical' => true, 'label' => 'Categorias','show_ui' => true,'query_var' => true,'rewrite' => false, 'singular_label' => 'Categoria') );
  
 }
 
-function ct_site_tag($post) {
+function ct_site_tag($post, $is_user=false) {
+
+	$id = (is_object($post)) ? $post->ID : (int) $post;
 	
 	$css = array('tag', 'right');
 
-	switch($post->post_type) {
-		default:
-			$center = get_post_meta($post->ID, 'ct_center', true);
-			$label = ct_site_name($center);
-			if ($center > 0) {
-				$url = 'http://'.get_post_meta($center, 'ct_center_domain', true);
-				$css[] = 'center';	
-			} else {
-								
-				$site = ct_get_site_for_post($post->ID);
-				if ($site && $site != 'ct-mex') {
-					$d = ct_get_domain_by_theme($site);
-					$url = 'http://'.$d['url'];
-					$label = $d['blogname'];
-					$css[] = $d['theme'];
-				} else {
-					$url = $domainTheme->home;
-				}				
-				
-			}
-			break;
+	$center = ($is_user) ? get_user_meta((int) $id, 'ct_center', true)
+						 : get_post_meta((int) $id, 'ct_center', true);
+	$label = ct_site_name($center);
+
+	if ($center > 0 &&
+		in_array($center, get_option('ct_active_centers'))) {
+		$url = 'http://'.get_post_meta($center, 'ct_center_domain', true);
+		$css[] = 'center';	
+	} else {
+						
+		$site = ct_get_site_for_post($id);
+		if ($site && $site != 'ct-mex') {
+			$d = ct_get_domain_by_theme($site);
+			$url = 'http://'.$d['url'];
+			$label = $d['blogname'];
+			$css[] = $d['theme'];
+		} else {
+			$url = $domainTheme->home;
+		}				
+		
 	}
+
 	return ct_tag($label, $url, $css);
 }
 
@@ -138,12 +143,35 @@ function ct_site_get_current_admin() {
 	if (!current_user_can('administrator') && current_user_can('editor')) {
 		if (current_user_can('ct_editor_edu')) {
 			return 'ct-edu';
+		} else if (current_user_can('ct_editor_alt')) {
+			return 'ct-derechos';
 		} else if (current_user_can('ct_coordinator') || 
 				   current_user_can('ct_facilitator')) {
 			return 'ct-centro';
 		}
 	} else {
 		return 'ct-mex';
+	}
+}
+
+function ct_site_get_page_category() {
+	$site = ct_site_get_current_admin();
+	switch($site) {
+		case 'ct-edu':
+			return 'cat-educacion';
+			break;
+		case 'ct-derechos':
+			return 'cat-altruismo';
+			break;
+		case 'ct-editorial':
+			return 'cat-editorial';
+			break;
+		case 'ct-centro':
+			return 'cat-sanghas';
+			break;
+		default:
+			return array('cat-casa-tibet', 'cat-sistema');
+			break;
 	}
 }
 

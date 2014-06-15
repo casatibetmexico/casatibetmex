@@ -16,6 +16,16 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 	<div class="page_content">
 		<?php ct_sidebar('social-share'); ?>
 		<?php the_content(); ?>
+		
+		<?php $events = ct_teacher_get_events($post->ID); ?>
+		<?php if ($events) : ?>
+		<div class="section" style="margin-top:25px;">
+			<div class="title"><?php _e('Cursos Impartido'); ?></div>
+			<ul class="listing teacher-listing">
+			<?php ct_listing('teacher-events', $events); ?>
+			</ul>
+		</div>
+		<?php endif; ?>
 	</div>
 </div>
 <?php endwhile; endif; ?>

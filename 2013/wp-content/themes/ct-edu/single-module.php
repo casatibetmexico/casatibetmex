@@ -46,12 +46,13 @@ $module = $post;
 			$q = new WP_Query('post_type=page&name=cursos');
 			$parts[] = $q->post;
 			$parts[] = get_post($_GET['ref']);
-						
+			
+									
 			$parents = array();
 			ct_mod_get_parents($module, $parents, get_post_meta($_GET['ref'], 'ct_course_materials', true));
 			if ($parents) {
 				$parents = array_reverse($parents);
-				foreach($parents as $p) {
+				foreach((array) $parents as $p) {
 					$parts[] = $p;
 				}
 			}

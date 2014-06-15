@@ -1,0 +1,18 @@
+[19-Aug-2013 20:49:50] PHP Fatal error:  Call to undefined function  get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[26-Aug-2013 01:50:34] PHP Fatal error:  Call to undefined function  get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[26-Aug-2013 02:26:16] PHP Fatal error:  Call to undefined function  get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[03-Oct-2013 13:22:59] PHP Fatal error:  Call to undefined function  get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[03-Oct-2013 17:09:30] PHP Fatal error:  Call to undefined function  get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[06-Nov-2013 15:55:00] PHP Fatal error:  Call to undefined function  get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[19-Nov-2013 11:48:47] PHP Fatal error:  Call to undefined function  get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[03-Dec-2013 15:29:51] PHP Fatal error:  Call to undefined function  get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[08-Jan-2014 17:31:20 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[21-Jan-2014 08:11:17 America/Chicago] PHP Fatal error:  Call to undefined function get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[11-Feb-2014 18:42:21 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[18-Feb-2014 17:11:12 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[25-Feb-2014 12:22:02 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[14-Mar-2014 11:25:09 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[19-Mar-2014 11:10:40 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[01-Apr-2014 19:56:01 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[22-Apr-2014 11:24:59 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3
+[03-Jun-2014 19:13:20 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/casatibe/public_html/2013/wp-content/themes/ct-mex/index.php on line 3

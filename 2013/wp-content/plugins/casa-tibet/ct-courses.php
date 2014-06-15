@@ -29,7 +29,7 @@ register_taxonomy('course-type',array('course', 'study-group'),array( 'hierarchi
 
 register_taxonomy('course-program',array('course'),array( 'hierarchical' => true, 'label' => 'Programas','show_ui' => true,'query_var' => true,'rewrite' => true, 'singular_label' => 'Programa') );
 
-register_post_type('study-group', array(	'label' => 'Grupos', 'description' => '','public' => true,'show_ui' => true,'show_in_menu' => true,'capability_type' => 'study-group', 'map_meta_cap' => true, 'hierarchical' => true,'rewrite' => 'study-group','query_var' => true,'has_archive' => false,'menu_position' => 5,'supports' => array('title'),'labels' => array (
+register_post_type('study-group', array(	'label' => 'Grupos', 'description' => '','public' => true,'show_ui' => true,'show_in_menu' => true,'capability_type' => 'study-group', 'map_meta_cap' => true, 'hierarchical' => true,'rewrite' => 'study-group','query_var' => true,'has_archive' => false,'menu_position' => 5,'supports' => array('title', 'excerpt'),'labels' => array (
   'name' => 'Grupos',
   'singular_name' => 'Grupo',
   'menu_name' => 'Grupos',
@@ -102,8 +102,45 @@ function ct_course_add_meta_boxes($postType) {
 		    );
 		    
 		    add_meta_box( 
-		        'ct_course_materials', 'Materiales', 'ct_course_meta_materials',
+		        'ct_course_objectives', 'Objetivos', 'ct_course_meta_objectives',
 		        $postType, 'normal' 
+		    );
+		    
+		    /*
+add_meta_box( 
+		        'ct_course_structure', 'Estructura', 'ct_course_meta_structure',
+		        $postType, 'normal' 
+		    );
+*/
+		    
+		    add_meta_box( 
+		        'ct_course_sessions', 'Sesiones', 'ct_course_meta_sessions',
+		        $postType, 'normal' 
+		    );
+		    
+		    add_meta_box( 
+		        'ct_course_meditations', 'Meditaciones', 'ct_course_meta_meditations',
+		        $postType, 'normal' 
+		    );
+		    
+		    add_meta_box( 
+		        'ct_course_practice', 'Para la Vida Cotidiana', 'ct_course_meta_practice',
+		        $postType, 'normal' 
+		    );
+		    
+		    add_meta_box( 
+		        'ct_course_resources', 'Recursos', 'ct_course_meta_resources',
+		        $postType, 'normal' 
+		    );
+		    
+		    add_meta_box( 
+		        'ct_course_biblio', 'Bibliografía', 'ct_course_meta_biblio',
+		        $postType, 'normal' 
+		    );
+		    
+		    add_meta_box( 
+		        'ct_course_materials', 'Materiales', 'ct_course_meta_materials',
+		        $postType, 'normal', 'low' 
 		    );
 		    
 			break;
@@ -115,6 +152,15 @@ function ct_course_add_meta_boxes($postType) {
 			    );
 			}
 			
+			add_meta_box( 'ct_study_details', 'Detalles', 'ct_study_meta_details', 
+		    			  $postType, 'normal' ); 
+			
+			add_meta_box( 'ct_study_schedule', 'Horario', 'ct_study_meta_schedule', 
+		    			  $postType, 'normal' ); 
+		    			  
+		    
+			
+			/*
 		    $g_id = get_post_meta($post->ID, 'ct_group_id', true);
 		    if ($g_id) {
 		    	add_meta_box( 'ct_study_add_members', 'Añadir Nuevos Miembros', 'ct_ctr_meta_add_member', 
@@ -123,15 +169,155 @@ function ct_course_add_meta_boxes($postType) {
 			        'ct_study_members', 'Miembros', 'ct_ctr_meta_members',
 			        $postType, 'normal' 
 			    );
-		    }
+		    }*/
 		    
+		    /*
 		    add_meta_box(
 		    	'ct_study_courses', 'Cursos:', 'ct_study_meta_courses',
 		        $postType, 'normal'
-		    );
+		    );*/
 			break;
 
 	}
+}
+
+function ct_course_meta_objectives($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_noncename' );
+	$info = html_entity_decode(get_post_meta($post->ID, 'ct_course_objectives',true)); 	
+	wp_editor($info, 'objectivescontent', 
+			  array('tinymce'=>true, 'wpautop'=>false,
+			  		'textarea_name'=>'objectivescontent', 'teeny'=>false));
+}
+
+function ct_course_meta_structure($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_noncename' );
+	$info = html_entity_decode(get_post_meta($post->ID, 'ct_course_structure',true)); 	
+	wp_editor($info, 'structurecontent', 
+			  array('tinymce'=>true, 'wpautop'=>false,
+			  		'textarea_name'=>'structurecontent', 'teeny'=>false));
+}
+
+function ct_course_meta_sessions($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_noncename' );
+	$info = html_entity_decode(get_post_meta($post->ID, 'ct_course_sessions',true)); 	
+	wp_editor($info, 'sessionscontent', 
+			  array('tinymce'=>true, 'wpautop'=>false,
+			  		'textarea_name'=>'sessionscontent', 'teeny'=>false));
+}
+
+function ct_course_meta_meditations($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_noncename' );
+	$info = html_entity_decode(get_post_meta($post->ID, 'ct_course_meditations',true)); 	
+	wp_editor($info, 'meditationscontent', 
+			  array('tinymce'=>true, 'wpautop'=>false,
+			  		'textarea_name'=>'meditationscontent', 'teeny'=>false));
+}
+
+function ct_course_meta_practice($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_noncename' );
+	$info = html_entity_decode(get_post_meta($post->ID, 'ct_course_practice',true)); 	
+	wp_editor($info, 'practicecontent', 
+			  array('tinymce'=>true, 'wpautop'=>false,
+			  		'textarea_name'=>'practicecontent', 'teeny'=>false));
+}
+
+function ct_course_meta_resources($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_noncename' );
+	$info = html_entity_decode(get_post_meta($post->ID, 'ct_course_resources',true)); 	
+	wp_editor($info, 'resourcescontent', 
+			  array('tinymce'=>true, 'wpautop'=>false,
+			  		'textarea_name'=>'resourcescontent', 'teeny'=>false));
+}
+
+function ct_course_meta_biblio($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_noncename' );
+	$info = html_entity_decode(get_post_meta($post->ID, 'ct_course_biblio',true)); 	
+	wp_editor($info, 'bibliocontent', 
+			  array('tinymce'=>true, 'wpautop'=>false,
+			  		'textarea_name'=>'bibliocontent', 'teeny'=>false));
+}
+
+
+
+function ct_study_meta_details($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_course_noncename' );
+
+	$level = get_post_meta($post->ID, 'ct_group_level', true);
+	$locations = ct_ctr_get_locations(); 
+	$loc = get_post_meta($post->ID, 'ct_group_location', true);
+?>
+
+	<table class="event_form">
+		<tr>
+			<td><label><?php _e('Ubicación: ');?></label></td>
+			<td><select id="group_loc" name="ct_group_location" style="width:100%;">
+				<?php foreach ((array) $locations as $index=>$l) : ?>
+				<option value="<?php echo $index; ?>"><?php echo $l['name']; ?></option>
+				<?php endforeach; ?>
+			</select></div>
+			</td>
+		</tr>
+		<tr>
+			<td><label><?php _e('Nivel de Acceso: ');?></label></td>
+			<td><select id="group_level" name="ct_group_level" style="width:50%;">
+				<option value="0"><?php _e('Abierto al Público'); ?></option>
+				<option value="1"><?php _e('Alumnos Regulares'); ?></option>
+			</select></div>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			jQuery('#group_loc').val(<?php echo (int) $loc; ?>);
+			jQuery('#group_level').val(<?php echo (int) $level; ?>);
+		});
+	</script>
+<?php
+}
+
+function ct_study_meta_schedule($post) {
+	wp_nonce_field( plugin_basename( __FILE__ ), 'ct_course_noncename' );
+
+	$weekday = get_post_meta($post->ID, 'ct_group_weekday', true);	
+	$start = get_post_meta($post->ID, 'ct_group_start', true);
+	$end = get_post_meta($post->ID, 'ct_group_end', true);
+?>
+
+	<table class="event_form">
+		<tr>
+			<td><label><?php _e('Día: ');?></label></td>
+			<td><select id="group_weekday" name="ct_group_weekday" style="width:100px;">
+				<option value="0"><?php _e('Lunes'); ?></option>
+				<option value="1"><?php _e('Martes'); ?></option>
+				<option value="2"><?php _e('Miercoles'); ?></option>
+				<option value="3"><?php _e('Jueves'); ?></option>
+				<option value="4"><?php _e('Viernes'); ?></option>
+				<option value="5"><?php _e('Sabado'); ?></option>
+				<option value="6"><?php _e('Domingo'); ?></option>
+			</select></div>
+			</td>
+		</tr>
+		<tr>
+			<td><label><?php _e('Hora de Inicio: ');?></label></td>
+			<td><div class="time_picker"><input type="text" name="ct_group_start" class="custom"
+				value="<?php echo $start; ?>" ></div>
+			</td>
+		</tr>
+		<tr>
+			<td><label><?php _e('Hora de Terminación: ');?></label></td>
+			<td><div class="time_picker"><input type="text" name="ct_group_end" class="custom"
+				value="<?php echo $end; ?>" ></div>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			jQuery('#group_weekday').val(<?php echo (int) $weekday; ?>);
+		    jQuery('.time_picker').timepicker();
+			
+		});
+	</script>
+<?php
 }
 
 function ct_study_meta_courses($post) {
@@ -268,25 +454,73 @@ function ct_course_create_forum($post_id) {
 add_action( 'save_post', 'ct_course_save_postdata' );
 function ct_course_save_postdata( $post_id ) {
 	
+    global $post_type;
+	
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
     	return;
   	if ( ( isset ( $_POST['ct_course_noncename'] ) ) && 
   		 ( ! wp_verify_nonce( $_POST['ct_course_noncename'], plugin_basename( __FILE__ ) ) ) )
     	return;
-	
-	if ($_POST['ct_course_use_community']) {
-		ct_course_activate_community($post_id);
-	} else {
-		ct_course_deactivate_community($post_id);
+  
+	switch($post_type) {
+		case 'study-group':
+			if (isset($_POST['ct_group_level'])) {
+				update_post_meta($post_id, 'ct_group_level', $_POST['ct_group_level']);
+			}
+			if (isset($_POST['ct_group_location'])) {
+				update_post_meta($post_id, 'ct_group_location', $_POST['ct_group_location']);
+			}
+			if (isset($_POST['ct_group_weekday'])) {
+				update_post_meta($post_id, 'ct_group_weekday', $_POST['ct_group_weekday']);
+			}
+			if (isset($_POST['ct_group_start'])) {
+				update_post_meta($post_id, 'ct_group_start', $_POST['ct_group_start']);
+			}
+			if (isset($_POST['ct_group_end'])) {
+				update_post_meta($post_id, 'ct_group_end', $_POST['ct_group_end']);
+			}
+			break;
+		default:
+			if ($_POST['ct_course_use_community']) {
+				ct_course_activate_community($post_id);
+			} else {
+				ct_course_deactivate_community($post_id);
+			}
+			
+			if (isset($_POST['objectivescontent'])) {  
+			  	update_post_meta($post_id, 'ct_course_objectives', $_POST['objectivescontent']);
+			}
+			if (isset($_POST['structurecontent'])) {  
+			  	update_post_meta($post_id, 'ct_course_structure', $_POST['structurecontent']);
+			}
+			if (isset($_POST['sessionscontent'])) {  
+			  	update_post_meta($post_id, 'ct_course_sessions', $_POST['sessionscontent']);
+			}
+			if (isset($_POST['objectivescontent'])) {  
+			  	update_post_meta($post_id, 'ct_course_meditations', $_POST['meditationscontent']);
+			}
+			if (isset($_POST['practicecontent'])) {  
+			  	update_post_meta($post_id, 'ct_course_practice', $_POST['practicecontent']);
+			}
+			if (isset($_POST['resourcescontent'])) {  
+			  	update_post_meta($post_id, 'ct_course_resources', $_POST['resourcescontent']);
+			}
+			if (isset($_POST['bibliocontent'])) {  
+			  	update_post_meta($post_id, 'ct_course_biblio', $_POST['bibliocontent']);
+			}
+			
+			if (isset($_POST['ct_course_materials'])) {
+				update_post_meta($post_id, 'ct_course_materials', $_POST['ct_course_materials']);
+			}
+			
+			if (isset($_POST['ct_study_courses'])) {
+				update_post_meta($post_id, 'ct_study_courses', $_POST['ct_study_courses']);
+			}
+			break;
+		
 	}
 	
-	if (isset($_POST['ct_course_materials'])) {
-		update_post_meta($post_id, 'ct_course_materials', $_POST['ct_course_materials']);
-	}
 	
-	if (isset($_POST['ct_study_courses'])) {
-		update_post_meta($post_id, 'ct_study_courses', $_POST['ct_study_courses']);
-	}
 	
 	
 	
@@ -313,7 +547,7 @@ function ct_study_insert_post($post_id) {
 						   'status'=>'hidden',
 						   'enable_forum'=>0,
 						   'date_created'=>current_time('mysql'));
-				$g_id = groups_create_group($group);
+				// TODO: $g_id = groups_create_group($group);
 				if ($g_id) {
 					update_post_meta($post_id, 'ct_group_id', $g_id);
 					groups_update_groupmeta( $g_id, 'total_member_count', 1 );
@@ -337,6 +571,50 @@ function ct_course_delete_post($post_id) {
 			break;
 	}
 }
+
+/* FILTERS *****************************************************/
+
+function ct_group_archive_filter($args) {
+									
+	$config = array();
+	$config['args'] = array('post_type'=>'study-group',
+							'nopaging'=>true,
+							 'order'=>'ASC',
+							 'orderby'=>'meta_value',
+							 'meta_key'=>'ct_group_start',
+							 'tax_query'=>array(),
+							 'meta_query'=>array());
+							 
+	$config['title'] = ($args['title']) ? $args['title'] : __('Grupos de Estudio');
+	$config['no_results'] = __('Actualmente no se encuentra ningun grupo en esta categoria.');
+							 
+	if ($args['course-type'] && $args['course-type'] != 'all') {
+		$config['args']['tax_query'][] = array(
+							'taxonomy' => 'course-type',
+							'field' => 'slug',
+							'terms' => $args['course-type']
+							);	
+	}
+
+	if (isset($args['loc']) && $args['loc'] != 'all') {
+	
+		$config['args']['meta_query'][] = array(
+							'key' => 'ct_group_location',
+							'value' => $args['loc']
+							);	
+	}
+	
+	if (isset($args['level']) && $args['level'] != 'all') {
+	
+		$config['args']['meta_query'][] = array(
+							'key' => 'ct_group_level',
+							'value' => $args['level']
+							);	
+	}
+
+	return $config;
+}
+add_filter('ct_archive-study-group', 'ct_group_archive_filter', 10, 1);
 
 /** SHORTCODES ***********************************************************/
 

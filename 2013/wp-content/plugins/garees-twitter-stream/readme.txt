@@ -3,7 +3,7 @@ Contributors: garee
 Donate link: http://www.garee.ch/wordpress/garees-twitter-stream/
 Tags: twitter, tweets
 Requires at least: 3.0.0
-Tested up to: 3.3.1
+Tested up to: 3.5.2
 Stable tag: trunk
 
 Flexibly integrate tweets on your blog.
@@ -13,6 +13,8 @@ Flexibly integrate tweets on your blog.
 The output is generated from template-files or your own templates, which you can write with Mustache.
 
 For more information check out the official [plugin-site](http://www.garee.ch/wordpress/garees-twitter-stream/)
+
+**Now with support for Twitter REST API version 1.1**
 
 
 Main-advantages:
@@ -32,7 +34,8 @@ Use shortcode-options to further customize which tweets and how they should be d
 1. Download the plugin and unzip it
 1. Upload the entire folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Goto the new plugin-page 'Garee's Twitter Stream' to get your shortcode
+1. Goto the new plugin-page 'Garee's Twitter Stream' and set up access to Twitter
+1. Get your shortcode
 1. Place the shortcode anywhere in your blog
 
 == Screenshots ==
@@ -48,6 +51,10 @@ Use shortcode-options to further customize which tweets and how they should be d
 
 
 == Changelog ==
+
+= 1.1 =
+* Twitter API 1.1 (with twitteroauth)
+* Mustache.php version 1.1.0
 
 = 1.0 =
 * Mustache.php version 0.9.0
@@ -75,6 +82,9 @@ Use shortcode-options to further customize which tweets and how they should be d
 * FIX: load default-css if template-option is missing
 
 == Upgrade Notice ==
+
+= 1.1 =
+With Twitter API 1.1 all requests are authenticated. Therefore a twitter-account is needed! Grant the plugin access on the plugin-settings page in the admin-section of your wordpress-installation.
 
 = 1.0 =
 There's a bug in version 0.9 that prevents cache from working!

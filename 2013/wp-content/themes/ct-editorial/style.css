@@ -2,11 +2,10 @@
 Theme Name: Casa Tibet : Editorial
 Author: Joe Flumerfelt
 Template: ct-mex
-Version: 0.1
+Version: 1.0
 */
 
 @import url("../ct-mex/style.css");
-
 
 /** STANDARD LAYOUT STYLES *****************************/
 
@@ -15,6 +14,10 @@ a {
 }
 
 /** HEADER **********************************************/
+
+#rm-header.interior {
+	height:74px;
+}
 
 .header .img {
 	background-image:url(img/ct_header_variants_yellow.png);
@@ -27,6 +30,10 @@ a {
 }
 .nav_bar .menu li.on {
 	background:#efa911;
+}
+
+#rm-header.interior .main_menu {
+	border-top: 8px solid #efa911;
 }
 
 .main_menu li.on,
@@ -150,8 +157,13 @@ a {
 
 /** PUBLICATIONS *******************************************/
 
+.publication .head_wrapper {
+	padding-bottom:60px;
+}
+
 .publication .page_header h1 {
 	padding-bottom:5px;
+	line-height:1.1;
 }
 .publication .page_header h4 {
 	/* font-family:inherit; */
@@ -180,7 +192,7 @@ a {
 .publication .page_header p.author {
 	margin-top:0px;
 	font-size:12px;
-	margin-bottom:25px;
+	margin-bottom:10px;
 	line-height:1.2;
 }
 

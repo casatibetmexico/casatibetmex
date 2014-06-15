@@ -1,0 +1,1 @@
+[06-Nov-2013 15:55:00] PHP Fatal error:  Call to undefined function  get_header() in /home1/casatibe/public_html/2013/wp-content/themes/ct-derechos/index.php on line 3

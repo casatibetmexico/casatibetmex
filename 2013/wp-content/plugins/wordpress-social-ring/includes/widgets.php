@@ -5,6 +5,11 @@ function SocialRing_Widget_loader() {
 	register_widget('SocialRing_Widget');
 }
 
+add_action('widgets_init', 'SocialRing_Fanbox_Widget_loader');
+function SocialRing_Fanbox_Widget_loader() {
+	register_widget('SocialRing_Fanbox_Widget');
+}
+
 class SocialRing_Widget extends WP_Widget {
 	function SocialRing_Widget() {
 		/* Widget settings. */
@@ -14,7 +19,7 @@ class SocialRing_Widget extends WP_Widget {
 		$control_ops = array('id_base' => 'social_ring_widget');
 
 		/* Create the widget. */
-		$this->WP_Widget('social_ring_widget', __('Social Ring Widget', WP_SOCIAL_RING), $widget_ops, $control_ops );
+		$this->WP_Widget('social_ring_widget', __('Social Network Buttons - Social Ring', WP_SOCIAL_RING), $widget_ops, $control_ops );
 	}
 
 function form($instance) {
@@ -144,6 +149,161 @@ function form($instance) {
 		
 		<div class="clear"></div>
 	</div>
+	<!-- Social Ring Widget JS Start -->
+	<script type='text/javascript' src='http://platform.twitter.com/widgets.js'></script>
+	<script type=\"text/javascript\">
+		window.___gcfg = {
+		  lang: '<?php echo $this->options['google_language']; ?>'
+		};
+		(function() {
+			var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+			po.src = 'https://apis.google.com/js/plusone.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		})();
+	</script>
+	<script type='text/javascript' src='https://apis.google.com/js/plusone.js'></script>
+	<div id="fb-root"></div><script src="http://connect.facebook.net/it_IT/all.js#xfbml=1"></script>
+	<!-- Social Ring Widget JS End -->
+<?php
+	echo $after_widget."\n";
+	}
+}
+
+
+// SOCIALRING FANBOX FACEBOOK
+
+
+class SocialRing_Fanbox_Widget extends WP_Widget {
+	function SocialRing_Fanbox_Widget() {
+		/* Widget settings. */
+		$widget_ops = array('classname' => 'SocialRing_Fanbox_Widget', 'description' => __('Use this widget to add the Facebook fanbox to your sidebar', 'WP_FANBOX_SOCIAL_RING'));
+
+		/* Widget control settings. */
+		$control_ops = array('id_base' => 'social_ring_fanbox_widget');
+
+		/* Create the widget. */
+		$this->WP_Widget('social_ring_fanbox_widget', __('Facebook Fanpage - Social Ring ', 'WP_FANBOX_SOCIAL_RING'), $widget_ops, $control_ops );
+	}
+
+function form($instance) {
+		
+		$defaults = array( 
+				'widget_title' => __('Follow ', 'WP_FANBOX_SOCIAL_RING').get_bloginfo('name'),
+				'data-href' => get_bloginfo('url'),
+				'data-color-scheme' => 'light',
+				'data-show-faces' => 'true',
+				'data-header' => 'true',
+				'data-stream' => 'false',
+				'data-show-border' => 'true',
+				'border_color' => 'D0D0D0',
+				'box_padding' => 20,
+				'button_margin' => 8
+			);
+		
+		$instance = wp_parse_args( (array) $instance, $defaults );
+		
+		
+		?>
+		<p><i><?php _e('This widget needs a sidebar of 300 pixels or more to display properly','WP_FANBOX_SOCIAL_RING'); ?></i></p>	
+		   <p>
+			<ul>
+				<?php // WIDGET TITLE ?>
+				<li>
+				<input id="<?php echo $this->get_field_id('widget_title'); ?>" name="<?php echo $this->get_field_name('widget_title'); ?>" type="text" value="<?php echo $instance['widget_title']; ?>" />
+				<label><?php _e('Widget Title','WP_FANBOX_SOCIAL_RING'); ?></label>
+				</li>
+				
+				<?php // FB PAGE URL ?>
+				<li>
+				<input id="<?php echo $this->get_field_id('data-href'); ?>" name="<?php echo $this->get_field_name('data-href'); ?>" type="text" value="<?php echo $instance['data-href']; ?>" />
+				<label><?php _e('FB Page URL','WP_FANBOX_SOCIAL_RING'); ?></label>
+				</li>
+				
+				<?php // COLORSCHEME ?>
+				<li>
+				<select id="<?php echo $this->get_field_id('data-color-scheme'); ?>" name="<?php echo $this->get_field_name('data-color-scheme'); ?>" >
+					<option <?php if($instance['data-color-scheme'] == 'light') { echo 'selected="selected"'; } ?> value="light" >Light</option>
+					<option <?php if($instance['data-color-scheme'] == 'dark') { echo 'selected="selected"'; } ?> value="dark" >Dark</option>
+				</select>
+				<label><?php _e('Colorscheme','WP_FANBOX_SOCIAL_RING'); ?></label>
+				</li>
+				
+				<?php // SHOW FACES ?>
+				<li>
+				<select id="<?php echo $this->get_field_id('data-show-faces'); ?>" name="<?php echo $this->get_field_name('data-show-faces'); ?>" >
+					<option <?php if($instance['data-show-faces'] == 'true') { echo 'selected="selected"'; } ?> value="true" >True</option>
+					<option <?php if($instance['data-show-faces'] == 'false') { echo 'selected="selected"'; } ?> value="false" >False</option>
+				</select>								
+				<label><?php _e('Show Faces','WP_FANBOX_SOCIAL_RING'); ?></label>
+				</li>
+				
+				<?php // HEADER ?>
+				<li>
+				<select id="<?php echo $this->get_field_id('data-header'); ?>" name="<?php echo $this->get_field_name('data-header'); ?>" >
+					<option <?php if($instance['data-header'] == 'true') { echo 'selected="selected"'; } ?> value="true" >True</option>
+					<option <?php if($instance['data-header'] == 'false') { echo 'selected="selected"'; } ?> value="false" >False</option>
+				</select>								
+				<label><?php _e('Header','WP_FANBOX_SOCIAL_RING'); ?></label>
+				</li>
+				
+				<?php // STREAM ?>
+				<li>
+				<select id="<?php echo $this->get_field_id('data-stream'); ?>" name="<?php echo $this->get_field_name('data-stream'); ?>" >
+					<option <?php if($instance['data-stream'] == 'true') { echo 'selected="selected"'; } ?> value="true" >True</option>
+					<option <?php if($instance['data-stream'] == 'false') { echo 'selected="selected"'; } ?> value="false" >False</option>
+				</select>								
+				<label><?php _e('Stream','WP_FANBOX_SOCIAL_RING'); ?></label>
+				</li>
+				
+				<?php // SHOW BORDER ?>
+				<li>
+				<select id="<?php echo $this->get_field_id('data-show-border'); ?>" name="<?php echo $this->get_field_name('data-show-border'); ?>" >
+					<option <?php if($instance['data-show-border'] == 'true') { echo 'selected="selected"'; } ?> value="true" >True</option>
+					<option <?php if($instance['data-show-border'] == 'false') { echo 'selected="selected"'; } ?> value="false" >False</option>
+				</select>								
+				<label><?php _e('Show Border','WP_FANBOX_SOCIAL_RING'); ?></label>
+				</li>
+			</ul>
+		   </p>
+		
+		<?php
+		
+	}
+	
+	function update($new_instance, $old_instance) {
+		// processes widget options to be saved
+		$instance = $old_instance;
+		$instance['widget_title'] = strip_tags( $new_instance['widget_title'] );
+		$instance['data-href'] = strip_tags( $new_instance['data-href'] );
+		$instance['data-color-scheme'] = strip_tags( $new_instance['data-color-scheme'] );
+		$instance['data-show-faces'] = strip_tags( $new_instance['data-show-faces'] );
+		$instance['data-header'] = strip_tags( $new_instance['data-header'] );
+		$instance['data-stream'] = strip_tags( $new_instance['data-stream'] );
+		$instance['data-show-border'] = strip_tags( $new_instance['data-show-border'] );
+		return $instance;
+	}
+
+	// outputs the content of the widget
+	function widget($args, $instance) {
+	extract($args);
+	echo $before_widget."\n";
+	if ( isset($instance['widget_title']) ) {
+		echo $before_title . $instance['widget_title'] . $after_title."\n";
+	}
+	$options = get_option('WP_FANBOX_SOCIAL_RING'.'_options');
+	?>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+	</script>
+
+	<div class="fb-like-box" data-href="<?php echo $instance['data-href']; ?>" data-width="300" data-colorscheme="<?php echo $instance['data-color-scheme']; ?>" data-show-faces="<?php echo $instance['data-show-faces']; ?>" data-header="<?php echo $instance['data-header']; ?>" data-stream="<?php echo $instance['data-stream']; ?>" data-show-border="<?php echo $instance['data-show-border']; ?>"></div>
+
 <?php
 	echo $after_widget."\n";
 	}

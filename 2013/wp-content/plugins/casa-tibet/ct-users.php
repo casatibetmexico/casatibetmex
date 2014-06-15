@@ -30,23 +30,46 @@ function ct_login_failed( $user ) {
 	}
 }
 
-add_filter('login_redirect', 'ct_login_redirect', 20, 3);
-function ct_login_redirect( $redirect_to, $request, $user ){
-    
+add_action('wp_logout','go_home');
+function go_home(){
+	$domains = ct_site_get_domains(true); 
+  	wp_redirect( $domains['ct-mex'] );
+ 	exit();
+}
+
+add_filter('login_redirect', 'ct_login_redirect', 200, 3);
+function ct_login_redirect( $redirect_to, $request, $user ) {
+     
     if( isset( $user->roles ) && is_array( $user->roles ) ) {
     	return ($redirect_to) ? $redirect_to : home_url();
     	/* DEACTIVATED */
         if( in_array( "administrator", $user->roles ) ||
-        	in_array( "ct_instructor", $user->roles ) ||
-        	in_array( "ct_coordinator", $user->roles ) ) {
-        	$url = get_bloginfo('siteurl').'/wp-admin/index.php';
-            return $url;
+        	in_array( "editor", $user->roles) ) {
+        	//$url = get_bloginfo('siteurl').'/wp-admin/index.php';
+            return $redirect_to; //$url;
         } else {
             return ($redirect_to) ? $redirect_to : home_url();
         }
     } else {
       	return $redirect_to;
     }
+}
+
+add_filter('register_url', 'ct_register_url', 200);
+function ct_register_url() {
+     $domains = ct_site_get_domains(true);
+     $url = $domains['ct-user'].'/register';
+     return $url; 
+}
+
+add_filter( 'allowed_redirect_hosts' , 'ct_allowed_redirect_hosts' , 10 );
+function ct_allowed_redirect_hosts($content) {
+	$domains = array_values(ct_site_get_domains(true));
+	$content = array();
+	foreach((array) $domains as $val) {
+		$content[] = str_replace('http://', '', $val);
+	}
+	return $content;
 }
 
 function ct_apply_caps_to_role($role, $args=array()) {
@@ -71,6 +94,7 @@ function ct_apply_caps_to_role($role, $args=array()) {
 function ct_add_theme_caps() {
 
 	$u = wp_get_current_user();
+
 	//$u->add_role('super_admin');
 	//grant_super_admin($u->ID);
 	
@@ -95,7 +119,29 @@ $u->remove_role('administrator');
     ct_apply_caps_to_role($editor, 
     					  array('types'=>array('post', 'page', 'course', 'study-group', 'module', 'resource'),
     					  		'access'=>array('editor', 'bbp_keymaster', 'bbp_moderator', 'bbp_participant', 'upload_files'),
-    					  		'restrict'=>array()));					  				
+    					  		'restrict'=>array()));		
+    					  		
+    /** EDITOR : EDITORIAL **/
+    /*
+add_role('ct_editor_edu', 'CT Editor : Educación');
+    $editor = get_role('ct_editor_edu');
+    ct_apply_caps_to_role($editor, 
+    					  array('types'=>array('post', 'page', 'course', 'study-group', 'module', 'resource'),
+    					  		'access'=>array('editor', 'bbp_keymaster', 'bbp_moderator', 'bbp_participant', 'upload_files'),
+    					  		'restrict'=>array()));	
+*/
+    					  		
+    /** EDITOR : ALTRUISMO **/
+    add_role('ct_editor_alt', 'CT Editor : Altruismo');
+    $editor = get_role('ct_editor_alt');
+    ct_apply_caps_to_role($editor, 
+    					  array('types'=>array('post', 'page', 'cause', 'org'),
+    					  		'access'=>array('editor', 'bbp_participant', 'upload_files', 'manage_categories',
+    					  						'delete_posts', 'manage_pages'),
+    					  		'restrict'=>array('edit_centers', 'edit_courses')));	
+    					  		
+   
+    					  					  				
     
     /** INSTRUCTORS **/
     remove_role('ct_instructor');
@@ -147,14 +193,9 @@ add_action( 'admin_init', 'ct_add_theme_caps');
 function ct_add_custom_user_profile_fields( $user ) {
 	
 	$center_id = get_the_author_meta( 'ct_center', $user->ID );
-	$status = get_the_author_meta( 'ct_member_status', $user->ID );
-	
-	$args = array('post_type'=>'centro',
-				  'order'=>'ASC',
-				  'orderby'=>'title');
-	$q = new WP_Query($args);
-	
+	$centers = ct_ctr_get_all_centers();
 ?>
+	
     <h3><?php _e('Casa Tibet'); ?></h3>
     
     <table class="form-table">
@@ -164,8 +205,8 @@ function ct_add_custom_user_profile_fields( $user ) {
             </label></th>
             <td>
                 <select name="ct-center" id="ct-center">
-                	<option>-- El usuario no pertence a ningun centro --</option>
-                <?php foreach($q->posts as $p) : ?>
+                	<option value="0">Casa Tibet México (Nacional)</option>
+                <?php foreach((array) $centers as $p) : ?>
                 	<option <?php if ($p->ID == $center_id) echo 'selected="true"'; ?> value="<?php echo $p->ID;?>"><?php echo $p->post_title; ?></option>
                 <?php endforeach; ?>
                 </select><br />
@@ -173,7 +214,10 @@ function ct_add_custom_user_profile_fields( $user ) {
             </td>
         </tr>
     </table>
+    
 <?php }
+
+
 function ct_save_custom_user_profile_fields( $user_id ) {
     
     if ( !current_user_can( 'edit_user', $user_id ) )
@@ -181,12 +225,10 @@ function ct_save_custom_user_profile_fields( $user_id ) {
     
     update_usermeta( $user_id, 'ct_center', $_POST['ct-center'] );
 }
-/*
 add_action( 'show_user_profile', 'ct_add_custom_user_profile_fields' );
 add_action( 'edit_user_profile', 'ct_add_custom_user_profile_fields' );
 add_action( 'personal_options_update', 'ct_save_custom_user_profile_fields' );
 add_action( 'edit_user_profile_update', 'ct_save_custom_user_profile_fields' );
-*/
 
 function grant_super_admin( $user_id ) {
 	global $super_admins;
@@ -213,6 +255,9 @@ function grant_super_admin( $user_id ) {
 /** FILTERS *******************************************************/
 
 function ct_user_posts_by_center($query) {
+
+
+
 	if ($query->is_admin && !current_user_can('administrator') &&
 		current_user_can('editor')) {
 	
@@ -222,14 +267,24 @@ function ct_user_posts_by_center($query) {
 		switch($type) {
 			case 'banner':
 			case 'post':
-			case 'page':
-				$tax_query = array(
-									array(
+				$tax_query = $query->get('tax_query');
+				$tax_query[] =  array(
 									'taxonomy' => 'site',
 									'field' => 'slug',
 									'terms' => ct_site_get_current_admin()
-									)
 								);
+				
+				$query->set('tax_query', $tax_query);
+				break;
+			case 'page':
+				$tax_query = $query->get('tax_query');
+				if ($type == 'page'){
+					$tax_query['page_category'] = array(
+									'taxonomy' => 'page_category',
+									'field' => 'slug',
+									'terms' => ct_site_get_page_category()
+									);
+				}
 				$query->set('tax_query', $tax_query);
 				break;
 		}
@@ -239,7 +294,7 @@ function ct_user_posts_by_center($query) {
 	
 	return $query;
 }
-add_filter('pre_get_posts', 'ct_user_posts_by_center');
+add_filter('pre_get_posts', 'ct_user_posts_by_center', 20);
 
 if (is_admin()) :
 	function ct_user_remove_meta_boxes() {
@@ -251,9 +306,10 @@ if (is_admin()) :
 				
 				/** POSTS **/
 				remove_meta_box('sitediv', 'post', 'side');
-				remove_meta_box('categorydiv', 'post', 'side');
+				if (current_user_can('ct_editor_edu')) remove_meta_box('categorydiv', 'post', 'side');
 				remove_meta_box('tagsdiv-post_tag', 'post', 'side');
 				remove_meta_box('ct_ctr_content', 'post', 'side');
+				if (current_user_can('ct_editor_alt')) remove_meta_box('post-catdiv', 'post', 'side');
 				
 				/** PAGES **/
 				remove_meta_box('page_categorydiv', 'page', 'side');
@@ -306,7 +362,8 @@ if (is_admin()) :
 	    if (!current_user_can('administrator')) {
 	    	if (current_user_can('editor')) {
 	    		
-	    		if (current_user_can('ct_editor_edu')) {
+	    		if (current_user_can('ct_editor_edu') ||
+	    			current_user_can('ct_editor_alt')) {
 	    		
 	    			$term = term_exists(ct_site_get_current_admin(), 'site');
 		    		wp_set_post_terms($post_id, array( $term['term_id'] ), 'site');	
@@ -314,14 +371,20 @@ if (is_admin()) :
 	    		
 	    			switch($post_type){
 	    				case 'post':
-	    					$term = term_exists('noticias', 'category');
-	    					wp_set_post_terms($post_id, array( $term['term_id'] ), 'category');	
+	    					if (current_user_can('ct_editor_edu')) {
+	    						$term = term_exists('noticias', 'category');
+	    						wp_set_post_terms($post_id, array( $term['term_id'] ), 'category');
+	    					}
 	    					break;
 	    				case 'page':
-	    					$term = term_exists('cat-educacion', 'page_category');
+	    					if (current_user_can('ct_editor_edu')) {
+	    						$term = term_exists('cat-educacion', 'page_category');
+	    					} else if (current_user_can('ct_editor_alt')) {
+	    						$term = term_exists('cat-altruismo', 'page_category');
+	    					}
 	    					wp_set_post_terms($post_id, array( $term['term_id'] ), 'page_category');
 	    					break;
-	    			}	
+	    			}
 	    			
 	    		} else if (current_user_can('ct_coordinator')) {
 	    			

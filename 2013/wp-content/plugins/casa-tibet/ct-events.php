@@ -284,6 +284,8 @@ function ct_event_archive_filter($args) {
 							 'meta_key'=>'ct_event_start',
 							 'orderby'=>'meta_value',
 							 'meta_query'=>array());
+	
+	$config['args'] = ct_ctr_query_args($config['args'], ct_is_theme('ct-mex'));							 
 
 	if ($_GET['date']) {
 			
@@ -365,7 +367,7 @@ add_filter('ct_archive-event', 'ct_event_archive_filter', 10, 1);
 
 /* API FUNCTIONS ***********************************************/
 
-function ct_event_get_upcoming($limit = 5, $args=array()) {
+function ct_event_get_upcoming($limit = 5, $args=array(), $digest=false, $multi=false) {
 
 	global $post;
 
@@ -386,11 +388,57 @@ function ct_event_get_upcoming($limit = 5, $args=array()) {
 	if ($post) {
 		$args['post__not_in'] = array($post->ID);
 	}
-	
-	$args = ct_ctr_query_args($args);
-	
+		
+	$args = ct_ctr_query_args($args, $digest);	
+
 	$q = new WP_Query($args); 
-	return $q->posts;
+	
+	if (!$multi) {
+		$margs = array('meta_query'=> array(
+				   		array(
+					 		'key'=>'ct_event_start',
+					 		'value'=>date('Y-m-d h:i:s', strtotime('now')),
+					 		'compare'=>'<=',
+					 		'type'=>'DATETIME'
+					 	),
+					 	array(
+						 	'key'=>'ct_event_end',
+						 	'value'=>date('Y-m-d h:i:s', strtotime('now')),
+						 	'compare'=>'>=',
+						 	'type'=>'DATETIME'
+					   )
+					 ));
+		
+		$multiday_posts = ct_event_get_upcoming($limit, $margs, $digest, true);
+		$res = array();
+		foreach((array) $multiday_posts as $p) {
+			$ops = get_post_meta($p->ID, 'ct_event_options', true);
+			if ((bool)$ops['has_end']) {
+				$res[] = $p;
+			}
+		}
+		
+		$posts = array_merge($q->posts, $res);
+		usort($posts, 'ct_event_sort');
+		
+	} else {
+		$posts = $q->posts;
+	}
+	
+	return $posts;
+}
+
+function ct_event_sort($a, $b) {
+	$startA = get_post_meta($a->ID, 'ct_event_start', true);
+	$startB = get_post_meta($b->ID, 'ct_event_start', true);
+	if ($startA == $startB) return 0;
+	return ($startA < $startB) ? -1 : 1;
+}
+function ct_event_sort_inverse($a, $b) {
+	$startA = get_post_meta($a->ID, 'ct_event_start', true);
+	$startB = get_post_meta($b->ID, 'ct_event_start', true);
+	if ($startA == $startB) return 0;
+	return ($startA < $startB) ? 1 : -1;
 }
 
 function ct_event_get_thumbnail($post, $size='thumb') {

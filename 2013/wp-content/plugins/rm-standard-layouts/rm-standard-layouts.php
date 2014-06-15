@@ -15,7 +15,8 @@ function rm_styles() {
 
 add_action('wp_enqueue_scripts', 'rm_styles_end', 20);
 function rm_styles_end() {
-	wp_enqueue_style('theme-style', get_stylesheet_uri());
+	wp_enqueue_style('theme-style', get_bloginfo('stylesheet_url') . '?t=' . 
+									filemtime( get_stylesheet_directory() . '/style.css'));
 }
 
 

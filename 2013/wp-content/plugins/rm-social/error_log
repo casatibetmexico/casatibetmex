@@ -1,0 +1,2 @@
+[26-Aug-2013 01:50:55] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/rm-social/rm-social.php on line 9
+[26-Aug-2013 02:26:39] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-content/plugins/rm-social/rm-social.php on line 9

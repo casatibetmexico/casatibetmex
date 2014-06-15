@@ -2,11 +2,11 @@
 /**
  * BuddyPress Groups component admin screen
  *
- * Props to WordPress core for the Comments admin screen, and its contextual help text,
- * on which this implementation is heavily based.
+ * Props to WordPress core for the Comments admin screen, and its contextual
+ * help text, on which this implementation is heavily based.
  *
  * @package BuddyPress
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
  * @subpackage Groups
  */
 
@@ -21,20 +21,17 @@ if ( is_admin() && ! empty( $_REQUEST['page'] ) && 'bp-groups' == $_REQUEST['pag
 	add_filter( 'set-screen-option', 'bp_groups_admin_screen_options', 10, 3 );
 
 /**
- * Registers the Groups component admin screen
+ * Register the Groups component admin screen.
  *
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
  */
 function bp_groups_add_admin_menu() {
-
-	if ( ! bp_current_user_can( 'bp_moderate' ) )
-		return;
 
 	// Add our screen
 	$hook = add_menu_page(
 		__( 'Groups', 'buddypress' ),
 		__( 'Groups', 'buddypress' ),
-		'manage_options',
+		'bp_moderate',
 		'bp-groups',
 		'bp_groups_admin',
 		'div'
@@ -46,12 +43,15 @@ function bp_groups_add_admin_menu() {
 add_action( bp_core_admin_hook(), 'bp_groups_add_admin_menu' );
 
 /**
- * Add groups component to custom menus array
+ * Add groups component to custom menus array.
  *
- * @since BuddyPress (1.7)
+ * This ensures that the Groups menu item appears in the proper order on the
+ * main Dashboard menu.
  *
- * @param array $custom_menus
- * @return array
+ * @since BuddyPress (1.7.0)
+ *
+ * @param array $custom_menus Array of BP top-level menu items.
+ * @return array Menu item array, with Groups added.
  */
 function bp_groups_admin_menu_order( $custom_menus = array() ) {
 	array_push( $custom_menus, 'bp-groups' );
@@ -60,11 +60,15 @@ function bp_groups_admin_menu_order( $custom_menus = array() ) {
 add_filter( 'bp_admin_menu_order', 'bp_groups_admin_menu_order' );
 
 /**
- * Set up the admin page before any output is sent. Register contextual help and screen options for this admin page.
+ * Set up the Groups admin page.
  *
- * @global object $bp BuddyPress global settings
+ * Loaded before the page is rendered, this function does all initial setup,
+ * including: processing form requests, registering contextual help, and
+ * setting up screen options.
+ *
+ * @since BuddyPress (1.7.0)
+ *
  * @global BP_Groups_List_Table $bp_groups_list_table Groups screen list table
- * @since BuddyPress (1.7)
  */
 function bp_groups_admin_load() {
 	global $bp_groups_list_table;
@@ -127,7 +131,6 @@ function bp_groups_admin_load() {
 		// Enqueue javascripts
 		wp_enqueue_script( 'postbox' );
 		wp_enqueue_script( 'dashboard' );
-		wp_enqueue_script( 'comment' );
 
 	// Index screen
 	} else {
@@ -161,12 +164,15 @@ function bp_groups_admin_load() {
 		);
 	}
 
+	$bp = buddypress();
+
 	// Enqueue CSS and JavaScript
-	wp_enqueue_script( 'bp_groups_admin_js', BP_PLUGIN_URL . "bp-groups/admin/js/admin.{$min}js", array( 'jquery', 'wp-ajax-response', 'jquery-ui-autocomplete' ), bp_get_version(), true );
-	wp_enqueue_style( 'bp_groups_admin_css', BP_PLUGIN_URL . "bp-groups/admin/css/admin.{$min}css", array(), bp_get_version() );
+	wp_enqueue_script( 'bp_groups_admin_js', $bp->plugin_url . "bp-groups/admin/js/admin.{$min}js", array( 'jquery', 'wp-ajax-response', 'jquery-ui-autocomplete' ), bp_get_version(), true );
+	wp_enqueue_style( 'bp_groups_admin_css', $bp->plugin_url . "bp-groups/admin/css/admin.{$min}css", array(), bp_get_version() );
 
 	wp_localize_script( 'bp_groups_admin_js', 'BP_Group_Admin', array(
-		'add_member_placeholder' => __( 'Start typing a username to add a new member.', 'buddypress' )
+		'add_member_placeholder' => __( 'Start typing a username to add a new member.', 'buddypress' ),
+		'warn_on_leave'          => __( 'If you leave this page, you will lose any unsaved changes you have made to the group.', 'buddypress' ),
 	) );
 
 	if ( $doaction && 'save' == $doaction ) {
@@ -235,12 +241,16 @@ function bp_groups_admin_load() {
 
 				// Make sure the user exists before attempting
 				// to add to the group
-				if ( ! $user_id = username_exists( $un ) ) {
-					$error_new[]   = $un;
-				} else if ( ! groups_join_group( $group_id, $user_id ) ) {
-					$error_new[]   = $un;
+				$user = get_user_by( 'slug', $un );
+
+				if ( empty( $user ) ) {
+					$error_new[] = $un;
 				} else {
-					$success_new[] = $un;
+					if ( ! groups_join_group( $group_id, $user->ID ) ) {
+						$error_new[]   = $un;
+					} else {
+						$success_new[] = $un;
+					}
 				}
 			}
 		}
@@ -373,13 +383,13 @@ function bp_groups_admin_load() {
 }
 
 /**
- * Handle save/update of screen options for the Groups component admin screen
+ * Handle save/update of screen options for the Groups component admin screen.
  *
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
  *
  * @param string $value Will always be false unless another plugin filters it first.
- * @param string $option Screen option name
- * @param string $new_value Screen option form value
+ * @param string $option Screen option name.
+ * @param string $new_value Screen option form value.
  * @return string Option value. False to abandon update.
  */
 function bp_groups_admin_screen_options( $value, $option, $new_value ) {
@@ -395,13 +405,13 @@ function bp_groups_admin_screen_options( $value, $option, $new_value ) {
 }
 
 /**
- * Outputs the Groups component admin screens
+ * Select the appropirate Groups admin screen, and output it.
  *
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
  */
 function bp_groups_admin() {
 	// Decide whether to load the index or edit screen
-	$doaction = ! empty( $_REQUEST['action'] ) ? $_REQUEST['action'] : '';
+	$doaction = bp_admin_list_table_current_bulk_action();
 
 	// Display the single group edit screen
 	if ( 'edit' == $doaction && ! empty( $_GET['gid'] ) ) {
@@ -418,13 +428,13 @@ function bp_groups_admin() {
 }
 
 /**
- * Display the single groups edit screen
+ * Display the single groups edit screen.
  *
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
  */
 function bp_groups_admin_edit() {
 
-	if ( ! is_super_admin() )
+	if ( ! current_user_can( 'bp_moderate' ) )
 		die( '-1' );
 
 	$messages = array();
@@ -443,7 +453,6 @@ function bp_groups_admin_edit() {
 			$messages[] = __( 'You cannot remove all administrators from a group.', 'buddypress' );
 		}
 
-		print_r($errors);
 		if ( ! empty( $errors ) ) {
 			$messages[] = __( 'An error occurred when trying to update your group details.', 'buddypress' );
 		} else if ( ! empty( $updated ) ) {
@@ -504,7 +513,7 @@ function bp_groups_admin_edit() {
 
 					<div id="post-body" class="metabox-holder columns-<?php echo 1 == get_current_screen()->get_columns() ? '1' : '2'; ?>">
 						<div id="post-body-content">
-							<div id="postdiv" class="postarea">
+							<div id="postdiv">
 								<div id="bp_groups_name" class="postbox">
 									<h3><?php _e( 'Name and Description', 'buddypress' ); ?></h3>
 									<div class="inside">
@@ -542,12 +551,12 @@ function bp_groups_admin_edit() {
 }
 
 /**
- * Display the Group delete confirmation screen
+ * Display the Group delete confirmation screen.
  *
  * We include a separate confirmation because group deletion is truly
  * irreversible.
  *
- * @since (BuddyPress) 1.7
+ * @since BuddyPress (1.7.0)
  */
 function bp_groups_admin_delete() {
 
@@ -559,7 +568,11 @@ function bp_groups_admin_delete() {
 		$group_ids = explode( ',', $group_ids );
 	}
 	$group_ids = wp_parse_id_list( $group_ids );
-	$groups    = groups_get_groups( array( 'include' => $group_ids, 'show_hidden' => true, ) );
+	$groups    = groups_get_groups( array(
+		'include'     => $group_ids,
+		'show_hidden' => true,
+		'per_page'    => null, // Return all results
+	) );
 
 	// Create a new list of group ids, based on those that actually exist
 	$gids = array();
@@ -590,12 +603,14 @@ function bp_groups_admin_delete() {
 }
 
 /**
- * Display the Groups admin index screen, which contains a list of all your
- * BuddyPress groups.
+ * Display the Groups admin index screen.
  *
- * @global BP_Group_List_Table $bp_groups_list_table Group screen list table
- * @global string $plugin_page
- * @since BuddyPress (1.7)
+ * This screen contains a list of all BuddyPress groups.
+ *
+ * @since BuddyPress (1.7.0)
+ *
+ * @global BP_Group_List_Table $bp_groups_list_table Group screen list table.
+ * @global string $plugin_page Currently viewed plugin page.
  */
 function bp_groups_admin_index() {
 	global $bp_groups_list_table, $plugin_page;
@@ -622,6 +637,10 @@ function bp_groups_admin_index() {
 		<h2>
 			<?php _e( 'Groups', 'buddypress' ); ?>
 
+			<?php if ( is_user_logged_in() && bp_user_can_create_groups() ) : ?>
+				<a class="add-new-h2" href="<?php echo trailingslashit( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/create' ); ?>"><?php _e( 'Add New', 'buddypress' ); ?></a>
+			<?php endif; ?>
+
 			<?php if ( !empty( $_REQUEST['s'] ) ) : ?>
 				<span class="subtitle"><?php printf( __( 'Search results for &#8220;%s&#8221;', 'buddypress' ), wp_html_excerpt( esc_html( stripslashes( $_REQUEST['s'] ) ), 50 ) ); ?></span>
 			<?php endif; ?>
@@ -647,10 +666,11 @@ function bp_groups_admin_index() {
 }
 
 /**
- * Settings metabox
+ * Markup for the single group's Settings metabox.
  *
- * @param object $item Group item
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
+ *
+ * @param object $item Information about the current group.
  */
 function bp_groups_admin_edit_metabox_settings( $item ) {
 
@@ -663,44 +683,52 @@ function bp_groups_admin_edit_metabox_settings( $item ) {
 	<?php endif; ?>
 
 	<div class="bp-groups-settings-section" id="bp-groups-settings-section-status">
-		<label for="group-status"><?php _e( 'Privacy', 'buddypress' ); ?></label>
+		<fieldset>
+			<legend><?php _e( 'Privacy', 'buddypress' ); ?></legend>
 
-		<ul>
-			<li><input type="radio" name="group-status" id="bp-group-status-public" value="public" <?php checked( $item->status, 'public' ) ?> /> <?php _e( 'Public', 'buddypress' ) ?></li>
-			<li><input type="radio" name="group-status" id="bp-group-status-private" value="private" <?php checked( $item->status, 'private' ) ?> /> <?php _e( 'Private', 'buddypress' ) ?></li>
-			<li><input type="radio" name="group-status" id="bp-group-status-hidden" value="hidden" <?php checked( $item->status, 'hidden' ) ?> /> <?php _e( 'Hidden', 'buddypress' ) ?></li>
+			<ul>
+				<li><input type="radio" name="group-status" id="bp-group-status-public" value="public" <?php checked( $item->status, 'public' ) ?> /><label for="bp-group-status-public"><?php _e( 'Public', 'buddypress' ) ?></label></li>
+				<li><input type="radio" name="group-status" id="bp-group-status-private" value="private" <?php checked( $item->status, 'private' ) ?> /><label for="bp-group-status-private"><?php _e( 'Private', 'buddypress' ) ?></label></li>
+				<li><input type="radio" name="group-status" id="bp-group-status-hidden" value="hidden" <?php checked( $item->status, 'hidden' ) ?> /><label for="bp-group-status-hidden"><?php _e( 'Hidden', 'buddypress' ) ?></label></li>
+			</ul>
+		</fieldset>
 	</div>
 
 	<div class="bp-groups-settings-section" id="bp-groups-settings-section-invite-status">
-		<label for="group-invite-status"><?php _e( 'Who can invite others to this group?', 'buddypress' ); ?></label>
+		<fieldset>
+			<legend><?php _e( 'Who can invite others to this group?', 'buddypress' ); ?></legend>
 
-		<ul>
-			<li><input type="radio" name="group-invite-status" id="bp-group-invite-status-members" value="members" <?php checked( $invite_status, 'members' ) ?> /> <?php _e( 'All group members', 'buddypress' ) ?></li>
-			<li><input type="radio" name="group-invite-status" id="bp-group-invite-status-mods" value="mods" <?php checked( $invite_status, 'mods' ) ?> /> <?php _e( 'Group admins and mods only', 'buddypress' ) ?></li>
-			<li><input type="radio" name="group-invite-status" id="bp-group-invite-status-admins" value="admins" <?php checked( $invite_status, 'admins' ) ?> /> <?php _e( 'Group admins only', 'buddypress' ) ?></li>
-		</ul>
+			<ul>
+				<li><input type="radio" name="group-invite-status" id="bp-group-invite-status-members" value="members" <?php checked( $invite_status, 'members' ) ?> /><label for="bp-group-invite-status-members"><?php _e( 'All group members', 'buddypress' ) ?></label></li>
+				<li><input type="radio" name="group-invite-status" id="bp-group-invite-status-mods" value="mods" <?php checked( $invite_status, 'mods' ) ?> /><label for="bp-group-invite-status-mods"><?php _e( 'Group admins and mods only', 'buddypress' ) ?></label></li>
+				<li><input type="radio" name="group-invite-status" id="bp-group-invite-status-admins" value="admins" <?php checked( $invite_status, 'admins' ) ?> /><label for="bp-group-invite-status-admins"><?php _e( 'Group admins only', 'buddypress' ) ?></label></li>
+			</ul>
+		</fieldset>
 	</div>
 
 <?php
 }
 
 /**
- * Add New Members metabox
+ * Output the markup for a single group's Add New Members metabox.
  *
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
  */
 function bp_groups_admin_edit_metabox_add_new_members( $item ) {
 	?>
 
-	<input name="bp-groups-new-members" id="bp-groups-new-members" class="bp-suggest-user" placeholder="<?php _e( 'Enter a comma-separated list of user logins.', 'buddypress' ) ?>" />
+	<input name="bp-groups-new-members" id="bp-groups-new-members" class="bp-suggest-user" placeholder="<?php esc_attr_e( 'Enter a comma-separated list of user logins.', 'buddypress' ) ?>" />
 	<ul id="bp-groups-new-members-list"></ul>
 	<?php
 }
 
 /**
- * Members metabox
+ * Renders the Members metabox on single group pages.
  *
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
+ *
+ * @param BP_Groups_Group $item The BP_Groups_Group object for the current
+ *        group.
  */
 function bp_groups_admin_edit_metabox_members( $item ) {
 	global $members_template;
@@ -708,50 +736,38 @@ function bp_groups_admin_edit_metabox_members( $item ) {
 	// Pull up a list of group members, so we can separate out the types
 	// We'll also keep track of group members here to place them into a
 	// javascript variable, which will help with group member autocomplete
-	$member_ids = array();
-	$members    = array(
+	$members = array(
 		'admin'  => array(),
 		'mod'    => array(),
 		'member' => array(),
-		'banned' => array()
+		'banned' => array(),
 	);
 
-	if ( bp_group_has_members( array(
-		'group_id' => $item->id,
-		'exclude_admins_mods' => false,
-		'exclude_banned' => false
-	) ) ) {
-		// Get a list of admins and mods, to reduce lookups
-		// We'll rekey them by user_id for convenience
-		$admins = $mods = array();
+	$pagination = array(
+		'admin'  => array(),
+		'mod'    => array(),
+		'member' => array(),
+		'banned' => array(),
+	);
 
-		foreach ( (array) groups_get_group_admins( $item->id ) as $admin_obj ) {
-			$admins[ $admin_obj->user_id ] = $admin_obj;
-		}
+	foreach ( $members as $type => &$member_type_users ) {
+		$page_qs_key = $type . '_page';
+		$current_type_page = isset( $_GET[ $page_qs_key ] ) ? absint( $_GET[ $page_qs_key ] ) : 1;
+		$member_type_query = new BP_Group_Member_Query( array(
+			'group_id'   => $item->id,
+			'group_role' => array( $type ),
+			'type'       => 'alphabetical',
+			'per_page'   => 10,
+			'page'       => $current_type_page,
+		) );
 
-		foreach ( (array) groups_get_group_mods( $item->id ) as $admin_obj ) {
-			$mods[ $admin_obj->user_id ] = $admin_obj;
-		}
+		$member_type_users = $member_type_query->results;
 
-		while ( bp_group_members() ) {
-			bp_group_the_member();
-			if ( bp_get_group_member_is_banned() ) {
-				$members['banned'][] = $members_template->member;
-			} else if ( isset( $admins[ bp_get_group_member_id() ] ) ) {
-				$members['admin'][]  = $members_template->member;
-			} else if ( isset( $mods[ bp_get_group_member_id() ] ) ) {
-				$members['mod'][]    = $members_template->member;
-			} else {
-				$members['member'][] = $members_template->member;
-			}
-
-			$member_ids[] = bp_get_group_member_id();
-		}
+		$pagination[ $type ] = bp_groups_admin_create_pagination_links( $member_type_query, $type );
 	}
 
 	// Echo out the javascript variable
-	$member_ids = ! empty( $member_ids ) ? implode( ',', $member_ids ) : '';
-	echo '<script type="text/javascript">var group_members = "' . $member_ids . '";</script>';
+	echo '<script type="text/javascript">var group_id = "' . $item->id . '";</script>';
 
 	// Loop through each member type
 	foreach ( $members as $member_type => $type_users ) : ?>
@@ -767,6 +783,10 @@ function bp_groups_admin_edit_metabox_members( $item ) {
 				endswitch; ?>
 			</h4>
 
+			<div class="bp-group-admin-pagination table-top">
+				<?php echo $pagination[ $member_type ] ?>
+			</div>
+
 		<?php if ( !empty( $type_users ) ) : ?>
 
 			<table class="widefat bp-group-members">
@@ -781,22 +801,21 @@ function bp_groups_admin_edit_metabox_members( $item ) {
 				<tbody>
 
 				<?php foreach ( $type_users as $type_user ) : ?>
-
 					<tr>
-						<th scope="row" class="uid-column"><?php echo esc_html( $type_user->user_id ); ?></th>
+						<th scope="row" class="uid-column"><?php echo esc_html( $type_user->ID ); ?></th>
 
 						<td class="uname-column">
-							<a style="float: left;" href="<?php echo bp_core_get_user_domain( $type_user->user_id ); ?>"><?php echo bp_core_fetch_avatar( array(
-								'item_id' => $type_user->user_id,
+							<a style="float: left;" href="<?php echo bp_core_get_user_domain( $type_user->ID ); ?>"><?php echo bp_core_fetch_avatar( array(
+								'item_id' => $type_user->ID,
 								'width'   => '32',
 								'height'  => '32'
 							) ); ?></a>
 
-							<span style="margin: 8px; float: left;"><?php echo bp_core_get_userlink( $type_user->user_id ) ?></span>
+							<span style="margin: 8px; float: left;"><?php echo bp_core_get_userlink( $type_user->ID ) ?></span>
 						</td>
 
 						<td class="urole-column">
-							<select class="bp-groups-role" id="bp-groups-role-<?php echo esc_attr( $type_user->user_id ); ?>" name="bp-groups-role[<?php echo esc_attr( $type_user->user_id ); ?>]">
+							<select class="bp-groups-role" id="bp-groups-role-<?php echo esc_attr( $type_user->ID ); ?>" name="bp-groups-role[<?php echo esc_attr( $type_user->ID ); ?>]">
 								<option value="admin" <?php selected( 'admin', $member_type ) ?>><?php _e( 'Administrator', 'buddypress' ) ?></option>
 								<option value="mod" <?php selected( 'mod', $member_type ) ?>><?php _e( 'Moderator', 'buddypress' ) ?></option>
 								<option value="member" <?php selected( 'member', $member_type ) ?>><?php _e( 'Member', 'buddypress' ) ?></option>
@@ -811,14 +830,26 @@ function bp_groups_admin_edit_metabox_members( $item ) {
 							 *
 							 * @todo remove this, and do database detection on save
 							 */ ?>
-							<input type="hidden" name="bp-groups-existing-role[<?php echo esc_attr( $type_user->user_id ); ?>]" value="<?php echo esc_attr( $member_type ); ?>" />
+							<input type="hidden" name="bp-groups-existing-role[<?php echo esc_attr( $type_user->ID ); ?>]" value="<?php echo esc_attr( $member_type ); ?>" />
 						</td>
 					</tr>
+
+					<?php if ( has_filter( 'bp_groups_admin_manage_member_row' ) ) : ?>
+						<tr>
+							<td colspan="3">
+								<?php do_action( 'bp_groups_admin_manage_member_row', $type_user->ID, $item ); ?>
+							</td>
+						</tr>
+					<?php endif; ?>
 
 				<?php endforeach; ?>
 
 				</tbody>
 			</table>
+
+			<div class="bp-group-admin-pagination table-bottom">
+				<?php echo $pagination[ $member_type ] ?>
+			</div>
 
 		<?php else : ?>
 
@@ -833,10 +864,11 @@ function bp_groups_admin_edit_metabox_members( $item ) {
 }
 
 /**
- * Status metabox for the Groups admin edit screen
+ * Renders the Status metabox for the Groups admin edit screen.
  *
- * @param object $item Group item
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
+ *
+ * @param object $item Information about the currently displayed group.
  */
 function bp_groups_admin_edit_metabox_status( $item ) {
 	$base_url = add_query_arg( array(
@@ -861,9 +893,71 @@ function bp_groups_admin_edit_metabox_status( $item ) {
 }
 
 /**
- * Match a set of user ids up to a set of usernames
+ * Create pagination links out of a BP_Group_Member_Query.
  *
- * @since BuddyPress (1.7)
+ * This function is intended to create pagination links for use under the
+ * Manage Members section of the Groups Admin Dashboard pages. It is a stopgap
+ * measure until a more general pagination solution is in place for BuddyPress.
+ * Plugin authors should not use this function, as it is likely to be
+ * deprecated soon.
+ *
+ * @since BuddyPress (1.8.0)
+ *
+ * @param BP_Group_Member_Query $query A BP_Group_Member_Query object.
+ * @param string $member_type member|mod|admin|banned.
+ * @return string Pagination links HTML.
+ */
+function bp_groups_admin_create_pagination_links( BP_Group_Member_Query $query, $member_type ) {
+	$pagination = '';
+
+	if ( ! in_array( $member_type, array( 'admin', 'mod', 'member', 'banned' ) ) ) {
+		return $pagination;
+	}
+
+	// The key used to paginate this member type in the $_GET global
+	$qs_key = $member_type . '_page';
+	$url_base = remove_query_arg( array( $qs_key, 'updated', 'success_modified' ), $_SERVER['REQUEST_URI'] );
+
+	$page     = isset( $_GET[ $qs_key ] ) ? absint( $_GET[ $qs_key ] ) : 1;
+	$per_page = 10; // @todo Make this customizable?
+
+	// Don't show anything if there's no pagination
+	if ( 1 === $page && $query->total_users <= $per_page ) {
+		return $pagination;
+	}
+
+	$current_page_start = ( ( $page - 1 ) * $per_page ) + 1;
+	$current_page_end   = $page * $per_page > intval( $query->total_users ) ? $query->total_users : $page * $per_page;
+
+	$pag_links = paginate_links( array(
+		'base'      => add_query_arg( $qs_key, '%#%', $url_base ),
+		'format'    => '',
+		'prev_text' => __( '&laquo;', 'buddypress' ),
+		'next_text' => __( '&raquo;', 'buddypress' ),
+		'total'     => ceil( $query->total_users / $per_page ),
+		'current'   => $page,
+	) );
+
+	$viewing_text = sprintf(
+		__( 'Viewing %1$s - %2$s of %3$s', 'buddypress' ),
+		number_format_i18n( $current_page_start ),
+		number_format_i18n( $current_page_end ),
+		sprintf( _n( '%s member', '%s members', $query->total_users, 'buddypress' ), $query->total_users )
+	);
+
+	$pagination .= '<span class="bp-group-admin-pagination-viewing">' . $viewing_text . '</span>';
+	$pagination .= '<span class="bp-group-admin-pagination-links">' . $pag_links . '</span>';
+
+	return $pagination;
+}
+
+/**
+ * Get a set of usernames corresponding to a set of user IDs.
+ *
+ * @since BuddyPress (1.7.0)
+ *
+ * @param array $user_ids Array of user IDs.
+ * @return array Array of user_logins corresponding to $user_ids.
  */
 function bp_groups_admin_get_usernames_from_ids( $user_ids = array() ) {
 
@@ -878,9 +972,9 @@ function bp_groups_admin_get_usernames_from_ids( $user_ids = array() ) {
 }
 
 /**
- * AJAX handler for group member autocomplete requests
+ * AJAX handler for group member autocomplete requests.
  *
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
  */
 function bp_groups_admin_autocomplete_handler() {
 
@@ -891,21 +985,31 @@ function bp_groups_admin_autocomplete_handler() {
 	$return = array();
 
 	// Exclude current group members
-	$group_members = isset( $_REQUEST['group_members'] ) ? wp_parse_id_list( $_REQUEST['group_members'] ) : array();
-	$terms         = isset( $_REQUEST['term']          ) ? $_REQUEST['term'] : '';
-	$users         = get_users( array(
-		'blog_id'        => false,
-		'search'         => '*' . $terms . '*',
-		'exclude'        => $group_members,
-		'search_columns' => array( 'user_login', 'user_nicename', 'user_email', 'display_name' ),
-		'number'         => 10
+	$group_id = isset( $_GET['group_id'] ) ? wp_parse_id_list( $_GET['group_id'] ) : array();
+	$group_member_query = new BP_Group_Member_Query( array(
+		'group_id'        => $group_id,
+		'per_page'        => 0, // show all
+		'group_role'      => array( 'member', 'mod', 'admin', ),
+		'populate_extras' => false,
+		'count_total'     => false,
 	) );
 
-	foreach ( (array) $users as $user ) {
+	$group_members = ! empty( $group_member_query->results ) ? wp_list_pluck( $group_member_query->results, 'ID' ) : array();
+
+	$terms = isset( $_GET['term'] ) ? $_GET['term'] : '';
+	$users = bp_core_get_users( array(
+		'type'            => 'alphabetical',
+		'search_terms'    => $terms,
+		'exclude'         => $group_members,
+		'per_page'        => 10,
+		'populate_extras' => false
+	) );
+
+	foreach ( (array) $users['users'] as $user ) {
 		$return[] = array(
 			/* translators: 1: user_login, 2: user_email */
-			'label' => sprintf( __( '%1$s (%2$s)' ), $user->user_login, $user->user_email ),
-			'value' => $user->user_login,
+			'label' => sprintf( __( '%1$s (%2$s)', 'buddypress' ), bp_is_username_compatibility_mode() ? $user->user_login : $user->user_nicename, $user->user_email ),
+			'value' => $user->user_nicename,
 		);
 	}
 
@@ -916,28 +1020,36 @@ add_action( 'wp_ajax_bp_group_admin_member_autocomplete', 'bp_groups_admin_autoc
 /**
  * List table class for the Groups component admin page.
  *
- * @since BuddyPress (1.7)
+ * @since BuddyPress (1.7.0)
  */
 class BP_Groups_List_Table extends WP_List_Table {
 
 	/**
-	 * What type of view is being displayed? e.g. "All", "Pending", "Approved", "Spam"...
+	 * The type of view currently being displayed.
 	 *
-	 * @since BuddyPress (1.7)
-	*/
+	 * e.g. "All", "Pending", "Approved", "Spam"...
+	 *
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @access public
+	 * @var string
+	 */
 	public $view = 'all';
 
 	/**
-	 * Group counts for each group type
+	 * Group counts for each group type.
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @access public
+	 * @var int
 	 */
 	public $group_counts = 0;
 
 	/**
 	 * Constructor
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
 	 */
 	public function __construct() {
 
@@ -950,9 +1062,12 @@ class BP_Groups_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Handle filtering of data, sorting, pagination, and any other data-manipulation required prior to rendering.
+	 * Set up items for display in the list table.
 	 *
-	 * @since BuddyPress (1.7)
+	 * Handles filtering of data, sorting, pagination, and any other data
+	 * manipulation required prior to rendering.
+	 *
+	 * @since BuddyPress (1.7.0)
 	 */
 	function prepare_items() {
 		global $groups_template;
@@ -969,24 +1084,27 @@ class BP_Groups_List_Table extends WP_List_Table {
 		// Set per page from the screen options
 		$per_page = $this->get_items_per_page( str_replace( '-', '_', "{$screen->id}_per_page" ) );
 
-		// Sort order. Note: not supported in bp_has_groups()
-		$order = 'ASC';
+		// Sort order.
+		$order = 'DESC';
 		if ( !empty( $_REQUEST['order'] ) ) {
 			$order = ( 'desc' == strtolower( $_REQUEST['order'] ) ) ? 'DESC' : 'ASC';
 		}
 
 		// Order by - default to newest
-		$type = 'newest';
-		if ( !empty( $_REQUEST['orderby'] ) ) {
+		$orderby = 'last_activity';
+		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			switch ( $_REQUEST['orderby'] ) {
 				case 'name' :
-					$type = 'alphabetical';
+					$orderby = 'name';
 					break;
 				case 'id' :
-					$type = 'newest';
+					$orderby = 'date_created';
 					break;
 				case 'members' :
-					$type = 'popular';
+					$orderby = 'total_member_count';
+					break;
+				case 'last_active' :
+					$orderby = 'last_activity';
 					break;
 			}
 		}
@@ -1027,7 +1145,7 @@ class BP_Groups_List_Table extends WP_List_Table {
 				'include'  => $include,
 				'per_page' => $per_page,
 				'page'     => $page,
-				'type'     => $type,
+				'orderby'  => $orderby,
 				'order'    => $order
 			);
 
@@ -1052,10 +1170,11 @@ class BP_Groups_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Get an array of all the columns on the page
+	 * Get an array of all the columns on the page.
 	 *
-	 * @return array
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @return array Array of column headers.
 	 */
 	function get_column_info() {
 		$this->_column_headers = array(
@@ -1068,18 +1187,18 @@ class BP_Groups_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Displays a message on screen when no items are found (e.g. no search matches)
+	 * Display a message on screen when no items are found ("No groups found").
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
 	 */
 	function no_items() {
 		_e( 'No groups found.', 'buddypress' );
 	}
 
 	/**
-	 * Outputs the Groups data table
+	 * Output the Groups data table.
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
 	*/
 	function display() {
 		extract( $this->_args );
@@ -1109,37 +1228,46 @@ class BP_Groups_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Generates content for a single row of the table
+	 * Generate content for a single row of the table.
 	 *
-	 * @param object $item The current item
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @param object $item The current group item in the loop.
 	 */
 	function single_row( $item = array() ) {
-		static $row_class = '';
+		static $even = false;
 
-		if ( empty( $row_class ) ) {
-			$row_class = ' class="alternate odd"';
+		$row_classes = array();
+
+		if ( $even ) {
+			$row_classes = array( 'even' );
 		} else {
-			$row_class = ' class="even"';
+			$row_classes = array( 'alternate', 'odd' );
 		}
+
+		$row_classes = apply_filters( 'bp_groups_admin_row_class', $row_classes, $item['id'] );
+		$row_class = ' class="' . implode( ' ', $row_classes ) . '"';
 
 		echo '<tr' . $row_class . ' id="group-' . esc_attr( $item['id'] ) . '" data-parent_id="' . esc_attr( $item['id'] ) . '" data-root_id="' . esc_attr( $item['id'] ) . '">';
 		echo $this->single_row_columns( $item );
 		echo '</tr>';
+
+		$even = ! $even;
 	}
 
 	/**
 	 * Get the list of views available on this table (e.g. "all", "public").
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
 	 */
 	function get_views() {
-		$url_base = remove_query_arg( array( 'orderby', 'order', 'group_status' ), $_SERVER['REQUEST_URI'] ); ?>
+		$url_base = bp_get_admin_url( 'admin.php?page=bp-groups' ); ?>
+
 		<ul class="subsubsub">
 			<li class="all"><a href="<?php echo esc_attr( esc_url( $url_base ) ); ?>" class="<?php if ( 'all' == $this->view ) echo 'current'; ?>"><?php _e( 'All', 'buddypress' ); ?></a> |</li>
-			<li class="public"><a href="<?php echo esc_attr( esc_url( add_query_arg( 'group_status', 'public', $url_base ) ) ); ?>" class="<?php if ( 'public' == $this->view ) echo 'current'; ?>"><?php printf( __( 'Public <span class="count">(%s)</span>', 'buddypress' ), number_format_i18n( $this->group_counts['public'] ) ); ?></a> |</li>
-			<li class="private"><a href="<?php echo esc_attr( esc_url( add_query_arg( 'group_status', 'private', $url_base ) ) ); ?>" class="<?php if ( 'private' == $this->view ) echo 'current'; ?>"><?php printf( __( 'Private <span class="count">(%s)</span>', 'buddypress' ), number_format_i18n( $this->group_counts['private'] ) ); ?></a> |</li>
-			<li class="hidden"><a href="<?php echo esc_attr( esc_url( add_query_arg( 'group_status', 'hidden', $url_base ) ) ); ?>" class="<?php if ( 'hidden' == $this->view ) echo 'current'; ?>"><?php printf( __( 'Hidden <span class="count">(%s)</span>', 'buddypress' ), number_format_i18n( $this->group_counts['hidden'] ) ); ?></a></li>
+			<li class="public"><a href="<?php echo esc_attr( esc_url( add_query_arg( 'group_status', 'public', $url_base ) ) ); ?>" class="<?php if ( 'public' == $this->view ) echo 'current'; ?>"><?php printf( _n( 'Public <span class="count">(%s)</span>', 'Public <span class="count">(%s)</span>', $this->group_counts['public'], 'buddypress' ), number_format_i18n( $this->group_counts['public'] ) ); ?></a> |</li>
+			<li class="private"><a href="<?php echo esc_attr( esc_url( add_query_arg( 'group_status', 'private', $url_base ) ) ); ?>" class="<?php if ( 'private' == $this->view ) echo 'current'; ?>"><?php printf( _n( 'Private <span class="count">(%s)</span>', 'Private <span class="count">(%s)</span>', $this->group_counts['private'], 'buddypress' ), number_format_i18n( $this->group_counts['private'] ) ); ?></a> |</li>
+			<li class="hidden"><a href="<?php echo esc_attr( esc_url( add_query_arg( 'group_status', 'hidden', $url_base ) ) ); ?>" class="<?php if ( 'hidden' == $this->view ) echo 'current'; ?>"><?php printf( _n( 'Hidden <span class="count">(%s)</span>', 'Hidden <span class="count">(%s)</span>', $this->group_counts['hidden'], 'buddypress' ), number_format_i18n( $this->group_counts['hidden'] ) ); ?></a></li>
 
 			<?php do_action( 'bp_groups_list_table_get_views', $url_base, $this->view ); ?>
 		</ul>
@@ -1147,10 +1275,11 @@ class BP_Groups_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Get bulk actions
+	 * Get bulk actions for single group row.
 	 *
-	 * @return array Key/value pairs for the bulk actions dropdown
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @return array Key/value pairs for the bulk actions dropdown.
 	 */
 	function get_bulk_actions() {
 		return apply_filters( 'bp_groups_list_table_get_bulk_actions', array(
@@ -1161,53 +1290,69 @@ class BP_Groups_List_Table extends WP_List_Table {
 	/**
 	 * Get the table column titles.
 	 *
+	 * @since BuddyPress (1.7.0)
+	 *
 	 * @see WP_List_Table::single_row_columns()
-	 * @return array
-	 * @since BuddyPress (1.7)
+	 *
+	 * @return array Array of column titles.
 	 */
 	function get_columns() {
-		return array(
+		return apply_filters( 'bp_groups_list_table_get_columns', array(
 			'cb'          => '<input name type="checkbox" />',
 			'comment'     => _x( 'Name', 'Groups admin Group Name column header',               'buddypress' ),
 			'description' => _x( 'Description', 'Groups admin Group Description column header', 'buddypress' ),
 			'status'      => _x( 'Status', 'Groups admin Privacy Status column header',         'buddypress' ),
 			'members'     => _x( '# Members', 'Groups admin Members column header',             'buddypress' ),
 			'last_active' => _x( 'Last Active', 'Groups admin Last Active column header',       'buddypress' )
-		);
+		) );
 	}
 
 	/**
 	 * Get the column names for sortable columns
 	 *
-	 * @return array
-	 * @since BuddyPress (1.7)
+	 * Note: It's not documented in WP, but the second item in the
+	 * nested arrays below is $desc_first. Normally, we would set
+	 * last_active to be desc_first (since you're generally interested in
+	 * the *most* recently active group, not the *least*). But because
+	 * the default sort for the Groups admin screen is DESC by last_active,
+	 * we want the first click on the Last Active column header to switch
+	 * the sort order - ie, to make it ASC. Thus last_active is set to
+	 * $desc_first = false.
+	 *
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @return array Array of sortable column names.
 	 */
 	function get_sortable_columns() {
 		return array(
-			'gid'         => array( 'gid',         false ),
-			'comment'     => array( 'name',        false ),
-			'members'     => array( 'members',     false ),
-			'last_active' => array( 'last_active', false )
+			'gid'         => array( 'gid', false ),
+			'comment'     => array( 'name', false ),
+			'members'     => array( 'members', false ),
+			'last_active' => array( 'last_active', false ),
 		);
 	}
 
 	/**
-	 * Checkbox column
+	 * Markup for the Checkbox column.
 	 *
-	 * @param array $item A singular item (one full row)
+	 * @since BuddyPress (1.7.0)
+	 *
 	 * @see WP_List_Table::single_row_columns()
-	 * @since BuddyPress (1.7)
+	 *
+	 * @param array $item A singular item (one full row).
 	 */
 	function column_cb( $item = array() ) {
-		printf( '<input type="checkbox" name="gid[]" value="%d" />', (int) $item['id'] );
+		printf( '<label class="screen-reader-text" for="gid-%1$d">' . __( 'Select group %1$d', 'buddypress' ) . '</label><input type="checkbox" name="gid[]" value="%1$d" id="gid-%1$d" />', $item['id'] );
 	}
 
 	/**
-	 * Group id column
+	 * Markup for the Group ID column.
 	 *
-	 * @param array $item A singular item (one full row)
+	 * @since BuddyPress (1.7.0)
+	 *
 	 * @see WP_List_Table::single_row_columns()
-	 * @since BuddyPress (1.7)
+	 *
+	 * @param array $item A singular item (one full row).
 	 */
 	function column_gid( $item = array() ) {
 		echo '<strong>' . $item['id'] . '</strong>';
@@ -1218,9 +1363,11 @@ class BP_Groups_List_Table extends WP_List_Table {
 	 *
 	 * Called "comment" in the CSS so we can re-use some WP core CSS.
 	 *
-	 * @param array $item A singular item (one full row)
+	 * @since BuddyPress (1.7.0)
+	 *
 	 * @see WP_List_Table::single_row_columns()
-	 * @since BuddyPress (1.7)
+	 *
+	 * @param array $item A singular item (one full row).
 	 */
 	function column_comment( $item = array() ) {
 
@@ -1272,18 +1419,22 @@ class BP_Groups_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Description column
+	 * Markup for the Description column.
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @param array Information about the current row.
 	 */
 	function column_description( $item = array() ) {
 		echo apply_filters_ref_array( 'bp_get_group_description', array( $item['description'], $item ) );
 	}
 
 	/**
-	 * Status column
+	 * Markup for the Status column.
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @param array Information about the current row.
 	 */
 	function column_status( $item = array() ) {
 		$status      = $item['status'];
@@ -1307,9 +1458,11 @@ class BP_Groups_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Number of Members column
+	 * Markup for the Number of Members column.
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @param array Information about the current row.
 	 */
 	function column_members( $item = array() ) {
 		$count = groups_get_groupmeta( $item['id'], 'total_member_count' );
@@ -1317,12 +1470,26 @@ class BP_Groups_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Last Active column
+	 * Markup for the Last Active column.
 	 *
-	 * @since BuddyPress (1.7)
+	 * @since BuddyPress (1.7.0)
+	 *
+	 * @param array Information about the current row.
 	 */
 	function column_last_active( $item = array() ) {
 		$last_active = groups_get_groupmeta( $item['id'], 'last_activity' );
 		echo apply_filters_ref_array( 'bp_groups_admin_get_group_last_active', array( $last_active, $item ) );
+	}
+
+	/**
+	 * Allow plugins to add their costum column.
+	 *
+	 * @since BuddyPress 2.0.0
+	 *
+	 * @param array Information about the current row.
+	 * @param string the column name.
+	 */
+	function column_default( $item = array(), $column_name = '' ) {
+		return apply_filters( 'bp_groups_admin_get_group_custom_column', '', $column_name, $item );
 	}
 }

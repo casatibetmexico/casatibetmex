@@ -13,10 +13,14 @@ function ct_bnr_add_meta_boxes($postType) {
 		case 'event':
 		case 'banner':  
 			
-			add_meta_box( 
-		        'ct_bnr_options', 'Opciones', 'ct_bnr_meta_option',
-		        $postType, 'side'
-		    ); 
+			if (current_user_can('administrator') ||
+				current_user_can('ct_coordinator')) {
+				add_meta_box( 
+			        'ct_bnr_options', 'Opciones', 'ct_bnr_meta_option',
+			        $postType, 'side'
+			    ); 
+			}
+			
 		     		    
 			break;
 	}
@@ -32,7 +36,9 @@ function ct_bnr_meta_option($post) {
 	<select id="ct_distribution" name="ct_distribution" style="width:100%;">
 		<option value="local"><?php _e('Local'); ?></option>
 		<option value="regional"><?php _e('Regional');?></option>
-		<option value="national"><?php _e('Nacional'); ?></option>
+		<?php if (current_user_can('administrator')) : ?>
+			<option value="national"><?php _e('Nacional'); ?></option>
+		<?php endif; ?>
 	</select>
 	<script type="text/javascript">	
 		jQuery('#ct_distribution').val('<?php echo $distribution; ?>');

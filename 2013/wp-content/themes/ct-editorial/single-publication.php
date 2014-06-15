@@ -44,7 +44,7 @@
 				<?php if ($details['cost']) : ?>
 				<div class="right">
 				<?php 
-					$pp_args = array('email'=>'editoria.casatibet@gmail.com',
+					$pp_args = array('email'=>'editorial@casatibet.org.mx',
 									 'name'=>$post->post_title,
 									 'return'=>ct_get_permalink($post->ID),
 									 'price'=>$details['cost'],

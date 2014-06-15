@@ -55,12 +55,17 @@ jQuery(function() {
   });
 
 
+function ui_button_text(caption) {
+  var wrapper = '<span class="ui-button-text">'+ caption +'</span>';
+  
+  return wrapper;
+}
 
 
 jQuery("#ure_add_role").button({
     label: ure_data.add_role
   }).click(function(event){
-		event.preventDefault();
+    event.preventDefault();
     jQuery(function($) {
       $info = $('#ure_add_role_dialog');
       $info.dialog({                   
@@ -68,12 +73,12 @@ jQuery("#ure_add_role").button({
         modal: true,
         autoOpen: true, 
         closeOnEscape: true,      
-        width: 320,
-        height: 190,
+        width: 400,
+        height: 230,
         resizable: false,
         title: ure_data.add_new_role_title,
         'buttons'       : {
-            'Add Role': function () {
+            'Add Role': function () {              
               var role_id = $('#user_role_id').val();
               if (role_id == '') {
                 alert( ure_data.role_name_required );
@@ -81,6 +86,10 @@ jQuery("#ure_add_role").button({
               }
               if  (!(/^[\w-]*$/.test(role_id))) {
                 alert( ure_data.role_name_valid_chars );
+                return false;
+              }
+              if  ((/^[0-9]*$/.test(role_id))) {
+                alert( ure_data.numeric_role_name_prohibited );
                 return false;
               }
               var role_name = $('#user_role_name').val();
@@ -91,15 +100,16 @@ jQuery("#ure_add_role").button({
                            { action: 'add-new-role', user_role_id: role_id, user_role_name: role_name, user_role_copy_from: role_copy_from,
                              ure_nonce: ure_data.wp_nonce} );
             },
-            'Cancel': function() {
+            Cancel: function() {
                 $(this).dialog('close');
+                return false;
             }
           }
       });    
       $('.ui-dialog-buttonpane button:contains("Add Role")').attr("id", "dialog-add-role-button");
-      $('#dialog-add_role-button').html(ure_data.add_role);
+      $('#dialog-add_role-button').html(ui_button_text(ure_data.add_role));
       $('.ui-dialog-buttonpane button:contains("Cancel")').attr("id", "dialog-cancel-button");
-      $('#dialog-cancel-button').html(ure_data.cancel);
+      $('#dialog-cancel-button').html(ui_button_text(ure_data.cancel));
     });
   });
   
@@ -134,9 +144,9 @@ jQuery("#ure_add_role").button({
       });
       // translate buttons caption
       $('.ui-dialog-buttonpane button:contains("Delete Role")').attr("id", "dialog-delete-button");
-      $('#dialog-delete-button').html(ure_data.delete);
+      $('#dialog-delete-button').html(ui_button_text(ure_data.delete_role));
       $('.ui-dialog-buttonpane button:contains("Cancel")').attr("id", "dialog-cancel-button");
-      $('#dialog-cancel-button').html(ure_data.cancel);
+      $('#dialog-cancel-button').html(ui_button_text(ure_data.cancel));
     });
   });
   
@@ -152,7 +162,7 @@ jQuery("#ure_add_role").button({
         modal: true,
         autoOpen: true, 
         closeOnEscape: true,      
-        width: 320,
+        width: 350,
         height: 190,
         resizable: false,
         title: ure_data.add_capability,
@@ -178,9 +188,9 @@ jQuery("#ure_add_role").button({
           }
       });    
       $('.ui-dialog-buttonpane button:contains("Add Capability")').attr("id", "dialog-add-capability-button");
-      $('#dialog-add_capability-button').html(ure_data.add_capability);
+      $('#dialog-add_capability-button').html(ui_button_text(ure_data.add_capability));
       $('.ui-dialog-buttonpane button:contains("Cancel")').attr("id", "dialog-cancel-button");
-      $('#dialog-cancel-button').html(ure_data.cancel);
+      $('#dialog-cancel-button').html(ui_button_text(ure_data.cancel));
     });    
   });
   
@@ -216,9 +226,9 @@ jQuery("#ure_add_role").button({
       });
       // translate buttons caption
       $('.ui-dialog-buttonpane button:contains("Delete Capability")').attr("id", "dialog-delete-capability-button");
-      $('#dialog-delete-capability-button').html(ure_data.delete_capability);
+      $('#dialog-delete-capability-button').html(ui_button_text(ure_data.delete_capability));
       $('.ui-dialog-buttonpane button:contains("Cancel")').attr("id", "dialog-cancel-button");
-      $('#dialog-cancel-button').html(ure_data.cancel);
+      $('#dialog-cancel-button').html(ui_button_text(ure_data.cancel));
     });    
   });
   
@@ -250,15 +260,16 @@ jQuery("#ure_add_role").button({
       });
       // translate buttons caption
       $('.ui-dialog-buttonpane button:contains("Set New Default Role")').attr("id", "dialog-default-role-button");
-      $('#dialog-default-role-button').html(ure_data.delete);
+      $('#dialog-default-role-button').html(ui_button_text(ure_data.set_new_default_role));
       $('.ui-dialog-buttonpane button:contains("Cancel")').attr("id", "dialog-cancel-button");
-      $('#dialog-cancel-button').html(ure_data.cancel);
+      $('#dialog-cancel-button').html(ui_button_text(ure_data.cancel));
     });
   });
   
   jQuery("#ure_reset_roles").button({
     label: ure_data.reset
   }).click(function(){
+    event.preventDefault();
     if (!confirm( ure_data.reset_warning )) {
       return false;
     }
@@ -296,21 +307,27 @@ function turn_it_back(control) {
  */
 function ure_select_all(selected) {
 
+	var qfilter = jQuery('#quick_filter').val();
   var form = document.getElementById('ure_form');
   for (i = 0; i < form.elements.length; i++) {
     el = form.elements[i];
     if (el.type !== 'checkbox') {
       continue;
     }
-    if (el.name === 'ure_caps_readable' || el.name === 'ure_show_deprecated_caps' || el.disabled ||
-				el.name.substr(0, 8) === 'wp_role_')  {
+    if (el.name === 'ure_caps_readable' || el.name === 'ure_show_deprecated_caps' || 
+		el.name === 'ure_apply_to_all' || el.disabled ||
+		el.name.substr(0, 8) === 'wp_role_')  {
       continue;
     }
-    if (selected >= 0) {
-      form.elements[i].checked = selected;
-    } else {
-      form.elements[i].checked = !form.elements[i].checked;
-    }
+		if (qfilter!=='' && !form.elements[i].parentNode.ure_tag) {
+			continue;
+		}
+		if (selected >= 0) {
+			form.elements[i].checked = selected;
+		} else {
+			form.elements[i].checked = !form.elements[i].checked;
+		}
+		
   }
 
 }
@@ -333,10 +350,11 @@ function ure_turn_caps_readable(user_id) {
 
 function ure_turn_deprecated_caps(user_id) {
 	
+	var ure_object = '';
 	if (user_id === 0) {
-		var ure_object = 'role';
+		ure_object = 'role';
 	} else {
-		var ure_object = 'user';
+		ure_object = 'user';
 	}
 	jQuery.ure_postGo(ure_data.page_url, {action: 'show-deprecated-caps', object: ure_object, user_id: user_id, ure_nonce: ure_data.wp_nonce});
 	
@@ -350,3 +368,27 @@ function ure_role_change(role_name) {
 	
 }
 // end of ure_role_change()
+
+
+function ure_filter_capabilities(cap_id) {
+	var div_list = jQuery("div[id^='ure_div_cap_']");
+	for (i=0; i<div_list.length; i++) {		 
+		if (cap_id!=='' && div_list[i].id.substr(11).indexOf(cap_id)!==-1) {
+			div_list[i].ure_tag = true;
+			div_list[i].style.color = '#27CF27';
+		} else {
+			div_list[i].style.color = '#000000';
+			div_list[i].ure_tag = false;
+		}
+	};
+		
+}
+// end of ure_filter_capabilities()
+
+
+function ure_hide_pro_banner() {
+	
+		jQuery.ure_postGo(ure_data.page_url, {action: 'hide-pro-banner', ure_nonce: ure_data.wp_nonce});
+		
+}
+// end of ure_hide_this_banner()

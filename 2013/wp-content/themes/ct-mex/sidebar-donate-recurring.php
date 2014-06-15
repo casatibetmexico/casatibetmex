@@ -6,7 +6,7 @@ global $sbar_args, $post;
 	<p>Apoya los proyectos del Editorial Casa Tibet, fomenta la generosidad como parte integral de tu vida cotidiana y refuerza la cohesión con tu comunidad.</p>
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 	<input type="hidden" name="cmd" value="_xclick-subscriptions">
-	<input type="hidden" name="business" value="editorial.casatibet@gmail.com">
+	<input type="hidden" name="business" value="editorial@casatibet.org.mx">
 	<input type="hidden" name="item_name" value="<?php _e('Apoyo al Editorial Casa Tibet'); ?>">
 	<table>
 	<tbody><tr>

@@ -1,19 +1,19 @@
 === WordPress Social Ring (Facebook Like, Google +1, ReTweet, LinkedIn and Pin It) ===
-Contributors: niccolo_tapparo
+Contributors: niccolo_tapparo, fabio.gioria
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=niccolo%2etapparo%40gmail%2ecom&lc=IT&item_name=Niccolo%20Tapparo&item_number=1&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
-Tags: Google +1, Facebook, Facebook Like, Facebook Share, Open Graph Meta Tag, Twitter, Retweet, Google+, Social Network, Linkedin
-Requires at least: 3.3
-Tested up to: 3.4.2
-Version: 1.2.2
-Stable tag: 1.2.2
+Tags: Google +1, Facebook, Facebook Like, Facebook Share, Open Graph Meta Tag, Twitter, Retweet, Google+, Social Network, Linkedin, Email, Print, PDF
+Requires at least: 3.7
+Tested up to: 3.9
+Version: 1.2.14
+Stable tag: 1.2.14
 
-WordPress Social Ring adds sharing buttons for Facebook, Twitter, Google+, Pinteres, LinkedIn and StumbleUpon.
+WordPress Social Ring adds sharing buttons for Facebook, Twitter, Google+, Pinterest, LinkedIn and StumbleUpon.
 
 == Description ==
 
 Let visitors share posts/pages on Facebook, Twitter, Google+, LinkedIn and StumbleUpon.
 
-From admin page you can choose which button display: Facebook Like, Facebook Send, Facebook Share, Google +1, Twitter, Pin It, in Share and StumbleUpon. 
+From admin page you can choose which button display: Facebook Like, Facebook Share, Google +1, Google+ Share, Twitter, Pin It, in Share and StumbleUpon.
 
 You can also choose on which pages display them: Home, Posts, Pages, Categories and Archives.
 
@@ -33,6 +33,52 @@ http://wordpress.altervista.org/category/wordpress-social-ring/
 2. Social sharing buttons on single post.
 
 == Changelog ==
+
+= 1.2.14 =
+
+* Widget bugfix
+
+= 1.2.13 =
+
+* Bugfix
+
+= 1.2.12 =
+
+* Style bugfix
+
+= 1.2.11 =
+
+* Load JS only when is necessary
+
+= 1.2.10 =
+
+* Bugfix
+
+= 1.2.9 =
+
+* Bugfix
+
+= 1.2.8 =
+
+* Bugfix
+
+= 1.2.7 =
+
+* Bugfix
+
+= 1.2.6 =
+
+* Select and sort visible social buttons with Drag&Drop system
+* Added Preview in Admin page
+
+= 1.2.5 =
+
+* Added Google+ Share, Print, PDF and Send Email buttons
+
+= 1.2.4 =
+
+* Bugfix: Google+ button - fixed sharing post in homepage
+* Added Facebook Like Box Widget
 
 = 1.2.2 =
 

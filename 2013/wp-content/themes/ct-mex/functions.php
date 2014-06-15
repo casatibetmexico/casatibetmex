@@ -54,7 +54,7 @@ function ct_mex_enqueue_scripts() {
 	
 	if ($use_feature) wp_enqueue_script('ct-feature-slider', get_bloginfo('template_url').'/js/jquery.feature_slider.js',  array('jquery', 'ct-class'));
 	
-	if ($use_faq) wp_enqueue_script('ct-faq', get_bloginfo('template_url').'/js/jquery.faq.js', array('jquery'));
+	if ($use_faq) wp_enqueue_script('ct-faq', get_bloginfo('template_url').'/js/jquery.faq.js', array('jquery'), '4.0');
 	
 	wp_enqueue_script('jquery-ui-datepicker');
 	wp_enqueue_script('jquery-ui-datepicker-es', plugins_url('casa-tibet').'/js/jquery.ui.datepicker-es.js', array('jquery-ui-datepicker'));
@@ -108,6 +108,15 @@ function ct_nav_menu($id) {
 	
 }
 
+function ct_get_nav_item($url) {
+	global $ob;
+	if ($ob) {
+		foreach((array) $ob as $item) {
+			if ($item['url'] == $url) return $item;
+		}
+	}
+}
+
 function ct_get_thumbnail($post, $size='thumb') {
 	global $_wp_additional_image_sizes;
 	$url = (gettype($post) == "object") ? wp_get_attachment_url( get_post_thumbnail_id($post->ID) )
@@ -141,8 +150,9 @@ function ct_listing($type, $list) {
 
 /** TAGS **************************************************/
 
-function ct_tag($label, $url, $css=array('tag')) {
-	return '<div class="'.implode(' ', $css).'" data-href="'.$url.'">'.$label.'</div>';
+function ct_tag($label, $url=null, $css=array('tag')) {
+	$href = ($url) ? 'data-href="'.$url.'"' : '';
+	return '<div class="'.implode(' ', $css).'" '.$href.'>'.$label.'</div>';
 }
 
 
@@ -175,7 +185,7 @@ function ct_sidebar($type, $args=array(), $output=false) {
 	}	
 }
 
-function ct_get_permalink($id, $type=null) {
+function ct_get_permalink($id=null, $type=null) {
 	$perma = "";
 	if ($id) {
 		if (!$type) $type = gettype($id);
@@ -210,7 +220,8 @@ function ct_get_permalink($id, $type=null) {
 	}
 	
 	$center = get_post_meta($id, 'ct_center', true);
-	if ($center > 0) {
+	if ($center > 0 &&
+	    in_array($center, get_option('ct_active_centers'))) {
 		return ct_replace_domain($perma, get_post_meta($center, 'ct_center_domain', true));	
 	} else {
 		$site = ct_get_site_for_post($id);
@@ -271,9 +282,13 @@ function ct_query_args($args=array()) {
 /** FORUMS ************************************************************/
 
 add_filter('the_title', 'ct_get_forum_title', 10, 2);
-function ct_get_forum_title($title, $id) {
-	$post = get_post( $id );
-	return ($post->post_type == 'forum') ? $post->post_title : $title;
+function ct_get_forum_title($title, $id=null) {
+	if ($id) {
+		$post = get_post( $id );
+		return ($post->post_type == 'forum') ? $post->post_title : $title;
+	} else {
+		return $title;
+	}
 }
 
 function print_filters_for( $hook = '' ) {
@@ -293,7 +308,8 @@ function ct_breadcrumbs($parts, $end) {
 	foreach($parts as $part) {
 		switch($part) {
 			case 'home':
-				$trail->do_home();
+				$site_name = get_option('blogname');
+				$trail->add(new bcn_breadcrumb($site_name, $trail->opt['Hhome_template'], array('home'), get_home_url()));
 				break;
 			default:
 				
@@ -307,7 +323,7 @@ function ct_breadcrumbs($parts, $end) {
 				
 					
 					if ($p->post_type != 'module') {
-						$trail->post_hierarchy($p->ID, $p->post_type, $p->post_parent);
+						//$trail->post_hierarchy($p->ID, $p->post_type, $p->post_parent);
 					}
 					
 				
@@ -321,10 +337,7 @@ function ct_breadcrumbs($parts, $end) {
 						$perma = add_query_arg('ref', $_GET['ref'], $perma);
 					}
 					$b->set_url($perma);
-					$trail->add($b);
-				
-
-												
+					$trail->add($b);												
 					
 				}
 
@@ -345,8 +358,6 @@ function ct_breadcrumbs($parts, $end) {
 					array('post-' . $end->post_type, 'current-item'), NULL, $end->ID);
 		$trail->add($b);
 	}
-	
-	
 	
 	echo '<div class="page_nav"><div class="breadcrumbs" itemprop="breadcrumbs">';
 	$trail->display(false, true, true);

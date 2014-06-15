@@ -7,77 +7,35 @@
 			<?php dynamic_sidebar('ct_page_nav'); ?>
 			<h1><?php the_title(); ?></h1>
 		</div>
-		<?php
-		$dalai_lama = ct_get_teacher('su-santidad-el-xiv-dalai-lama');
-		$geshe_sopa = ct_get_teacher('geshe-lhundub-sopa');
-		$tulku_urgyen = ct_get_teacher('tulku-urgyen-rinpoche');
-		?>
-		<table class="teachers">
-			<tr>
-				<td class="right">
-				<div class="teacher right" data-href="<?php echo ct_get_permalink($geshe_sopa->ID); ?>">
-					<div class="info">
-						<h2><?php echo $geshe_sopa->post_title;?></h2>
-					</div>
-					<div class="thumbnail ct-image-fader">
-					<?php echo ct_get_thumbnail($geshe_sopa, array(250,324,true)); ?>
-					</div>
-				</div>
-				</td>
-				<td class="center">
-				<div class="teacher center" data-href="<?php echo ct_get_permalink($dalai_lama->ID); ?>">
-					<div class="info">
-						<h2><?php echo $dalai_lama->post_title;?></h2>
-					</div>
-					<div class="thumbnail ct-image-fader">
-					<?php echo ct_get_thumbnail($dalai_lama, array(319,414,true)); ?>
-					</div>
-				</div>
-				</td>
-				<td class="left">
-				<div class="teacher left" data-href="<?php echo ct_get_permalink($tulku_urgyen->ID); ?>">
-					<div class="info">
-						<h2><?php echo $tulku_urgyen->post_title;?></h2>
-					</div>
-					<div class="thumbnail ct-image-fader">
-					<?php echo ct_get_thumbnail($tulku_urgyen, array(250,324,true)); ?>
-					</div>
-				</div>
-				</td>
-			</tr>
-		</table>
+		<?php  $types = get_terms( 'teacher-type'); ?> 
+		<?php foreach((array) $types as $t) : ?>
+		<div class="section sidebar">
+			<div class="title"><?php echo $t->name; ?></div>
+			
+			<?php if ($t->slug == 'maestros-raiz') : ?>
+			<div class="root-teachers">
+			<?php endif; ?>
+			<!-- <div class="teacher-grid" style="margin-bottom:25px;"> -->
+				<table class="teachers">
+					<?php 
+					
+					$args = array('nopaging'=>true);
+					$teachers = ct_get_teachers($t->slug, $args);
+					
+					$list = ($t->slug == 'maestros-raiz') ? 'teacher-root' : 'teacher';
+					
+					ct_listing($list, $teachers); 
+					?>
+				</table>
+			<!-- </div> -->
+			<?php if ($t->slug == 'maestros-raiz') : ?>
+			</div>
+			<?php endif; ?>
+
+		</div>
+
+		<?php endforeach; ?>
 	</div>
-</div>
-<div class="col full">
-	<div class="teacher-grid" style="margin-bottom:25px;">
-	<table class="teachers">
-		<?php 
-		
-		$args = array('no_paging'=>true);
-		$teachers = ct_get_teachers(array('invitado','monastico','rinpoche'), $args);
-		
-		$args['fields'] = 'ids';
-		$args['post__not_in'] = ct_get_teachers(array('invitado','monastico','rinpoche'), $args);
-		$args['fields'] = 'all';
-		$monks = ct_get_teachers(array('invitado','monastico'), $args);
-		
-		$teachers = array_merge($teachers, $monks);
-		
-		$args = array('no_paging'=>true);
-		$teachers = array_merge($teachers, ct_get_teachers(array('invitado','leico','rinpoche'),$args));
-		
-		$args['fields'] = 'ids';
-		$args['post__not_in'] = ct_get_teachers(array('invitado','leico','rinpoche'), $args);
-		$args['fields'] = 'all';
-		$lay = ct_get_teachers(array('invitado','leico'), $args);
-		$teachers = array_merge($teachers, $lay);
-		
-		array_push($teachers, ct_get_teacher('marco-antonio-karam'));
-		
-		ct_listing('teacher', $teachers); 
-		?>
-	</table>
-</div>
 </div>
 
 <script type="text/javascript">

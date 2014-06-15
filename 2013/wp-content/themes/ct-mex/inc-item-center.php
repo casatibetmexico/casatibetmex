@@ -15,6 +15,10 @@
 											? 'Casa Tibet : '.$item->post_title 
 											: 'Grupo de Estudio : '.$item->post_title
 								  : $item->post_title;
+				  
+	if (ct_ctr_is_active($item->ID)) {
+		$info['website'] = 'http://'.get_post_meta($item->ID, 'ct_center_domain', true);
+	}
 	
 	
 ?>
