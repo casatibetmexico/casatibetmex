@@ -1,0 +1,12 @@
+/* CSS Document */
+#gareeMain table {
+	border: 1px #ccc solid;
+	-webkit-border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	border-radius: 0.5em;
+	margin-right:2px;
+	margin-bottom:10px;
+}
+#gareeMain td, #gareeMain th {
+	padding:10px;
+}

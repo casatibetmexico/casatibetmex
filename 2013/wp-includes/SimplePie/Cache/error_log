@@ -1,0 +1,8 @@
+[26-Aug-2013 01:53:27] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home/casatibe/public_html/2013/wp-includes/SimplePie/Cache/DB.php on line 51
+[26-Aug-2013 01:53:27] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home/casatibe/public_html/2013/wp-includes/SimplePie/Cache/File.php on line 51
+[26-Aug-2013 01:53:27] PHP Fatal error:  Class 'SimplePie_Cache_DB' not found in /home/casatibe/public_html/2013/wp-includes/SimplePie/Cache/MySQL.php on line 57
+[26-Aug-2013 01:53:27] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home/casatibe/public_html/2013/wp-includes/SimplePie/Cache/Memcache.php on line 58
+[26-Aug-2013 02:29:11] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home/casatibe/public_html/2013/wp-includes/SimplePie/Cache/DB.php on line 51
+[26-Aug-2013 02:29:11] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home/casatibe/public_html/2013/wp-includes/SimplePie/Cache/File.php on line 51
+[26-Aug-2013 02:29:11] PHP Fatal error:  Class 'SimplePie_Cache_DB' not found in /home/casatibe/public_html/2013/wp-includes/SimplePie/Cache/MySQL.php on line 57
+[26-Aug-2013 02:29:11] PHP Fatal error:  Interface 'SimplePie_Cache_Base' not found in /home/casatibe/public_html/2013/wp-includes/SimplePie/Cache/Memcache.php on line 58

@@ -1,0 +1,19 @@
+body.login {
+	background:#7b0006;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#7b0005),to(#570003));
+	background-image: -webkit-linear-gradient(top,#7b0005,#570003);
+	background-image: -moz-linear-gradient(top,#7b0005,#570003);
+	background-image: -o-linear-gradient(top,#7b0005,#570003);
+	background-image: linear-gradient(to bottom,#7b0005,#570003);
+}
+
+.login h1 a {
+	background-image: url('ct-logo-login.png');
+	background-size: 155px 144px;
+	width: 155px;
+	height: 144px;
+}	
+
+#login {
+	padding: 5% 0 0;
+}

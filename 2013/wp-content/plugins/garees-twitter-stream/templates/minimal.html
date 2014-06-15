@@ -1,0 +1,6 @@
+{{! minimal-style for use in a sidebar in a text-widget }}
+
+{{#items}}
+{{{tweet_text}}}{{#tweet_has_image}} <a href="{{tweet_image_url}}">{{tweet_image_url}}</a>{{/tweet_has_image}} {{{tweet_time}}}
+<br />
+{{/items}}

@@ -1,0 +1,69 @@
+/* CSS Document */
+
+.twittersweet_outer {
+	position:relative;
+	width:314px;
+	height:159px;
+	margin:0px;
+	padding:0px;
+}
+
+.twittersweet_outer_light {
+	background-image:url(twittersweet/tweet-light.png);
+}
+.twittersweet_outer_dark {
+	background-image:url(twittersweet/tweet-dark.png);
+}
+
+.twittersweet_text {
+	position:absolute;
+	top:2px;
+	bottom:20px;
+	left:2px;
+	right:3px;
+	bottom:29px;
+	padding-top:7px;
+    padding-left:13px;
+    padding-right:10px;
+    padding-bottom:0px;
+	font-size:16px;
+	line-height:120%;
+}
+
+.twittersweet_text_light, twittersweet_footer_light {
+	color:#090909;
+}
+.twittersweet_text_dark, twittersweet_footer_dark {
+	color:#f2f2f2;
+}
+.twittersweet_text a {
+	text-decoration:none;
+}
+.twittersweet_text a:hover {
+	text-decoration:underline;
+}
+.twittersweet_text_dark a {
+	color:#f2f2f2;
+}
+.twittersweet_text_dark:hover a {
+	color:#0CF;
+}
+
+.twittersweet_text_light a {
+	color:#090909;
+}
+.twittersweet_text_light:hover a {
+	color:#03C;
+}
+
+.twittersweet_footer {
+	position:absolute;
+	bottom:5px;
+	right:12px;
+	padding-top:0px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-bottom:0px;
+	font-size:11px;
+	line-height:120%;
+}

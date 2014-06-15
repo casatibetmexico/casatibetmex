@@ -1,0 +1,118 @@
+ul.tweet_list {
+	margin-left:5px !important;
+	margin-right:5px !important;
+	padding: 10px !important;
+	list-style:none;
+	overflow-y: hidden;
+}
+ul.tweet_list .tweet{
+	margin:0px !important;
+	padding: 0px !important;
+	position: relative;	
+}
+ul.tweet_list .tweet_avatar{
+	margin-top: 0px !important;	
+}
+ul.tweet_list .tweet_avatar img{
+	margin-top: 10px !important;	
+}
+ul.tweet_list .tweet_text {
+	color: rgb(68, 68, 68);
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	text-align:left !important;
+	padding: 0px 30px 0px 10px !important;
+	margin: 0px 0px 0px 60px !important;
+}
+ul.tweet_list .tweet_header {
+	padding: 10px 0px 5px 10px !important;
+	margin: 0 !important;
+	line-height:16px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	font-weight:bold;
+	margin: 0px 0px 0px 60px !important;
+}
+ul.tweet_list .tweet_name {
+	color: rgb(153, 153, 153);
+	font-size: 12px;	
+	font-weight:normal;
+}
+ul.tweet_list .tweet_footer {
+	color: rgb(153, 153, 153);
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	padding: 2px 0px 0px 10px !important;
+	line-height:18px;
+	margin: 0px 0px 0px 60px !important;
+}
+ul.tweet_list li {
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 0.5em;
+	margin: 0px !important;
+	border-top:#f2f2f2 solid 1px;
+	border-bottom:#f2f2f2 solid 1px;
+}
+ul.tweet_list li:hover {
+	background-color: rgb(229, 247, 249);
+	border-top:#06F solid 1px;
+	border-bottom:#06F solid 1px;
+}
+ul.tweet_list li .tweet_footer_hidden {
+	display:none;
+}
+ul.tweet_list li:hover .tweet_footer_hidden {
+	display:inline;
+}
+ul.tweet_list li .tweet_image {
+	position: absolute;
+	top: 0;
+	right: 5px;
+}
+ul.tweet_list li a {
+	color:#333333;
+	text-decoration:none;
+}
+ul.tweet_list li:hover a {
+	color:rgb(34, 119, 221);
+	text-decoration:none;
+}
+ul.tweet_list li a:hover {
+	color:rgb(34, 119, 221);
+	text-decoration:underline;
+}
+
+ul.tweet_list .tweet_avatar {
+	padding-right: .5em;
+	float: left;
+}
+ul.tweet_list .tweet_avatar img {
+	vertical-align: middle;
+}
+.tweet_action, .retweeted_by {
+	background-repeat:no-repeat;
+	background-position:left;
+	padding: 3px 0px 3px 18px;
+}
+a.tweet_reply {
+	background-image:url(list/reply.png);
+}
+a.tweet_reply:hover {
+	background-image:url(list/reply_hover.png);
+}
+a.tweet_retweet {
+	background-image:url(list/retweet.png);
+}
+a.tweet_retweet:hover {
+	background-image:url(list/retweet_hover.png);
+}
+a.tweet_favorite {
+	background-image:url(list/favorite.png);
+}
+a.tweet_favorite:hover {
+	background-image:url(list/favorite_hover.png);
+}
+span.retweeted_by {
+	background-image:url(list/retweet_hover.png);
+}

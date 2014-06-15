@@ -1,0 +1,112 @@
+[26-Aug-2013 01:50:45] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/rss.php on line 18
+[26-Aug-2013 01:50:46] PHP Fatal error:  Call to undefined function  is_admin() in /home/casatibe/public_html/2013/wp-includes/vars.php on line 20
+[26-Aug-2013 01:50:46] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/kses.php on line 1392
+[26-Aug-2013 01:50:46] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/post.php on line 165
+[26-Aug-2013 01:50:46] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/user.php on line 71
+[26-Aug-2013 01:50:47] PHP Fatal error:  Call to undefined function  add_shortcode() in /home/casatibe/public_html/2013/wp-includes/media.php on line 610
+[26-Aug-2013 01:50:47] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/theme.php on line 582
+[26-Aug-2013 01:50:47] PHP Fatal error:  Call to undefined function  is_main_site() in /home/casatibe/public_html/2013/wp-includes/update.php on line 431
+[26-Aug-2013 01:50:48] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/taxonomy.php on line 121
+[26-Aug-2013 01:50:49] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-rss.php on line 8
+[26-Aug-2013 01:50:49] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-rdf.php on line 8
+[26-Aug-2013 01:50:49] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-atom.php on line 8
+[26-Aug-2013 01:50:49] PHP Warning:  require(ABSPATHWPINC/option.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/functions.php on line 8
+[26-Aug-2013 01:50:49] PHP Warning:  require(ABSPATHWPINC/option.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/functions.php on line 8
+[26-Aug-2013 01:50:49] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/option.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/functions.php on line 8
+[26-Aug-2013 01:50:49] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-rss2.php on line 8
+[26-Aug-2013 01:50:49] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/canonical.php on line 506
+[26-Aug-2013 01:50:50] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/admin-bar.php on line 40
+[26-Aug-2013 01:50:50] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/shortcodes.php on line 377
+[26-Aug-2013 01:50:50] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/class-wp-embed.php on line 20
+[26-Aug-2013 01:50:50] PHP Warning:  require_once(ABSPATHWPINC/class-simplepie.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/class-feed.php on line 4
+[26-Aug-2013 01:50:50] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/class-simplepie.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/class-feed.php on line 4
+[26-Aug-2013 01:50:51] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/class-snoopy.php on line 6
+[26-Aug-2013 01:50:51] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/author-template.php on line 392
+[26-Aug-2013 01:50:51] PHP Fatal error:  Class 'WP_Dependencies' not found in /home/casatibe/public_html/2013/wp-includes/class.wp-styles.php on line 19
+[26-Aug-2013 01:50:51] PHP Fatal error:  Call to undefined function  is_robots() in /home/casatibe/public_html/2013/wp-includes/template-loader.php on line 14
+[26-Aug-2013 01:50:51] PHP Warning:  require(ABSPATHWPINC/SimplePie/Misc.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/class-simplepie.php on line 5
+[26-Aug-2013 01:50:51] PHP Warning:  require(ABSPATHWPINC/SimplePie/Misc.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/class-simplepie.php on line 5
+[26-Aug-2013 01:50:51] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/SimplePie/Misc.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/class-simplepie.php on line 5
+[26-Aug-2013 01:50:51] PHP Fatal error:  Class 'WP_Widget' not found in /home/casatibe/public_html/2013/wp-includes/default-widgets.php on line 14
+[26-Aug-2013 01:50:51] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/default-filters.php on line 17
+[26-Aug-2013 01:50:51] PHP Fatal error:  Class 'WP_Dependencies' not found in /home/casatibe/public_html/2013/wp-includes/class.wp-scripts.php on line 19
+[26-Aug-2013 01:50:52] PHP Fatal error:  Class 'Walker' not found in /home/casatibe/public_html/2013/wp-includes/comment-template.php on line 1217
+[26-Aug-2013 01:50:52] PHP Fatal error:  Class 'Walker' not found in /home/casatibe/public_html/2013/wp-includes/category-template.php on line 766
+[26-Aug-2013 01:50:52] PHP Warning:  require(ABSPATHWPINC/ms-load.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/ms-settings.php on line 14
+[26-Aug-2013 01:50:52] PHP Warning:  require(ABSPATHWPINC/ms-load.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/ms-settings.php on line 14
+[26-Aug-2013 01:50:52] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/ms-load.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/ms-settings.php on line 14
+[26-Aug-2013 01:50:52] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/post-formats.php on line 170
+[26-Aug-2013 01:50:53] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/registration.php on line 7
+[26-Aug-2013 01:50:53] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/ms-functions.php on line 1735
+[26-Aug-2013 01:50:53] PHP Fatal error:  Class 'Walker' not found in /home/casatibe/public_html/2013/wp-includes/post-template.php on line 985
+[26-Aug-2013 01:50:53] PHP Warning:  require(ABSPATHWPINC/class.wp-dependencies.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/script-loader.php on line 25
+[26-Aug-2013 01:50:53] PHP Warning:  require(ABSPATHWPINC/class.wp-dependencies.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/script-loader.php on line 25
+[26-Aug-2013 01:50:53] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/class.wp-dependencies.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/script-loader.php on line 25
+[26-Aug-2013 01:50:53] PHP Fatal error:  Class 'Walker' not found in /home/casatibe/public_html/2013/wp-includes/nav-menu-template.php on line 17
+[26-Aug-2013 01:50:53] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/ms-default-filters.php on line 17
+[26-Aug-2013 01:50:53] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/general-template.php on line 1315
+[26-Aug-2013 01:50:53] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-rss2-comments.php on line 8
+[26-Aug-2013 01:50:54] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-atom-comments.php on line 8
+[26-Aug-2013 01:50:54] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/rss-functions.php on line 8
+[26-Aug-2013 01:50:54] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/ms-default-constants.php on line 151
+[26-Aug-2013 01:50:54] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/registration-functions.php on line 7
+[26-Aug-2013 01:50:54] PHP Fatal error:  Class 'IXR_Server' not found in /home/casatibe/public_html/2013/wp-includes/class-wp-xmlrpc-server.php on line 22
+[26-Aug-2013 01:50:55] PHP Fatal error:  Class 'IXR_Client' not found in /home/casatibe/public_html/2013/wp-includes/class-wp-http-ixr-client.php on line 9
+[26-Aug-2013 01:50:55] PHP Fatal error:  Class 'WP_Image_Editor' not found in /home/casatibe/public_html/2013/wp-includes/class-wp-image-editor-gd.php on line 17
+[26-Aug-2013 01:50:55] PHP Fatal error:  Class 'WP_Image_Editor' not found in /home/casatibe/public_html/2013/wp-includes/class-wp-image-editor-imagick.php on line 17
+[26-Aug-2013 02:26:30] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/rss.php on line 18
+[26-Aug-2013 02:26:31] PHP Fatal error:  Call to undefined function  is_admin() in /home/casatibe/public_html/2013/wp-includes/vars.php on line 20
+[26-Aug-2013 02:26:31] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/kses.php on line 1392
+[26-Aug-2013 02:26:31] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/post.php on line 165
+[26-Aug-2013 02:26:31] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/user.php on line 71
+[26-Aug-2013 02:26:32] PHP Fatal error:  Call to undefined function  add_shortcode() in /home/casatibe/public_html/2013/wp-includes/media.php on line 610
+[26-Aug-2013 02:26:32] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/theme.php on line 582
+[26-Aug-2013 02:26:33] PHP Fatal error:  Call to undefined function  is_main_site() in /home/casatibe/public_html/2013/wp-includes/update.php on line 431
+[26-Aug-2013 02:26:34] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/taxonomy.php on line 121
+[26-Aug-2013 02:26:34] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-rss.php on line 8
+[26-Aug-2013 02:26:34] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-rdf.php on line 8
+[26-Aug-2013 02:26:34] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-atom.php on line 8
+[26-Aug-2013 02:26:34] PHP Warning:  require(ABSPATHWPINC/option.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/functions.php on line 8
+[26-Aug-2013 02:26:34] PHP Warning:  require(ABSPATHWPINC/option.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/functions.php on line 8
+[26-Aug-2013 02:26:34] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/option.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/functions.php on line 8
+[26-Aug-2013 02:26:34] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-rss2.php on line 8
+[26-Aug-2013 02:26:34] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/canonical.php on line 506
+[26-Aug-2013 02:26:35] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/admin-bar.php on line 40
+[26-Aug-2013 02:26:35] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/shortcodes.php on line 377
+[26-Aug-2013 02:26:35] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/class-wp-embed.php on line 20
+[26-Aug-2013 02:26:35] PHP Warning:  require_once(ABSPATHWPINC/class-simplepie.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/class-feed.php on line 4
+[26-Aug-2013 02:26:35] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/class-simplepie.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/class-feed.php on line 4
+[26-Aug-2013 02:26:36] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/class-snoopy.php on line 6
+[26-Aug-2013 02:26:36] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/author-template.php on line 392
+[26-Aug-2013 02:26:36] PHP Fatal error:  Class 'WP_Dependencies' not found in /home/casatibe/public_html/2013/wp-includes/class.wp-styles.php on line 19
+[26-Aug-2013 02:26:36] PHP Warning:  require(ABSPATHWPINC/SimplePie/Misc.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/class-simplepie.php on line 5
+[26-Aug-2013 02:26:36] PHP Warning:  require(ABSPATHWPINC/SimplePie/Misc.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/class-simplepie.php on line 5
+[26-Aug-2013 02:26:36] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/SimplePie/Misc.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/class-simplepie.php on line 5
+[26-Aug-2013 02:26:36] PHP Fatal error:  Class 'WP_Widget' not found in /home/casatibe/public_html/2013/wp-includes/default-widgets.php on line 14
+[26-Aug-2013 02:26:36] PHP Fatal error:  Call to undefined function  is_robots() in /home/casatibe/public_html/2013/wp-includes/template-loader.php on line 14
+[26-Aug-2013 02:26:36] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/default-filters.php on line 17
+[26-Aug-2013 02:26:36] PHP Fatal error:  Class 'WP_Dependencies' not found in /home/casatibe/public_html/2013/wp-includes/class.wp-scripts.php on line 19
+[26-Aug-2013 02:26:36] PHP Fatal error:  Class 'Walker' not found in /home/casatibe/public_html/2013/wp-includes/comment-template.php on line 1217
+[26-Aug-2013 02:26:37] PHP Fatal error:  Class 'Walker' not found in /home/casatibe/public_html/2013/wp-includes/category-template.php on line 766
+[26-Aug-2013 02:26:37] PHP Warning:  require(ABSPATHWPINC/ms-load.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/ms-settings.php on line 14
+[26-Aug-2013 02:26:37] PHP Warning:  require(ABSPATHWPINC/ms-load.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/ms-settings.php on line 14
+[26-Aug-2013 02:26:37] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/ms-load.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/ms-settings.php on line 14
+[26-Aug-2013 02:26:37] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/post-formats.php on line 170
+[26-Aug-2013 02:26:37] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/registration.php on line 7
+[26-Aug-2013 02:26:37] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/ms-functions.php on line 1735
+[26-Aug-2013 02:26:37] PHP Fatal error:  Class 'Walker' not found in /home/casatibe/public_html/2013/wp-includes/post-template.php on line 985
+[26-Aug-2013 02:26:37] PHP Warning:  require(ABSPATHWPINC/class.wp-dependencies.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/script-loader.php on line 25
+[26-Aug-2013 02:26:37] PHP Warning:  require(ABSPATHWPINC/class.wp-dependencies.php) [<a href='function.require'>function.require</a>]: failed to open stream: No such file or directory in /home/casatibe/public_html/2013/wp-includes/script-loader.php on line 25
+[26-Aug-2013 02:26:37] PHP Fatal error:  require() [<a href='function.require'>function.require</a>]: Failed opening required 'ABSPATHWPINC/class.wp-dependencies.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/casatibe/public_html/2013/wp-includes/script-loader.php on line 25
+[26-Aug-2013 02:26:37] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/general-template.php on line 1315
+[26-Aug-2013 02:26:38] PHP Fatal error:  Class 'Walker' not found in /home/casatibe/public_html/2013/wp-includes/nav-menu-template.php on line 17
+[26-Aug-2013 02:26:38] PHP Fatal error:  Call to undefined function  add_filter() in /home/casatibe/public_html/2013/wp-includes/ms-default-filters.php on line 17
+[26-Aug-2013 02:26:38] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-rss2-comments.php on line 8
+[26-Aug-2013 02:26:38] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/rss-functions.php on line 8
+[26-Aug-2013 02:26:38] PHP Fatal error:  Call to undefined function  feed_content_type() in /home/casatibe/public_html/2013/wp-includes/feed-atom-comments.php on line 8
+[26-Aug-2013 02:26:38] PHP Fatal error:  Call to undefined function  add_action() in /home/casatibe/public_html/2013/wp-includes/ms-default-constants.php on line 151
+[26-Aug-2013 02:26:38] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/registration-functions.php on line 7
+[26-Aug-2013 02:26:38] PHP Fatal error:  Class 'IXR_Server' not found in /home/casatibe/public_html/2013/wp-includes/class-wp-xmlrpc-server.php on line 22
+[26-Aug-2013 02:26:39] PHP Fatal error:  Class 'IXR_Client' not found in /home/casatibe/public_html/2013/wp-includes/class-wp-http-ixr-client.php on line 9
+[26-Aug-2013 02:26:39] PHP Fatal error:  Class 'WP_Image_Editor' not found in /home/casatibe/public_html/2013/wp-includes/class-wp-image-editor-gd.php on line 17
+[26-Aug-2013 02:26:39] PHP Fatal error:  Class 'WP_Image_Editor' not found in /home/casatibe/public_html/2013/wp-includes/class-wp-image-editor-imagick.php on line 17

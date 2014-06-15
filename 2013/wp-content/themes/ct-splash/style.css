@@ -1,0 +1,42 @@
+/*
+Theme Name: Casa Tibet - Splash
+Author: Joe Flumerfelt
+Version: 0.1
+License: GNU General Public License
+*/
+
+/* STANDARD LAYOUT STYLES *******************************/
+
+#rm-container {
+	background-position:0px 0px;
+	background-image:url(img/ct-bg-tile.png);
+}
+
+#rm-header {
+	height:0px;
+	display:none;
+}
+
+#rm-footer {
+	display:none;
+	height: 50px;
+}
+
+.rm-main {
+	padding-bottom:0px;
+}
+
+.rm-main img {
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-75px;
+	margin-left:-70px;
+	width:139px;
+	height:150px;
+}
+
+.rm-content {
+	width:800px;
+	height:100%;
+}

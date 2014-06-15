@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="viewport" content="width=1021" />
+<title>Casa Tibet México  | Calendario</title>
+<meta name='robots' content='noindex,follow' />
+<link rel='stylesheet' id='pp_donate-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/paypal-donate/paypal-donate.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rm-social-css-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-social/rm-social.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rm-standard-layouts-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-standard-layouts/rm-standard-layouts.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rm-contact-form-css-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-contact-form/rm-contact-form.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='bbp-default-bbpress-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.4-5380' type='text/css' media='screen' />
+<link rel='stylesheet' id='theme-style-css'  href='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/style.css?t=1399482427&#038;ver=3.9.1' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-includes/js/jquery/jquery.js?ver=1.11.0'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-social/jquery.popupWindow.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/js/Class.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/js/casatibet.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/js/jquery.nav_menu.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/js/jquery.image_fader.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-includes/js/jquery/ui/jquery.ui.core.min.js?ver=1.10.4'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-includes/js/jquery/ui/jquery.ui.datepicker.min.js?ver=1.10.4'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/casa-tibet/js/jquery.ui.datepicker-es.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-contact-form/js/jquery.validate.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-contact-form/js/rm-contact-form.js?ver=3.9.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var BP_Confirm = {"are_you_sure":"\u00bfEst\u00e1s seguro?"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/buddypress/bp-core/js/confirm.min.js?ver=2.0.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/casa-tibet/js/jquery.embed.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/casa-tibet/js/jquery.cookie.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/casa-tibet/js/ct_functions.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://p.jwpcdn.com/6/8/jwplayer.js?ver=3.9.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.casatibet.org.mx/2013/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.casatibet.org.mx/2013/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Clínica de Medicina Tibetana' href='http://www.casatibet.org.mx/nosotros/medicina-tibetana/' />
+<link rel='next' title='Actividad' href='http://www.casatibet.org.mx/actividad/' />
+<meta name="generator" content="WordPress 3.9.1" />
+<link rel='canonical' href='http://www.casatibet.org.mx/calendario/' />
+<link rel='shortlink' href='http://www.casatibet.org.mx/?p=5424' />
+
+		<script type="text/javascript">
+			/* <![CDATA[ */
+			
+						jQuery(document).ready( function() {
+
+				/* Use backticks instead of <code> for the Code button in the editor */
+				if ( typeof( edButtons ) !== 'undefined' ) {
+					edButtons[110] = new QTags.TagButton( 'code', 'code', '`', '`', 'c' );
+					QTags._buttonsInit();
+				}
+
+				/* Tab from topic title */
+				jQuery( '#bbp_topic_title' ).bind( 'keydown.editor-focus', function(e) {
+					if ( e.which !== 9 )
+						return;
+
+					if ( !e.ctrlKey && !e.altKey && !e.shiftKey ) {
+						if ( typeof( tinymce ) !== 'undefined' ) {
+							if ( ! tinymce.activeEditor.isHidden() ) {
+								var editor = tinymce.activeEditor.editorContainer;
+								jQuery( '#' + editor + ' td.mceToolbar > a' ).focus();
+							} else {
+								jQuery( 'textarea.bbp-the-content' ).focus();
+							}
+						} else {
+							jQuery( 'textarea.bbp-the-content' ).focus();
+						}
+
+						e.preventDefault();
+					}
+				});
+
+				/* Shift + tab from topic tags */
+				jQuery( '#bbp_topic_tags' ).bind( 'keydown.editor-focus', function(e) {
+					if ( e.which !== 9 )
+						return;
+
+					if ( e.shiftKey && !e.ctrlKey && !e.altKey ) {
+						if ( typeof( tinymce ) !== 'undefined' ) {
+							if ( ! tinymce.activeEditor.isHidden() ) {
+								var editor = tinymce.activeEditor.editorContainer;
+								jQuery( '#' + editor + ' td.mceToolbar > a' ).focus();
+							} else {
+								jQuery( 'textarea.bbp-the-content' ).focus();
+							}
+						} else {
+							jQuery( 'textarea.bbp-the-content' ).focus();
+						}
+
+						e.preventDefault();
+					}
+				});
+			});
+						/* ]]> */
+		</script>
+
+	
+	<script type="text/javascript">var ajaxurl = 'http://www.casatibet.org.mx/2013/wp-admin/admin-ajax.php';</script>
+
+<script type="text/javascript">jwplayer.defaults = { "ph": 2 };</script> 
+		<style type="text/css">
+			.social-ring:after {
+				 clear: both;
+			}
+				   
+			.social-ring:before,
+			.social-ring:after {
+				 content: "";
+				 display: table;
+			}
+			
+			.social-ring {
+				margin: 0 0 0.5em !important;
+				padding: 0 !important;
+				line-height: 20px !important;
+				height: auto;
+				font-size: 11px;
+			}
+			.social-ring-button {
+				float: left !important;
+								height: 30px;
+								margin: 0 5px 0 0 !important;
+				padding: 0 !important;
+			}
+			.social-ring .social-ring-button iframe {
+				max-width: none !important;
+			}
+		</style>
+	<!-- <link href="http://fnt.webink.com/wfs/webink.css?project=7A36BC1B-1FA8-40BE-9194-DE0B97D81875&fonts=3ADF0713-3388-8371-8FC2-3CBA9D020557:f=AGaramondPro-Regular,4E5B817B-633D-E2C2-8120-FBBC0786B815:f=AGaramondPro-Semibold,DB6F18C0-2E60-CC71-F543-390ED488B3D2:f=AGaramondPro-Italic" rel="stylesheet" type="text/css"/> -->
+<script type="text/javascript">
+	ct.siteurl = 'http://www.casatibet.org.mx';
+	ct.theme = 'ct-mex';
+</script>
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<style type="text/css" media="screen"> 
+  html { margin-top: 0px !important; } 
+  * html body { margin-top: 0px !important; } 
+  </style></head>
+<body>
+<div id="rm-container">
+	<div id="rm-header" class="interior">
+		<div class="rm-content">
+			<div class="nav_bar">
+
+	<ul class="login">
+		
+	 
+		<li data-action="register" data-href="http://mi.casatibet.org.mx/register">REGISTRAR</li>
+		<li data-action="login" data-href="http://www.casatibet.org.mx/2013/wp-login.php?redirect_to=http%3A%2F%2Fmi.casatibet.org.mx">LOGIN</li>
+		<li>¡Bienvenido Invitado!</li>
+		
+		</ul>
+	<ul class="menu">
+		<li data-site="ct-mex" data-href="http://www.casatibet.org.mx">CASA TIBET</li>
+		<li data-site="ct-edu" data-href="http://educacion.casatibet.org.mx">EDUCACIÓN</li>
+		<li data-site="ct-editorial" data-href="http://editorial.casatibet.org.mx">EDITORIAL</li>
+		<li data-site="ct-derechos" data-href="http://altruismo.casatibet.org.mx">ALTRUISMO</li>
+	</ul>
+</div>
+<div class="main_menu">
+	<ul id="ct_nav_menu"></ul>
+<script type="text/javascript">jQuery("#ct_nav_menu").navMenu([{"label":"Inicio","url":"http:\/\/www.casatibet.org.mx\/","target":""},{"label":"Nosotros","url":"http:\/\/www.casatibet.org.mx\/nosotros\/","target":"","children":[{"label":"Nuestra Historia","url":"http:\/\/www.casatibet.org.mx\/nosotros\/historia\/","target":""},{"label":"Nuestros Maestros","url":"http:\/\/www.casatibet.org.mx\/nosotros\/nuestros-maestros\/","target":""},{"label":"Cl\u00ednica de Medicina Tibetana","url":"http:\/\/www.casatibet.org.mx\/nosotros\/medicina-tibetana\/","target":""},{"label":"Librer\u00eda Potala","url":"http:\/\/www.casatibet.org.mx\/nosotros\/libreria-potala\/","target":""},{"label":"Preguntas Frecuentes","url":"http:\/\/www.casatibet.org.mx\/nosotros\/preguntas-frecuentes\/","target":""}]},{"label":"Nuestros Centros","url":"http:\/\/www.casatibet.org.mx\/nuestros-centros\/","target":"","children":[{"label":"M\u00e9xico","url":"\/nuestros-centros\/?country=mexico&center-type=sangha-sede","target":""},{"label":"Estados Unidos","url":"\/nuestros-centros\/?country=eua&center-type=sangha-sede","target":""},{"label":"Guatemala","url":"\/nuestros-centros\/?country=guatemala&center-type=sangha-sede","target":""},{"label":"Casas del Tibet en el Mundo","url":"\/nuestros-centros\/?country=otra&center-type=sangha-sede","target":""}]},{"label":"Calendario","url":"http:\/\/www.casatibet.org.mx\/calendario\/","target":"","children":[{"label":"Pr\u00f3ximos Eventos","url":"http:\/\/www.casatibet.org.mx\/calendario\/","target":""},{"label":"Eventos Pasados","url":"http:\/\/www.casatibet.org.mx\/calendario\/eventos-pasados\/","target":""}]},{"label":"Noticias","url":"http:\/\/www.casatibet.org.mx\/noticias\/","target":""},{"label":"Contacto","url":"http:\/\/www.casatibet.org.mx\/contacto\/","target":""}]);</script>
+</div>		</div>
+	</div>
+	<div id="rm-main">
+		<div class="rm-content">
+<div class="col side">
+	<div class="calendar"></div>
+<input type="hidden" id="search_by_date" value="" />
+<script type="text/javascript">
+	var datesArray = ["2014-11-16","2014-08-25","2014-08-23","2014-07-11"];
+	var curDate = {"year":"2014","month":"06"};
+	function ctLoadDate(data) {
+		if (data.year && data.month) {
+			var target = 'date='+data.year+'-'+data.month;
+			if(data.day) target += '-'+data.day;
+			ct.goTo('http://www.casatibet.org.mx/calendario/?'+target, true);
+		}
+	}
+	jQuery(document).ready(function() {
+		jQuery('.calendar').datepicker({
+				        dateFormat : 'yy-mm-dd',
+	        beforeShowDay: function(date) {
+	        	var theday = [];
+	        	theday.push(date.getFullYear());
+	        	var month = date.getMonth()+1;
+	        	theday.push((month < 10) ? '0'+month : month);
+	        	var date = date.getDate();
+	        	theday.push((date < 10) ? '0'+date : date);
+	        	var theday = theday.join('-');
+				return [true,jQuery.inArray(theday, datesArray) >=0?"day_highlight":''];
+			},
+			onChangeMonthYear: function(year, month) {
+				curDate = {year:year, month:month};
+			},
+			onSelect: function(dateText) {
+				var parts = dateText.split('-');
+				var data = {year:parts[0], month:parts[1], day:parts[2]};
+				ctLoadDate(data);
+			}
+	    });
+	    
+	    jQuery('.calendar').click(function(e) {
+	    	var el = jQuery(e.srcElement);
+	    	if (el.hasClass('ui-datepicker-title') ||
+	    		el.hasClass('ui-datepicker-month') || 
+	    		el.hasClass('ui-datepicker-year')) {
+	    		ctLoadDate(curDate);
+	    	}
+	    });
+    });
+</script></div>
+<div class="col main">
+	<div class="section listing event-main">
+<div class="title" >
+Proximos Eventos</div>
+<ul >
+		<li class="list_header">julio 2014</li>
+		<li class="event_item" data-href="http://www.casatibet.org.mx/event/seminario-los-cuatro-darmas-de-gampopa/">
+		<div class="thumbnail ct-image-fader"><img src="http://www.casatibet.org.mx/2013/wp-content/uploads/2014/06/186-e1402424182660-150x100c.jpg" /></div>				<div class="event_type"><div class="tag right" >Casa Tibet México</div></div>
+				<h3>Seminario: Los cuatro Darmas de Gampopa</h3>
+		<p>11 julio, 2014 @ 07:00 pm - 13 julio, 2014 @ 02:00 pm</p>
+				<p class="teacher">
+		Impartido por: Marcia Dechen Wangmo</p>
+			</li>
+		<li class="list_header">agosto 2014</li>
+		<li class="event_item" data-href="http://www.casatibet.org.mx/event/seminario-cambia-tu-mente-abre-tu-corazon/">
+		<div class="thumbnail ct-image-fader"><img src="http://www.casatibet.org.mx/2013/wp-content/uploads/2014/06/IMG_0056-150x100c.jpg" /></div>				<div class="event_type"><div class="tag right" >Casa Tibet México</div></div>
+				<h3>Seminario: Cambia tu mente, abre tu corazón</h3>
+		<p>23 agosto, 2014 @ 09:00 am - 24 agosto, 2014 @ 06:00 pm</p>
+				<p class="teacher">
+		Impartido por: Su Eminencia Jetsün Mindrolling Khandro Rinpoché</p>
+			</li>
+	<li class="event_item" data-href="http://www.casatibet.org.mx/event/conferencia-el-cultivo-de-la-atencion-desde-la-perspectiva-de-los-tres-vehiculos-del-budismo-tibetano/">
+		<div class="thumbnail ct-image-fader"><img src="http://www.casatibet.org.mx/2013/wp-content/uploads/2014/06/IMG_0160-150x100c.jpg" /></div>				<div class="event_type"><div class="tag right" >Casa Tibet México</div></div>
+				<h3>Conferencia: El cultivo de la atención </h3>
+		<p>25 agosto, 2014 @ 07:00 pm - 25 agosto, 2014 @ 09:00 pm</p>
+				<p class="teacher">
+		Impartido por: Su Eminencia Jetsün Mindrolling Khandro Rinpoché</p>
+			</li>
+		<li class="list_header">noviembre 2014</li>
+		<li class="event_item" data-href="http://www.casatibet.org.mx/event/viaje-esplendores-de-la-india-clasica-del-sur-y-sri-lanka/">
+		<div class="thumbnail ct-image-fader"><img src="http://www.casatibet.org.mx/2013/wp-content/uploads/2014/04/10005998_647722385265570_1625028707036760437_o-e1397501330831-150x100c.jpg" /></div>				<div class="event_type"><div class="tag right" >Casa Tibet México</div></div>
+				<h3>VIAJE: Esplendores de la India clásica del sur y Sri Lanka</h3>
+		<p>16 noviembre, 2014 - 9 diciembre, 2014</p>
+			</li>
+<script type="text/javascript">
+jQuery('.event_item .ct-image-fader').imageFader({fade:500, w:150, h:100});
+</script></ul>
+</div>
+
+</div>
+
+		</div>
+	</div>
+	<div id="rm-footer">
+	<div class="rm-content">
+		<div class="menu">
+	<ul>
+		<li data-href="http://www.casatibet.org.mx/2013/wp-admin">ADMIN</li>
+		<li data-href="http://www.casatibet.org.mx/realimentacion">REALIMENTACIÓN</li>
+			<li data-href="http://www.casatibet.org.mx/nosotros/preguntas-frecuentes">PREGUNTAS FRECUENTES</li>
+	</ul>
+</div>
+<div class="copyright">
+<h2>Casa Tibet México</h2>
+<p>Orizaba # 93, Roma norte, Del. Cuauhtemoc, México D.F. CP. 06700,<br />
+Tels. 55147763 • 55110802 • 55140443 info@casatibet.org.mx</p>
+</div>	</div>
+	</div>
+</div>
+
+<!-- Generated in 0,400 seconds. (24 q) -->
+
+	</body>
+</html>
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Minified using disk
+Page Caching using disk: enhanced
+Database Caching 83/107 queries in 0.029 seconds using disk
+
+ Served from: www.casatibet.org.mx @ 2014-06-15 10:32:04 by W3 Total Cache -->

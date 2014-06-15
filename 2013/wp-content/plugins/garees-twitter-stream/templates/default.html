@@ -1,0 +1,5 @@
+{{! uses the styling of embedded tweets by twitter: https://dev.twitter.com/docs/embedded-tweets }}
+
+{{#items}}
+<blockquote class="twitter-tweet"{{#reply_user_id}} data-in-reply-to="{{reply_user_id}}"{{/reply_user_id}}><p>{{tweet_text_raw}}</p>&mdash; {{user_name}} (@{{user_screen_name}}) <a href="https://twitter.com/twitterapi/status/{{tweet_id}}" data-datetime="{{tweet_time_raw}}">{{tweet_time_formatted}}</a></blockquote>
+{{/items}}

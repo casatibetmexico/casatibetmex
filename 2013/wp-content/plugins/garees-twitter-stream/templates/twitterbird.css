@@ -1,0 +1,15 @@
+/* CSS Document */
+
+.twitterbird_outer {
+	margin:0px;
+	padding:0px;
+}
+
+.twitterbird_inner {
+	padding-top:40%;
+    padding-left:15%;
+    padding-right:10%;
+    padding-bottom:5%;
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	line-height:120%;
+}

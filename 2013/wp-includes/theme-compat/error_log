@@ -1,0 +1,10 @@
+[26-Aug-2013 01:51:44] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/footer.php on line 10
+[26-Aug-2013 01:51:44] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/sidebar.php on line 10
+[26-Aug-2013 01:51:44] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/header.php on line 10
+[26-Aug-2013 01:51:44] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/comments-popup.php on line 10
+[26-Aug-2013 01:51:44] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/comments.php on line 10
+[26-Aug-2013 02:27:27] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/footer.php on line 10
+[26-Aug-2013 02:27:27] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/sidebar.php on line 10
+[26-Aug-2013 02:27:27] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/header.php on line 10
+[26-Aug-2013 02:27:27] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/comments.php on line 10
+[26-Aug-2013 02:27:27] PHP Fatal error:  Call to undefined function  _deprecated_file() in /home/casatibe/public_html/2013/wp-includes/theme-compat/comments-popup.php on line 10

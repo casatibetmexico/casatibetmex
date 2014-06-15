@@ -1,0 +1,2 @@
+[26-Aug-2013 01:51:24] PHP Fatal error:  Call to undefined function  get_header() in /home/casatibe/public_html/2013/wp-content/plugins/rm-standard-layouts/templates/index.php on line 1
+[26-Aug-2013 02:27:04] PHP Fatal error:  Call to undefined function  get_header() in /home/casatibe/public_html/2013/wp-content/plugins/rm-standard-layouts/templates/index.php on line 1

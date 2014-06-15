@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="viewport" content="width=1021" />
+<title>Casa Tibet : Editorial  | Noticias</title>
+<meta name='robots' content='noindex,follow' />
+<link rel="alternate" type="application/rss+xml" title="Casa Tibet : Editorial &raquo; Noticias RSS de la categoría" href="http://editorial.casatibet.org.mx/noticias/feed/" />
+<link rel='stylesheet' id='pp_donate-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/paypal-donate/paypal-donate.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rm-social-css-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-social/rm-social.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rm-standard-layouts-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-standard-layouts/rm-standard-layouts.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rm-contact-form-css-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-contact-form/rm-contact-form.css?ver=3.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='bbp-default-bbpress-css'  href='http://www.casatibet.org.mx/2013/wp-content/plugins/bbpress/templates/default/css/bbpress.css?ver=2.5.4-5380' type='text/css' media='screen' />
+<link rel='stylesheet' id='theme-style-css'  href='http://www.casatibet.org.mx/2013/wp-content/themes/ct-editorial/style.css?t=1399482428&#038;ver=3.9.1' type='text/css' media='all' />
+<script type='text/javascript' src='http://editorial.casatibet.org.mx/2013/wp-includes/js/jquery/jquery.js?ver=1.11.0'></script>
+<script type='text/javascript' src='http://editorial.casatibet.org.mx/2013/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-social/jquery.popupWindow.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/js/Class.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/js/casatibet.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/js/jquery.nav_menu.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/themes/ct-mex/js/jquery.image_fader.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://editorial.casatibet.org.mx/2013/wp-includes/js/jquery/ui/jquery.ui.core.min.js?ver=1.10.4'></script>
+<script type='text/javascript' src='http://editorial.casatibet.org.mx/2013/wp-includes/js/jquery/ui/jquery.ui.datepicker.min.js?ver=1.10.4'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/casa-tibet/js/jquery.ui.datepicker-es.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-contact-form/js/jquery.validate.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/rm-contact-form/js/rm-contact-form.js?ver=3.9.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var BP_Confirm = {"are_you_sure":"\u00bfEst\u00e1s seguro?"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/buddypress/bp-core/js/confirm.min.js?ver=2.0.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/casa-tibet/js/jquery.embed.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/casa-tibet/js/jquery.cookie.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://www.casatibet.org.mx/2013/wp-content/plugins/casa-tibet/js/ct_functions.js?ver=3.9.1'></script>
+<script type='text/javascript' src='http://p.jwpcdn.com/6/8/jwplayer.js?ver=3.9.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://editorial.casatibet.org.mx/2013/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://editorial.casatibet.org.mx/2013/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 3.9.1" />
+
+		<script type="text/javascript">
+			/* <![CDATA[ */
+			
+						jQuery(document).ready( function() {
+
+				/* Use backticks instead of <code> for the Code button in the editor */
+				if ( typeof( edButtons ) !== 'undefined' ) {
+					edButtons[110] = new QTags.TagButton( 'code', 'code', '`', '`', 'c' );
+					QTags._buttonsInit();
+				}
+
+				/* Tab from topic title */
+				jQuery( '#bbp_topic_title' ).bind( 'keydown.editor-focus', function(e) {
+					if ( e.which !== 9 )
+						return;
+
+					if ( !e.ctrlKey && !e.altKey && !e.shiftKey ) {
+						if ( typeof( tinymce ) !== 'undefined' ) {
+							if ( ! tinymce.activeEditor.isHidden() ) {
+								var editor = tinymce.activeEditor.editorContainer;
+								jQuery( '#' + editor + ' td.mceToolbar > a' ).focus();
+							} else {
+								jQuery( 'textarea.bbp-the-content' ).focus();
+							}
+						} else {
+							jQuery( 'textarea.bbp-the-content' ).focus();
+						}
+
+						e.preventDefault();
+					}
+				});
+
+				/* Shift + tab from topic tags */
+				jQuery( '#bbp_topic_tags' ).bind( 'keydown.editor-focus', function(e) {
+					if ( e.which !== 9 )
+						return;
+
+					if ( e.shiftKey && !e.ctrlKey && !e.altKey ) {
+						if ( typeof( tinymce ) !== 'undefined' ) {
+							if ( ! tinymce.activeEditor.isHidden() ) {
+								var editor = tinymce.activeEditor.editorContainer;
+								jQuery( '#' + editor + ' td.mceToolbar > a' ).focus();
+							} else {
+								jQuery( 'textarea.bbp-the-content' ).focus();
+							}
+						} else {
+							jQuery( 'textarea.bbp-the-content' ).focus();
+						}
+
+						e.preventDefault();
+					}
+				});
+			});
+						/* ]]> */
+		</script>
+
+	
+	<script type="text/javascript">var ajaxurl = 'http://editorial.casatibet.org.mx/2013/wp-admin/admin-ajax.php';</script>
+
+<script type="text/javascript">jwplayer.defaults = { "ph": 2 };</script> 
+		<style type="text/css">
+			.social-ring:after {
+				 clear: both;
+			}
+				   
+			.social-ring:before,
+			.social-ring:after {
+				 content: "";
+				 display: table;
+			}
+			
+			.social-ring {
+				margin: 0 0 0.5em !important;
+				padding: 0 !important;
+				line-height: 20px !important;
+				height: auto;
+				font-size: 11px;
+			}
+			.social-ring-button {
+				float: left !important;
+								height: 30px;
+								margin: 0 5px 0 0 !important;
+				padding: 0 !important;
+			}
+			.social-ring .social-ring-button iframe {
+				max-width: none !important;
+			}
+		</style>
+	<!-- <link href="http://fnt.webink.com/wfs/webink.css?project=7A36BC1B-1FA8-40BE-9194-DE0B97D81875&fonts=3ADF0713-3388-8371-8FC2-3CBA9D020557:f=AGaramondPro-Regular,4E5B817B-633D-E2C2-8120-FBBC0786B815:f=AGaramondPro-Semibold,DB6F18C0-2E60-CC71-F543-390ED488B3D2:f=AGaramondPro-Italic" rel="stylesheet" type="text/css"/> -->
+<script type="text/javascript">
+	ct.siteurl = 'http://editorial.casatibet.org.mx';
+	ct.theme = 'ct-editorial';
+</script>
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<style type="text/css" media="screen"> 
+  html { margin-top: 0px !important; } 
+  * html body { margin-top: 0px !important; } 
+  </style></head>
+<body>
+<div id="rm-container">
+	<div id="rm-header" class="interior">
+		<div class="rm-content">
+			<div class="nav_bar">
+
+	<ul class="login">
+		
+	 
+		<li data-action="register" data-href="http://mi.casatibet.org.mx/register">REGISTRAR</li>
+		<li data-action="login" data-href="http://editorial.casatibet.org.mx/2013/wp-login.php?redirect_to=http%3A%2F%2Fmi.casatibet.org.mx">LOGIN</li>
+		<li>¡Bienvenido Invitado!</li>
+		
+		</ul>
+	<ul class="menu">
+		<li data-site="ct-mex" data-href="http://www.casatibet.org.mx">CASA TIBET</li>
+		<li data-site="ct-edu" data-href="http://educacion.casatibet.org.mx">EDUCACIÓN</li>
+		<li data-site="ct-editorial" data-href="http://editorial.casatibet.org.mx">EDITORIAL</li>
+		<li data-site="ct-derechos" data-href="http://altruismo.casatibet.org.mx">ALTRUISMO</li>
+	</ul>
+</div>
+<div class="main_menu">
+	<ul id="ct_nav_menu"></ul>
+<script type="text/javascript">jQuery("#ct_nav_menu").navMenu([{"label":"Inicio","url":"http:\/\/editorial.casatibet.org.mx\/","target":""},{"label":"Consejo Editorial","url":"http:\/\/editorial.casatibet.org.mx\/consejo-editorial\/","target":"","children":[{"label":"Comit\u00e9 de Grabaciones","url":"http:\/\/editorial.casatibet.org.mx\/consejo-editorial\/comite-de-grabaciones\/","target":""},{"label":"Comite de Traducci\u00f3n","url":"http:\/\/editorial.casatibet.org.mx\/consejo-editorial\/comite-de-traduccion\/","target":""},{"label":"Comite de Transcripci\u00f3n","url":"http:\/\/editorial.casatibet.org.mx\/consejo-editorial\/comite-de-transcripciones\/","target":""}]},{"label":"Proyectos Activos","url":"http:\/\/editorial.casatibet.org.mx\/proyectos\/","target":""},{"label":"Publicaciones","url":"http:\/\/editorial.casatibet.org.mx\/publicaciones\/","target":"","children":[{"label":"Libros","url":"http:\/\/editorial.casatibet.org.mx\/publication-type\/libros\/","target":""},{"label":"Cl\u00e1sicos de Bolsillo","url":"http:\/\/editorial.casatibet.org.mx\/publication-type\/clasicos-de-bolsillo\/","target":""}]},{"label":"Editoriales","url":"http:\/\/editorial.casatibet.org.mx\/editoriales\/","target":"","children":[{"label":"Budismo 1.01","url":"http:\/\/editorial.casatibet.org.mx\/editoriales\/budismo-1-01\/","target":""},{"label":"Vida contemplativa","url":"http:\/\/editorial.casatibet.org.mx\/editoriales\/vida-contemplativa\/","target":""},{"label":"84 Mil","url":"http:\/\/editorial.casatibet.org.mx\/editoriales\/84-mil\/","target":""},{"label":"Desde el Escritorio del Editor","url":"http:\/\/editorial.casatibet.org.mx\/editoriales\/desde-el-escritorio\/","target":""}]},{"label":"Noticias","url":"http:\/\/editorial.casatibet.org.mx\/noticias\/","target":""}]);</script>
+</div>		</div>
+	</div>
+	<div id="rm-main">
+		<div class="rm-content">
+<div class="col side">
+	<div class="calendar"></div>
+<input type="hidden" id="search_by_date" value="" />
+<script type="text/javascript">
+	var datesArray = [];
+	var curDate = {"year":"2014","month":"06"};
+	function ctLoadDate(data) {
+		if (data.year && data.month) {
+			var target = 'date='+data.year+'-'+data.month;
+			if(data.day) target += '-'+data.day;
+			ct.goTo('http://editorial.casatibet.org.mx/noticias/?'+target, true);
+		}
+	}
+	jQuery(document).ready(function() {
+		jQuery('.calendar').datepicker({
+				        dateFormat : 'yy-mm-dd',
+	        beforeShowDay: function(date) {
+	        	var theday = [];
+	        	theday.push(date.getFullYear());
+	        	var month = date.getMonth()+1;
+	        	theday.push((month < 10) ? '0'+month : month);
+	        	var date = date.getDate();
+	        	theday.push((date < 10) ? '0'+date : date);
+	        	var theday = theday.join('-');
+				return [true,jQuery.inArray(theday, datesArray) >=0?"day_highlight":''];
+			},
+			onChangeMonthYear: function(year, month) {
+				curDate = {year:year, month:month};
+			},
+			onSelect: function(dateText) {
+				var parts = dateText.split('-');
+				var data = {year:parts[0], month:parts[1], day:parts[2]};
+				ctLoadDate(data);
+			}
+	    });
+	    
+	    jQuery('.calendar').click(function(e) {
+	    	var el = jQuery(e.srcElement);
+	    	if (el.hasClass('ui-datepicker-title') ||
+	    		el.hasClass('ui-datepicker-month') || 
+	    		el.hasClass('ui-datepicker-year')) {
+	    		ctLoadDate(curDate);
+	    	}
+	    });
+    });
+</script>	</div>
+<div class="col main">
+	<div class="page_header cat">
+		<div class="page_nav"><div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#"><!-- Breadcrumb NavXT 5.1.0 -->
+<a title="Go to Casa Tibet : Editorial." href="http://editorial.casatibet.org.mx" class="home">Casa Tibet : Editor&hellip;</a>&nbsp;<span class="separator">&raquo;</span>&nbsp;<span typeof="v:Breadcrumb"><span property="v:title">Noticias</span></span></div></div>		<div class="head_wrapper">
+		<h1>Noticias</h1>
+				</div>
+	</div>
+	
+		
+	<div class="section listing news-main">
+<div class="title" >
+<div class="pager">
+<div class="icon ui next" data-page="/noticias/?pg=2"></div>
+</div>
+<script type="text/javascript">
+	jQuery('.pager .icon').each(function() {
+		ct.addHover(this);
+		jQuery(this).click(function(e) {
+			e.stopPropagation();
+			ct.goTo(jQuery(this).data('page'), true);
+		});
+	});
+</script>Entradas Recientes</div>
+<ul >
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/llegamos-a-los-8400-seguidores/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2014/05/BIIB-01-e1400807811885-150x100c.jpg" /></div>				<h3>		Nuestra revista llegó a los 8,400 seguidores…</h3>
+		<p>Con gran alegría hemos llegado, casi de manera inadvertida, a los 8,400 seguidores de nuestra revista en Facebook. &#8220;Nuestra&#8221; no porque pertenezca únicamente a los colaboradores de 84 Mil, sino [...]</p>
+	</li>
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/poesia-visual-de-richard-gere/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2014/03/richard-gere-435-e1394586284274-150x100c.jpg" /></div>				<h3>		Poesía visual de Richard Gere</h3>
+		<p>Son casi tres décadas de trabajo durante las cuales Richard Gere, uno de los rostros más reconocidos del cine hollywoodense, se ha dedicado con honestidad a resguardar los derechos humanos y [...]</p>
+	</li>
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/corazon-de-peregrino/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2014/03/get_img-150x100c.jpg" /></div>				<h3>		Corazón de Peregrino</h3>
+		<p>Las contundentes 64 imágenes contenidas en Peregrino, fotografías de Richard Gere, publicadas en español en octubre de 2013 por la Editorial de Casa Tíbet México en una edición de lujo, [...]</p>
+	</li>
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/aprovechando-esta-preciosa-vida/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2013/07/217158_540418659334828_1687422877_n-e1372693242202-150x100c.jpg" /></div>				<h3>		Aprovechando esta preciosa vida</h3>
+		<p>Queridos Amigos, Casa Tíbet México se complace enormemente en compartir con ustedes este extracto de las enseñanzas presentadas por S. E. Jetsün Khandro Rinpoché en 2012 cuando nos visitó esta [...]</p>
+	</li>
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/borges-y-el-budismo/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2013/05/46463_borges-150x100c.jpg" /></div>				<h3>		Borges y el Budismo</h3>
+		<p>Entre junio y agosto de 1977, Jorge Luis Borges pronunció siete conferencias en el Teatro Coliseo de Buenos Aires: La Divina Comedia, La pesadilla, El libro de las mil y [...]</p>
+	</li>
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/el-mandala/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2013/04/mandala_2560x1600-1-e1366910165980-150x100c.jpg" /></div>				<h3>		El Mándala</h3>
+		<p>En la tradición budista, el mándala es utilizado como representación ideográfica del universo puro de un Buda, un ser humano plenamente despierto. Conforma un mapa de la realidad vista desde [...]</p>
+	</li>
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/samsara/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2013/04/mar-olas-mareomotriz-e1366067115842-150x100c.jpg" /></div>				<h3>		Samsara</h3>
+		<p>Tony Karam, presidente y fundador de Casa Tíbet México, narra una historia muy cómica acerca de cómo vivimos atados a la adicción compulsiva del samsara.</p>
+	</li>
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/la-no-violencia/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2013/04/verona-productos-decoracion-buda-paz1-e1365207600289-150x100c.jpg" /></div>				<h3>		La (no) violencia</h3>
+		<p>Una mirada budista a la (no) violencia: Artículo escrito por Marco Antonio Karam para la Revista de la Universidad Intercontinental.</p>
+	</li>
+	<li class="news_item" data-href="http://altruismo.casatibet.org.mx/noticias/china-oidos-sordos/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2013/04/0128628950085-e1365202809339-150x100c.jpg" /></div>				<h3>		China: oídos sordos</h3>
+		<p>[Setenta años después el Gobierno Chino sigue ejerciendo la ocupación ilegal del Tíbet. ] El pasado 10 de marzo, miles de personas alrededor del mundo se manifestaron por el fracaso [...]</p>
+	</li>
+	<li class="news_item" data-href="http://editorial.casatibet.org.mx/noticias/meditacion-al-volante/">
+		<div class="thumbnail ct-image-fader"><img src="http://editorial.casatibet.org.mx/2013/wp-content/uploads/2013/02/wheel-cl-e1360104228237-150x100c.jpg" /></div>				<h3>		Meditación al volante</h3>
+		<p> Por Thich Nhat Hanh: En Vietnam, hace cuarenta años, fui el primer monje que anduvo en bicicleta. En ese tiempo no era considerada una cosa muy propia de un monje. [...]</p>
+	</li>
+<script type="text/javascript">
+jQuery('.news_item .ct-image-fader').imageFader({fade:500, w:150, h:100});
+</script></ul>
+</div>
+
+	
+	
+</div>
+
+		</div>
+	</div>
+	<div id="rm-footer">
+	<div class="rm-content">
+		<div class="menu">
+	<ul>
+		<li data-href="http://www.casatibet.org.mx/2013/wp-admin">ADMIN</li>
+		<li data-href="http://www.casatibet.org.mx/realimentacion">REALIMENTACIÓN</li>
+			<li data-href="http://www.casatibet.org.mx/nosotros/preguntas-frecuentes">PREGUNTAS FRECUENTES</li>
+	</ul>
+</div>
+<div class="copyright">
+<h2>Casa Tibet : Editorial</h2>
+<p>Orizaba # 93, Roma norte, Del. Cuauhtemoc, México D.F. CP. 06700,<br />
+Tels. 55147763 • 55110802 • 55140443 info@casatibet.org.mx</p>
+</div>	</div>
+	</div>
+</div>
+
+<!-- Generated in 0,480 seconds. (59 q) -->
+
+	</body>
+</html>
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Minified using disk
+Page Caching using disk: enhanced
+Database Caching 79/138 queries in 0.049 seconds using disk
+
+ Served from: editorial.casatibet.org.mx @ 2014-06-15 11:20:38 by W3 Total Cache -->

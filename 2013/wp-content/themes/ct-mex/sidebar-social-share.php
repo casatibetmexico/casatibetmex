@@ -1,0 +1,1 @@
+<?php if(function_exists('social_ring_show')){ social_ring_show();} ?>

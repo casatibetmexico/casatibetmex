@@ -1,0 +1,24 @@
+{{! template used on garee.ch - tweet-boxes and twitter-background }}
+
+<p class="tweet_intro"></p>
+<ul class="tweet_list">
+{{#items}}
+<li>
+<div class="tweet_header">
+	{{{avatar}}}{{{user}}}<br />
+	<span class="tweet_name">{{user_name}}</span>
+</div>
+<div class="tweet_text">
+	{{{tweet_text}}}
+</div>
+{{#tweet_has_image}}<img src="{{tweet_image_media_url}}:small" class="tweet_image" />{{/tweet_has_image}}
+<div class="tweet_footer">
+{{! about tweet_time  }}
+	{{tweet_time_formatted}} via {{{tweet_source}}}<br />
+    {{{reply_action}}} {{{retweet_action}}} {{{favorite_action}}}
+</div>
+</li>
+{{/items}}
+</ul>
+
+
